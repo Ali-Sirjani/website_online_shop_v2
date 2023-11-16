@@ -1,0 +1,54 @@
+version: 'latest'
+
+services:
+  web:
+    build: .
+    command: python /code/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+      - redis
+    environment:
+      - "DJANGO_SECRET_KEY=${DOCKER_COMPOSE_DJANGO_SECRET_KEY}"
+      - "DJAGNO_DEBUG=${DOCKER_COMPOSE_DJANGO_DEBUG}"
+      - "EMAIL_HOST=${DOCKER_COMPOSE_EMAIL_HOST}"
+      - "EMAIL_HOST_PASSWORD={DOCKER_COMPOSE_EMAIL_HOST_PASSWORD}"
+
+  celery-worker:
+    build: .
+    command: celery -A config worker -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+      - web
+    environment:
+      - "DJANGO_SECRET_KEY=${DOCKER_COMPOSE_DJANGO_SECRET_KEY}"
+      - "DJAGNO_DEBUG=${DOCKER_COMPOSE_DJANGO_DEBUG}"
+      - "EMAIL_HOST=${DOCKER_COMPOSE_EMAIL_HOST}"
+      - "EMAIL_HOST_PASSWORD={DOCKER_COMPOSE_EMAIL_HOST_PASSWORD}"
+
+  celery-beat:
+    build: .
+    command: celery -A config beat -l info
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+      - web
+    environment:
+      - "DJANGO_SECRET_KEY=${DOCKER_COMPOSE_DJANGO_SECRET_KEY}"
+      - "DJAGNO_DEBUG=${DOCKER_COMPOSE_DJANGO_DEBUG}"
+      - "EMAIL_HOST=${DOCKER_COMPOSE_EMAIL_HOST}"
+      - "EMAIL_HOST_PASSWORD={DOCKER_COMPOSE_EMAIL_HOST_PASSWORD}"
+
+  redis:
+    image: "redis:latest"
+
+  db:
+    image: postgres:latest
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"

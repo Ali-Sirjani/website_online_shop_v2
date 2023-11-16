@@ -1,0 +1,7 @@
+venv/
+db.sqlite3
+.idea/
+.env
+core/migrations/
+store/migrations/
+celerybeat-schedule
