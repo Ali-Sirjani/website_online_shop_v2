@@ -50,6 +50,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'django_filters',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -206,3 +209,8 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 CELERY_TASK_DEFAULT_QUEUE = 'default'
+
+# config crispy
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap5'

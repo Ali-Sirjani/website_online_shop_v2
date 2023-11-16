@@ -10,14 +10,17 @@ click-didyoumean==0.3.0
 click-plugins==1.1.1
 click-repl==0.3.0
 colorama==0.4.6
+crispy-bootstrap5==2023.10
 cryptography==41.0.5
 defusedxml==0.7.1
 Django==4.2.7
 django-allauth==0.58.2
 django-axes==6.1.1
+django-crispy-forms==2.1
 django-cuser==2017.3.16
 django-debug-toolbar==4.2.0
 django-environ==0.11.2
+django-filter==23.3
 django-tinymce==3.6.1
 idna==3.4
 kombu==5.3.3
