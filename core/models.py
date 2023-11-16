@@ -7,7 +7,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class CustomUser(AbstractUser):
-    pass
+    email = models.EmailField(max_length=254, unique=True, verbose_name='email address')
 
 
 class Profile(models.Model):
@@ -18,7 +18,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=200, blank=True, verbose_name=_('Last name'))
     phone = PhoneNumberField(unique=True, blank=True, null=True, region='IR', verbose_name=_('phone'))
     picture = models.ImageField(upload_to='accounts_pictures/',
-                                default='static/img/default_account/default_profile.png', blank=True,
+                                default='../static/img/default_account/default_profile.png', blank=True,
                                 verbose_name=_('picture'))
     state = models.CharField(max_length=200, blank=True, verbose_name=_('state'))
     city = models.CharField(max_length=200, blank=True, verbose_name=_('city'))
