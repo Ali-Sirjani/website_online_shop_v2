@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # third party
     'debug_toolbar',
+    'axes',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -63,6 +64,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     # allauth
     'allauth.account.middleware.AccountMiddleware',
+    # AxesMiddleware should be the last middleware in the MIDDLEWARE list.
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -146,6 +149,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # config allauth
 AUTHENTICATION_BACKENDS = [
+    # AxesStandaloneBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesStandaloneBackend',
+
     # Needed to log in by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
 
@@ -184,6 +190,13 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = DEFAULT_FROM_EMAIL = env('EMAIL_HOST')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
+# config django-axes
+AXES_FAILURE_LIMIT = 5  # Maximum allowed login failures before lockout.
+AXES_LOCK_OUT_AT_FAILURE = True  # Enable lockout after exceeding failure limit.
+AXES_COOLOFF_TIME = 0.1  # Time period (in days) for cooling off during lockout.
+AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT = False  # Don't reset cool-off time on each failure during lockout.
+AXES_USERNAME_FORM_FIELD = 'login'  # Name of the form field for the username or identifier.
 
 # config celery
 CELERY_BROKER_URL = 'redis://redis:6379/0'
