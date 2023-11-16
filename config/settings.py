@@ -53,6 +53,9 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     'crispy_bootstrap5',
+
+    # local apps
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -149,6 +152,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# config custom user model
+AUTH_USER_MODEL = 'core.CustomUser'
 
 # config allauth
 AUTHENTICATION_BACKENDS = [
