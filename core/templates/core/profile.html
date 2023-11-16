@@ -1,0 +1,26 @@
+{% extends '_base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block title %} profile {% endblock title %}
+
+{% block content %}
+
+    <p>****************</p>
+    <p>
+    'first_name': {{ profile.first_name }} <br>
+    'last_name': {{ profile.last_name }} <br>
+    'phone': {{ profile.phone }} <br>
+    'picture': <img src="{{ profile.picture.url }}" style="width: 100px; height: 100px;"> <br>
+    'state': {{ profile.state }} <br>
+    'city': {{ profile.city }} <br>
+    'address': {{ profile.address }} <br>
+    'plate': {{ profile.plate }} <br>
+    </p>
+    <p>****************</p>
+    <form action="" method="post" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit">Click</button>
+    </form>
+{% endblock content %}
