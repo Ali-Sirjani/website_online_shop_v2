@@ -43,6 +43,30 @@ class ProductSpecificationValueTabu(admin.TabularInline):
     extra = 1
 
 
+@admin.register(ProductColor)
+class ProductColorAdmin(admin.ModelAdmin):
+    fields = ('name', 'color')
+    list_display = ('name', 'color', 'color_image')
+    search_fields = ('color', 'name')
+
+    def color_image(self, obj):
+        return format_html('<div style="background-color: {}; width: 20px; height: 20px;"></div>', obj.color)
+
+
+class ProductColorValueTabu(admin.TabularInline):
+    model = ProductColorValue
+    fields = ('color', 'color_image', 'inventory',)
+    readonly_fields = ('color_image', )
+    autocomplete_fields = ('color',)
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'cols': 70, 'rows': 4})}
+    }
+    extra = 1
+
+    def color_image(self, obj):
+        return format_html('<div style="background-color: {}; width: 20px; height: 20px;"></div>', obj.color.color)
+
+
 @admin.register(Product)
 class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     form = ProductFormAdmin
@@ -61,6 +85,7 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
         }),
     )
     readonly_fields = ('datetime_created', 'datetime_updated',)
+    inlines = (ProductSpecificationValueTabu, ProductColorValueTabu,)
     list_display = ('title', 'price', 'datetime_created', 'datetime_updated', 'is_active')
     ordering = ('-datetime_updated',)
     search_fields = ('title',)
