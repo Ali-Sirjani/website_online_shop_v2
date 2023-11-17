@@ -141,3 +141,50 @@ class ProductSizeValue(models.Model):
 
     def __str__(self):
         return f'{self.size}'
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images',
+                                verbose_name=_('product'))
+
+    image = models.ImageField(upload_to='product_images/', verbose_name=_('image'))
+    is_main = models.BooleanField(default=False, verbose_name=_('is main'))
+
+    datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
+    datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
+
+    class Meta:
+        verbose_name = _('product image')
+        verbose_name_plural = _('product images')
+
+    def __str__(self):
+        return f'{self.pk}'
+
+
+class ProductComment(models.Model):
+    STAR_CHOICES = (
+        ('1', _('Too Bad')),
+        ('2', _('Bad')),
+        ('3', _('Normal')),
+        ('4', _('Good')),
+        ('5', _('Great')),
+    )
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments', verbose_name=_('product'))
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='comments',
+                               verbose_name=_('author'))
+
+    text = models.TextField(verbose_name=_('text'))
+    star = models.CharField(max_length=1, choices=STAR_CHOICES, verbose_name=_('star'))
+
+    confirmation = models.BooleanField(default=False, verbose_name=_('confirmation'))
+
+    datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
+    datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
+
+    class Meta:
+        verbose_name = _('product comment')
+        verbose_name_plural = _('product comments')
+
+    def __str__(self):
+        return f'{self.author}'

@@ -1,2 +1,2 @@
 from .product_models import (Category, Product, ProductSpecification,
-                             ProductSpecificationValue, )
+                             ProductSpecificationValue, ProductImage, ProductComment, )
