@@ -94,6 +94,7 @@ class ProductSpecificationValue(models.Model):
 
 
 class ProductColor(models.Model):
+    name = models.CharField(max_length=255, unique=True, verbose_name=_('name'))
     color = ColorField()
 
     class Meta:
@@ -101,7 +102,7 @@ class ProductColor(models.Model):
         verbose_name_plural = _('product colors')
 
     def __str__(self):
-        return f'{self.color}'
+        return f'{self.name}'
 
 
 class ProductColorValue(models.Model):
