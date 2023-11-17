@@ -110,6 +110,8 @@ class ProductColorValue(models.Model):
     color = models.ForeignKey(ProductColor, on_delete=models.CASCADE, related_name='color_values',
                               verbose_name=_('color'))
 
+    inventory = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('inventory'))
+
     class Meta:
         verbose_name = _('product color value')
         verbose_name_plural = _('product color values')
@@ -134,8 +136,11 @@ class ProductSizeValue(models.Model):
                                 verbose_name=_('product'))
     size = models.ForeignKey(ProductSize, on_delete=models.CASCADE, related_name='size_values',
                              verbose_name=_('size'))
+    color = models.ForeignKey(ProductColor, on_delete=models.CASCADE, null=True, blank=True, related_name='size_values',
+                              verbose_name=_('color'))
 
     size_price = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('size price'))
+    inventory = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('inventory'))
 
     class Meta:
         verbose_name = _('product size')
