@@ -4,11 +4,13 @@ from django.shortcuts import reverse
 from django.utils.http import urlencode
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
+from django.forms import Textarea
+from django.db import models
 
 from mptt.admin import MPTTModelAdmin
 from jalali_date.admin import ModelAdminJalaliMixin
 
-from ..models import Category, Product
+from ..models import Category, Product, ProductSpecification, ProductSpecificationValue, ProductColor, ProductColorValue
 from ..forms import ProductFormAdmin
 
 
@@ -23,6 +25,22 @@ class CategoryAdmin(MPTTModelAdmin):
     def products_count(self, obj):
         url = (reverse('admin:store_product_changelist') + '?' + urlencode({'category': obj.pk}))
         return format_html('<a href="{}">{}</a>', url, obj.produc_count)
+
+
+@admin.register(ProductSpecification)
+class ProductSpecificationAdmin(admin.ModelAdmin):
+    fields = ('name',)
+    search_fields = ('name',)
+
+
+class ProductSpecificationValueTabu(admin.TabularInline):
+    model = ProductSpecificationValue
+    fields = ('specification', 'value',)
+    autocomplete_fields = ('specification',)
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'cols': 70, 'rows': 4})}
+    }
+    extra = 1
 
 
 @admin.register(Product)
