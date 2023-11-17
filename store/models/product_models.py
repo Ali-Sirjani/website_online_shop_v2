@@ -135,6 +135,8 @@ class ProductSizeValue(models.Model):
     size = models.ForeignKey(ProductSize, on_delete=models.CASCADE, related_name='size_values',
                              verbose_name=_('size'))
 
+    size_price = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('size price'))
+
     class Meta:
         verbose_name = _('product size')
         verbose_name_plural = _('product sizes')
