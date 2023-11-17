@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'colorfield',
     'mptt',
+    'jalali_date',
 
     # local apps
     'core',
