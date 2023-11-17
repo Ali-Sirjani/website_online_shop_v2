@@ -1,1 +1,2 @@
-from .product_models import (Category, Product, )
+from .product_models import (Category, Product, ProductSpecification,
+                             ProductSpecificationValue, )
