@@ -11,8 +11,8 @@ from mptt.admin import MPTTModelAdmin
 from jalali_date.admin import ModelAdminJalaliMixin
 
 from ..models import (Category, Product, ProductSpecification, ProductSpecificationValue, ProductColor,
-                      ProductSize,)
-from ..forms import ProductFormAdmin
+                      ProductSize, ProductColorAndSizeValue, ProductImage, ProductComment)
+from ..forms import ProductFormAdmin, InventoryForm, ProductColorAndSizeValueFormAdmin, ProductImageValueFormAdmin
 
 
 @admin.register(Category)
@@ -61,6 +61,40 @@ class ProductSizeAdmin(admin.ModelAdmin):
     search_fields = ('size',)
 
 
+class ProductColorAndSizeValueTabu(admin.TabularInline):
+    model = ProductColorAndSizeValue
+    form = ProductColorAndSizeValueFormAdmin
+    fields = ('color', 'color_image', 'size', 'size_price', 'inventory',)
+    readonly_fields = ('color_image',)
+    autocomplete_fields = ('color', 'size')
+    extra = 1
+
+    def color_image(self, obj):
+        return format_html('<div style="background-color: {}; width: 20px; height: 20px;"></div>', obj.color.color)
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related('color', 'size')
+
+
+class ProductImageTabu(admin.TabularInline):
+    model = ProductImage
+    form = ProductImageValueFormAdmin
+    fields = ('image', 'is_main',)
+    extra = 1
+
+
+class ProductCommentTabu(admin.TabularInline):
+    model = ProductComment
+    readonly_fields = ('datetime_updated',)
+    fields = ('author', 'text', 'confirmation', 'datetime_updated')
+    ordering = ('-datetime_updated',)
+    extra = 1
+    autocomplete_fields = ('author',)
+    formfield_overrides = {
+        models.TextField: {'widget': Textarea(attrs={'cols': 70, 'rows': 4})}
+    }
+
+
 @admin.register(Product)
 class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     form = ProductFormAdmin
@@ -79,7 +113,7 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
         }),
     )
     readonly_fields = ('datetime_created', 'datetime_updated',)
-    inlines = (ProductSpecificationValueTabu,)
+    inlines = (ProductSpecificationValueTabu, ProductColorAndSizeValueTabu, ProductImageTabu, ProductCommentTabu)
     list_display = ('title', 'price', 'datetime_created', 'datetime_updated', 'is_active')
     ordering = ('-datetime_updated',)
     search_fields = ('title',)
