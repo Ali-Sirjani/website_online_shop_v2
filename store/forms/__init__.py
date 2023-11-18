@@ -1,1 +1,1 @@
-from .product_forms import ProductFormAdmin
+from .product_forms import ProductFormAdmin, ProductColorValueFormAdmin
