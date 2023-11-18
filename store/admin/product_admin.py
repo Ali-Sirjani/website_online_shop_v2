@@ -11,7 +11,7 @@ from mptt.admin import MPTTModelAdmin
 from jalali_date.admin import ModelAdminJalaliMixin
 
 from ..models import Category, Product, ProductSpecification, ProductSpecificationValue, ProductColor, ProductColorValue
-from ..forms import ProductFormAdmin
+from ..forms import ProductFormAdmin, ProductColorValueFormAdmin
 
 
 @admin.register(Category)
@@ -55,12 +55,10 @@ class ProductColorAdmin(admin.ModelAdmin):
 
 class ProductColorValueTabu(admin.TabularInline):
     model = ProductColorValue
+    form = ProductColorValueFormAdmin
     fields = ('color', 'color_image', 'inventory',)
     readonly_fields = ('color_image', )
     autocomplete_fields = ('color',)
-    formfield_overrides = {
-        models.TextField: {'widget': Textarea(attrs={'cols': 70, 'rows': 4})}
-    }
     extra = 1
 
     def color_image(self, obj):
@@ -90,3 +88,22 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     ordering = ('-datetime_updated',)
     search_fields = ('title',)
     autocomplete_fields = ('category',)
+
+    def save_model(self, request, obj, form, change):
+        inventory = form.cleaned_data.get('inventory')
+        if obj:
+            obj.inventory = inventory
+
+        else:
+            form.instance.inventory = inventory
+
+        super().save_model(request, obj, form, change)
+
+    def get_formsets_with_inlines(self, request, obj=None):
+        formsets, inlines = super().get_formsets_with_inlines(request, obj)
+
+        for inline, formset in zip(inlines, formsets):
+            if isinstance(inline, ProductColorValueTabu):
+                formset.form.request_inventory = request.POST.get('inventory')
+
+        return formsets, inlines
