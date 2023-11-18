@@ -105,23 +105,6 @@ class ProductColor(models.Model):
         return f'{self.name}'
 
 
-class ProductColorValue(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='color_values',
-                                verbose_name=_('product'))
-    color = models.ForeignKey(ProductColor, on_delete=models.CASCADE, related_name='color_values',
-                              verbose_name=_('color'))
-
-    inventory = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('inventory'))
-
-    class Meta:
-        unique_together = ('product', 'color')
-        verbose_name = _('product color value')
-        verbose_name_plural = _('product color values')
-
-    def __str__(self):
-        return f'{self.color}'
-
-
 class ProductSize(models.Model):
     size = models.CharField(max_length=200, verbose_name=_('size'))
 
@@ -133,23 +116,24 @@ class ProductSize(models.Model):
         return f'{self.size}'
 
 
-class ProductSizeValue(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='size_values',
+class ProductColorAndSizeValue(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='color_size_values',
                                 verbose_name=_('product'))
-    size = models.ForeignKey(ProductSize, on_delete=models.CASCADE, related_name='size_values',
-                             verbose_name=_('size'))
-    color = models.ForeignKey(ProductColor, on_delete=models.CASCADE, null=True, blank=True, related_name='size_values',
-                              verbose_name=_('color'))
+    color = models.ForeignKey(ProductColor, on_delete=models.CASCADE, null=True, blank=True,
+                              related_name='color_size_values', verbose_name=_('color'))
+    size = models.ForeignKey(ProductSize, on_delete=models.CASCADE, null=True, blank=True,
+                             related_name='color_size_values', verbose_name=_('size'))
 
     size_price = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('size price'))
     inventory = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('inventory'))
 
     class Meta:
-        verbose_name = _('product size')
-        verbose_name_plural = _('product sizes')
+        unique_together = (('color', 'size'), )
+        verbose_name = _('product color and size')
+        verbose_name_plural = _('product color and size values')
 
     def __str__(self):
-        return f'{self.size}'
+        return f'{self.product.pk}'
 
 
 class ProductImage(models.Model):
