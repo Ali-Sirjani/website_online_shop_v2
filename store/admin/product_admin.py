@@ -1,3 +1,5 @@
+import types
+
 from django.contrib import admin
 from django.db.models import Count
 from django.shortcuts import reverse
@@ -118,3 +120,72 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     ordering = ('-datetime_updated',)
     search_fields = ('title',)
     autocomplete_fields = ('category',)
+
+    def get_formsets_with_inlines(self, request, obj=None):
+        """
+        Customizes formsets and inlines for the ProductAdmin based on the presence of an existing object (obj).
+        If obj is provided, it retrieves the 'inventory' from the object. Otherwise, it creates a temporary
+        InventoryForm to extract the 'inventory' from the request.POST data. This 'inventory' value is then
+        applied to certain formsets within the admin.
+
+        Note: The use of lists ensures the preservation of changes since lists act as references, making them
+              a preferred choice for passing variables.
+
+        Returns:
+        - result: The modified formsets and inlines.
+        """
+        if obj:
+            inventory = obj.inventory
+        else:
+            # Creating a temporary InventoryForm to extract 'inventory' from request.POST data
+            inv_form = InventoryForm(data={'inventory': request.POST.get('inventory')})
+            if inv_form.is_valid():
+                inventory = inv_form.cleaned_data.get('inventory')
+            else:
+                inventory = 0
+
+        # Getting the default formsets and inlines using the super() method
+        result = super().get_formsets_with_inlines(request, obj)
+
+        if isinstance(result, types.GeneratorType):
+            # Converting the generator to a tuple for further processing
+            result = tuple(result)
+
+            for formset, inline in result:
+                # Applying 'inventory' to specific formsets
+                if isinstance(inline, (ProductColorAndSizeValueTabu,)):
+                    formset.form.product_inventory = [inventory]
+
+                elif isinstance(inline, (ProductImageTabu,)):
+                    formset.form.is_main_set = [False]
+
+            return result
+
+        # Unpacking the result into formsets and inlines
+        formsets, inlines = result
+        for inline, formset in zip(inlines, formsets):
+            # Applying 'inventory' to specific formsets
+            if isinstance(inline, (ProductColorAndSizeValueTabu,)):
+                formset.form.product_inventory = [inventory]
+
+            elif isinstance(inline, (ProductImageTabu,)):
+                formset.form.is_main_set = [False]
+
+        return formsets, inlines
+
+
+@admin.register(ProductComment)
+class ProductCommentAdmin(admin.ModelAdmin):
+    fields = ('product', 'author', 'text', 'star', 'confirmation',
+              'datetime_created', 'datetime_updated',)
+
+    list_display = ('product', 'star', 'confirmation', 'datetime_updated',)
+    ordering = ('datetime_updated',)
+    autocomplete_fields = ('product', 'author')
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = ['datetime_created', 'datetime_updated', ]
+        if obj:
+            readonly_fields.extend(['product', 'author'])
+
+        return readonly_fields
