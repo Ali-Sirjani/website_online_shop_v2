@@ -28,7 +28,7 @@ class Category(MPTTModel):
 
 class ActiveProductsManager(models.Manager):
     def get_queryset(self):
-        return super(ActiveProductsManager, self).get_queryset().filter(is_active=True)
+        return super(ActiveProductsManager, self).get_queryset().filter(is_active=True, inventory__gt=0)
 
 
 class Product(models.Model):
@@ -95,7 +95,7 @@ class ProductSpecificationValue(models.Model):
 
 class ProductColor(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name=_('name'))
-    color = ColorField()
+    color = ColorField(verbose_name=_('color'))
 
     class Meta:
         verbose_name = _('product color')
