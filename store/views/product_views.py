@@ -1,11 +1,13 @@
+from django.shortcuts import render
 from django.views import generic
-from django.db.models import Prefetch
+from django.db.models import Q, Prefetch
 
 from django_filters.views import FilterMixin
 
 from ..models import Product, ProductSpecificationValue, ProductColorAndSizeValue
 from ..utils import sort_product_queryset
 from ..filters import ProductFilter
+from ..forms import SearchForm
 
 
 class ProductsListView(FilterMixin, generic.ListView):
@@ -68,3 +70,53 @@ class CategoryView(ProductsListView):
         queryset = self.filterset_class(self.request.GET, queryset=queryset).qs
 
         return queryset
+
+
+class ProductSearchView(ProductsListView):
+    template_name = 'store/product/search_page.html'
+
+    def get_queryset(self):
+        queryset = []
+        request_get = self.request.GET
+
+        if 'q' in request_get:
+            form = SearchForm(request_get)
+            if form.is_valid():
+                q = form.cleaned_data['q']
+                queryset = Product.active_objs.filter(
+                    Q(title__icontains=q) | Q(category__name__icontains=q)).distinct()
+
+                queryset = queryset.prefetch_related(
+                    Prefetch(
+                        'specs_values',
+                        queryset=ProductSpecificationValue.objects.select_related('specification')
+                    ),
+                    Prefetch(
+                        'color_size_values',
+                        queryset=ProductColorAndSizeValue.objects.select_related('color', 'size')
+                    ),
+                    'images',
+                )
+                self.q = q
+
+                sort_num = self.request.GET.get('sort')
+                if sort_num:
+                    queryset = sort_product_queryset(sort_num, queryset)
+
+        queryset = self.filterset_class(self.request.GET, queryset=queryset).qs
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            context['q'] = self.q
+        except AttributeError:
+            context['q'] = None
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        q = request.GET.get('q')
+        if not q or q.isspace():
+            return render(self.request, 'store/product/search_none.html')
+        return super().dispatch(request, *args, **kwargs)
