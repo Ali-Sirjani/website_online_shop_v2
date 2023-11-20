@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from ..models import Product, ProductColorAndSizeValue, ProductImage
+from ..models import Product, ProductColorAndSizeValue, ProductImage, ProductComment
 
 
 class ProductFormAdmin(forms.ModelForm):
@@ -85,3 +85,14 @@ class ProductImageValueFormAdmin(forms.ModelForm):
                 self.is_main_set[0] = True
 
         return clean_data
+
+
+class SearchForm(forms.Form):
+    q = forms.CharField()
+
+
+class ProductCommentForm(forms.ModelForm):
+    class Meta:
+        model = ProductComment
+        fields = ('text', 'star')
+
