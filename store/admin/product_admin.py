@@ -8,12 +8,13 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from django.forms import Textarea
 from django.db import models
+from django.utils.text import Truncator
 
 from mptt.admin import MPTTModelAdmin
 from jalali_date.admin import ModelAdminJalaliMixin
 
 from ..models import (Category, Product, ProductSpecification, ProductSpecificationValue, ProductColor,
-                      ProductSize, ProductColorAndSizeValue, ProductImage, ProductComment)
+                      ProductSize, ProductColorAndSizeValue, ProductImage, TopProduct, ProductComment)
 from ..forms import ProductFormAdmin, InventoryForm, ProductColorAndSizeValueFormAdmin, ProductImageValueFormAdmin
 
 
@@ -83,6 +84,7 @@ class ProductImageTabu(admin.TabularInline):
     form = ProductImageValueFormAdmin
     fields = ('image', 'is_main',)
     extra = 1
+    min_num = 1
 
 
 class ProductCommentTabu(admin.TabularInline):
@@ -116,7 +118,7 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     )
     readonly_fields = ('datetime_created', 'datetime_updated',)
     inlines = (ProductSpecificationValueTabu, ProductColorAndSizeValueTabu, ProductImageTabu, ProductCommentTabu)
-    list_display = ('title', 'price', 'datetime_created', 'datetime_updated', 'is_active')
+    list_display = ('limit_title', 'price', 'discount_price', 'inventory', 'datetime_updated', 'is_active')
     ordering = ('-datetime_updated',)
     search_fields = ('title',)
     autocomplete_fields = ('category',)
@@ -172,6 +174,22 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
                 formset.form.is_main_set = [False]
 
         return formsets, inlines
+
+    def limit_title(self, obj):
+        return Truncator(obj.title).words(15)
+
+
+@admin.register(TopProduct)
+class TopProductAdmin(admin.ModelAdmin):
+    fields = ('product', 'level', 'is_top_level', 'datetime_created', 'datetime_updated',)
+    readonly_fields = ('datetime_created', 'datetime_updated',)
+    autocomplete_fields = ('product', )
+    list_display = ('product', 'level', 'is_top_level')
+    ordering = ('level', '-is_top_level')
+    search_fields = ('products__title', )
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).filter(product__is_active=True, product__inventory__gt=0)
 
 
 @admin.register(ProductComment)
