@@ -9,52 +9,8 @@
     {% include 'store/product/_top_product_list.html' %}
     <div class="container">
         {% if products %}
-            {% for product in products %}
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h5 class="card-title">'title: {{ product.title }}'</h5>
-                    </div>
-                    <div class="card-body">
-                        {% for spec_value in product.specs_values.all %}
-                            <p class="card-text">
-                                <strong>'{{ spec_value.specification.name }}'</strong>: {{ spec_value.value }}
-                            </p>
-                        {% endfor %}
+            {% include 'store/product/_show_product_list.html' with products=products %}
 
-                        {% for color_or_size in product.color_size_values.all %}
-                            <p class="card-text">
-                                <strong>'Color'</strong>: {{ color_or_size.color.name }} <br>
-                                <strong>'Size'</strong>: {{ color_or_size.size.size }} <br>
-                                <strong>'Size Price'</strong>: {{ color_or_size.size_price }}
-                            </p>
-                        {% endfor %}
-
-                        <p class="card-text">
-                            <strong>'Short Description'</strong>: {{ product.short_description }}
-                        </p>
-
-                        {% for product_image in product.images.all %}
-                            {% if product_image.is_main %}
-                                <img src="{{ product_image.image.url }}" alt="Main Image" class="img-thumbnail"
-                                     style="width: 120px; height: 120px;">
-                            {% else %}
-                                <img src="{{ product_image.image.url }}" alt="Image" class="img-thumbnail"
-                                     style="width: 60px; height: 60px;">
-                            {% endif %}
-                        {% endfor %}
-
-                        <p class="card-text">
-                            <strong>'Price'</strong>: {{ product.price }} <br>
-                            <strong>'Discount'</strong>: {{ product.discount }} <br>
-                            <strong>'Discount Price'</strong>: {{ product.discount_price }} <br>
-                            <strong>'Slug'</strong>: {{ product.slug }}
-                        </p>
-                        <p class="card-text">
-                        <a type="button" href="{{ product.get_absolute_url }}" class="btn btn-success">detail</a>
-                        </p>
-                    </div>
-                </div>
-            {% endfor %}
         {% else %}
             <h2>None</h2>
         {% endif %}
