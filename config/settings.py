@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from environ import Env
 
+from django.contrib.messages import constants as messages
 # Initialize environ
 env = Env()
 
@@ -93,6 +94,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'store.context_processors.product_contexts'
             ],
         },
     },
@@ -226,3 +228,8 @@ CELERY_TASK_DEFAULT_QUEUE = 'default'
 # config crispy
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+# config message
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
