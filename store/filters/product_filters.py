@@ -1,10 +1,10 @@
-from django.db.models import F, Case, When, IntegerField
+from django.db.models import F, Case, When, IntegerField, Q
 from django.utils.translation import gettext_lazy as _
 import django_filters
 from django_filters import widgets
 from persiantools.jdatetime import JalaliDateTime
 
-from ..models import Product
+from ..models import Product, ProductSize, ProductColor
 
 
 def datetime_to_dict_func(dt_obj):
@@ -40,9 +40,28 @@ class ProductFilter(django_filters.FilterSet):
     datetime_updated = django_filters.DateFromToRangeFilter(label=_('date'), widget=widgets.DateRangeWidget(
         attrs={'class': 'jalali_date-date'}), method='custom_filter_datetime')
 
+    color = django_filters.ModelChoiceFilter(
+        queryset=ProductColor.objects.all(),
+        field_name='color_size_values__color',
+        to_field_name='name',
+        label=_('color'),
+        method='custom_filter_color_and_size',
+    )
+    size = django_filters.ModelChoiceFilter(
+        queryset=ProductSize.objects.all(),
+        field_name='color_size_values__size',
+        to_field_name='size',
+        label=_('size'),
+        method='custom_filter_color_and_size',
+    )
+    consider_both = django_filters.BooleanFilter(
+        label=_('Consider both color and size'),
+        method='custom_filter_color_and_size',
+    )
+
     class Meta:
         model = Product
-        fields = ('price', 'datetime_updated', 'discount')
+        fields = ('price', 'datetime_updated', 'discount', 'size', 'color')
 
     def custom_filter_price(self, queryset, name, value):
         start_value, stop_value = value.start, value.stop
@@ -78,5 +97,22 @@ class ProductFilter(django_filters.FilterSet):
 
         elif stop_value:
             queryset = queryset.filter(datetime_updated__lte=stop_value)
+
+        return queryset
+
+    def custom_filter_color_and_size(self, queryset, name, value):
+        data = self.data
+        color_value = data.get('color')
+        size_value = data.get('size')
+        consider_both_value = data.get('consider_both')
+        if color_value and size_value and consider_both_value == 'true':
+            queryset = queryset.filter(
+                color_size_values__color__name=color_value,
+                color_size_values__size__size=size_value
+            ).distinct()
+        else:
+            queryset = queryset.filter(
+                Q(color_size_values__color__name=color_value) | Q(color_size_values__size__size=size_value)
+            ).distinct()
 
         return queryset
