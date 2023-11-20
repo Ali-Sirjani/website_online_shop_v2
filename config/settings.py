@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'colorfield',
     'mptt',
     'jalali_date',
+    'pytz',
 
     # local apps
     'core',
@@ -98,7 +99,7 @@ TEMPLATES = [
 ]
 
 INTERNAL_IPS = [
-    '172.18.0.1',
+    '172.22.0.1',
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
