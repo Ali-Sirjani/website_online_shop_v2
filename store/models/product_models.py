@@ -1,4 +1,5 @@
 from django.db import models
+from django.shortcuts import reverse
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
@@ -63,6 +64,9 @@ class Product(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+    def get_absolute_url(self):
+        return reverse('store:product_detail', args=[self.slug])
 
 
 class ProductSpecification(models.Model):
@@ -190,6 +194,9 @@ class TopProduct(models.Model):
     def __str__(self):
         return f'{self.product}'
 
+    def get_absolute_url(self):
+        return reverse('store:product_detail', args=[self.product.slug])
+
 
 class ProductComment(models.Model):
     STAR_CHOICES = (
@@ -218,3 +225,6 @@ class ProductComment(models.Model):
 
     def __str__(self):
         return f'{self.author}'
+
+    def get_absolute_url(self):
+        return reverse('store:product_detail', args=[self.product.slug])
