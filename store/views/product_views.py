@@ -1,12 +1,15 @@
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Q, Prefetch
+from django.http import HttpResponseRedirect, JsonResponse
 
 from django_filters.views import FilterMixin
+import json
 
 from ..models import Product, ProductSpecificationValue, ProductColorAndSizeValue, ProductComment
 from ..utils import sort_product_queryset
@@ -165,3 +168,31 @@ class ProductDetailView(generic.edit.FormMixin, generic.DetailView):
         else:
             messages.error(request, _('Your comment have problem please try again!'))
             return super().form_invalid(form)
+
+
+@require_POST
+def favorite_view(request):
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        messages.warning(request, _('Oops! Something went wrong with your request. Please try again.'
+                                    ' If the issue persists, contact our support team for assistance.'))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    if request.user.is_authenticated:
+        pk = data.get('productId')
+        product_obj = get_object_or_404(Product.active_objs, pk=pk,)
+        user = request.user
+        if product_obj.favorite.filter(pk=user.pk).exists():
+            product_obj.favorite.remove(user)
+            messages.error(request, _('Unlike post.'))
+        else:
+            product_obj.favorite.add(user)
+            messages.success(request, _('Like post.'))
+
+        response = {'authenticated': True}
+        return JsonResponse(response, safe=False)
+    else:
+        messages.info(request, _('Please first login!'))
+        response = {'authenticated': False, 'login': request.build_absolute_uri(reverse('account_login'))}
+        return JsonResponse(response, safe=False)
