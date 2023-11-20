@@ -122,7 +122,7 @@ class ProductSearchView(ProductsListView):
     def dispatch(self, request, *args, **kwargs):
         q = request.GET.get('q')
         if not q or q.isspace():
-            return render(self.request, 'store/product/search_none.html')
+            return render(self.request, 'store/product/search_q_none.html')
         return super().dispatch(request, *args, **kwargs)
 
 
