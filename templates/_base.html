@@ -99,5 +99,32 @@
         crossorigin="anonymous"></script>
 <script src="{% static 'admin/js/django_jalali.min.js' %}"></script>
 
+<!-- Var USER -->
+<script type="text/javascript">
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+</script>
+
+<script>
+    // Assuming csrftoken is already defined in your template
+    var productLikeUrl = '{% url "store:set_product_favorite" %}';
+</script>
+
+<script src="{% static 'js/like_product.js' %}"></script>
+
 </body>
 </html>
