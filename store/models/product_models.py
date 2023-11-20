@@ -128,7 +128,7 @@ class ProductColorAndSizeValue(models.Model):
     inventory = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('inventory'))
 
     class Meta:
-        unique_together = (('color', 'size'), )
+        unique_together = (('color', 'size'),)
         verbose_name = _('product color and size')
         verbose_name_plural = _('product color and size values')
 
@@ -152,6 +152,43 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f'{self.pk}'
+
+
+class ActiveTopProductsManager(models.Manager):
+    def get_queryset(self):
+        return super(ActiveTopProductsManager, self).get_queryset().filter(product__is_active=True,
+                                                                           product__inventory__gt=0)
+
+
+class TopProduct(models.Model):
+    LEVEL_CHOICES = (
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+    )
+
+    product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='top_products',
+                                   limit_choices_to={'is_active': True, 'inventory__gt': 0}, verbose_name=_('product'))
+
+    level = models.CharField(max_length=1, choices=LEVEL_CHOICES,
+                             help_text=_('Levels are ordered from top to bottom, with 1 being the highest.'),
+                             verbose_name=_('level'))
+    is_top_level = models.BooleanField(default=False,
+                                       help_text='Check this box if you want the product to be at the top of its specified level.',
+                                       verbose_name='is_top_level')
+
+    datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
+    datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
+
+    objects = models.Manager()
+    active_objs = ActiveTopProductsManager()
+
+    class Meta:
+        verbose_name = _('top product')
+        verbose_name_plural = _('top products')
+
+    def __str__(self):
+        return f'{self.product}'
 
 
 class ProductComment(models.Model):
