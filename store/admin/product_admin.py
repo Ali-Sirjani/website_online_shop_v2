@@ -15,7 +15,8 @@ from jalali_date.admin import ModelAdminJalaliMixin
 
 from ..models import (Category, Product, ProductSpecification, ProductSpecificationValue, ProductColor,
                       ProductSize, ProductColorAndSizeValue, ProductImage, TopProduct, ProductComment)
-from ..forms import ProductFormAdmin, InventoryForm, ProductColorAndSizeValueFormAdmin, ProductImageValueFormAdmin
+from ..forms import (ProductFormAdmin, InventoryForm, ProductColorAndSizeValueFormSetAdmin,
+                     ProductImageTabuFormSetAdmin)
 
 
 @admin.register(Category)
@@ -66,7 +67,7 @@ class ProductSizeAdmin(admin.ModelAdmin):
 
 class ProductColorAndSizeValueTabu(admin.TabularInline):
     model = ProductColorAndSizeValue
-    form = ProductColorAndSizeValueFormAdmin
+    formset = ProductColorAndSizeValueFormSetAdmin
     fields = ('color', 'color_image', 'size', 'size_price', 'inventory',)
     readonly_fields = ('color_image',)
     autocomplete_fields = ('color', 'size')
@@ -81,7 +82,7 @@ class ProductColorAndSizeValueTabu(admin.TabularInline):
 
 class ProductImageTabu(admin.TabularInline):
     model = ProductImage
-    form = ProductImageValueFormAdmin
+    formset = ProductImageTabuFormSetAdmin
     fields = ('image', 'is_main',)
     extra = 1
     min_num = 1
@@ -156,10 +157,7 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
             for formset, inline in result:
                 # Applying 'inventory' to specific formsets
                 if isinstance(inline, (ProductColorAndSizeValueTabu,)):
-                    formset.form.product_inventory = [inventory]
-
-                elif isinstance(inline, (ProductImageTabu,)):
-                    formset.form.is_main_set = [False]
+                    formset.product_inventory = inventory
 
             return result
 
@@ -168,10 +166,7 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
         for inline, formset in zip(inlines, formsets):
             # Applying 'inventory' to specific formsets
             if isinstance(inline, (ProductColorAndSizeValueTabu,)):
-                formset.form.product_inventory = [inventory]
-
-            elif isinstance(inline, (ProductImageTabu,)):
-                formset.form.is_main_set = [False]
+                formset.product_inventory = inventory
 
         return formsets, inlines
 
@@ -183,10 +178,10 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
 class TopProductAdmin(admin.ModelAdmin):
     fields = ('product', 'level', 'is_top_level', 'datetime_created', 'datetime_updated',)
     readonly_fields = ('datetime_created', 'datetime_updated',)
-    autocomplete_fields = ('product', )
+    autocomplete_fields = ('product',)
     list_display = ('product', 'level', 'is_top_level')
     ordering = ('level', '-is_top_level')
-    search_fields = ('products__title', )
+    search_fields = ('products__title',)
 
     def get_queryset(self, request):
         return super().get_queryset(request).filter(product__is_active=True, product__inventory__gt=0)
