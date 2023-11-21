@@ -1,0 +1,46 @@
+{% extends '_base.html' %}
+
+{% load crispy_forms_filters %}
+{% load product_temp_filters %}
+
+{% block title %} products {% endblock title %}
+
+{% block content %}
+    {% include 'store/product/_top_product_list.html' %}
+
+    <div class="container mt-4">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        {% for image in product.images.all %}
+                            {% if image.is_main %}
+                                <img src="{{ image.image.url }}" class="card-img-top" alt="{{ product.title }}">
+                            {% endif %}
+                        {% endfor %}
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.title }}</h5>
+                            <p class="card-text">{{ product.short_description }}</p>
+                            <p class="card-text">Price:
+                                {{ product.price }}{% if product.discount %} (Discounted: {{ product.discount_price }}
+                                    ){% endif %}</p>
+                            <a href="{{ product.get_absolute_url }}" class="btn btn-primary">View Details</a>
+                            {% if product.pk in liked %}
+                                <button name="like-product" data-product="{{ product.pk }}"
+                                        class="btn btn-dark like-product">Unlike
+                                </button>
+                            {% else %}
+                                <button name="like-product" data-product="{{ product.pk }}"
+                                        class="btn btn-danger like-product">Like
+                                </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% include 'store/product/_pagination.html' %}
+
+{% endblock content %}
