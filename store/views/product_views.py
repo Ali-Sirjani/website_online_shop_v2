@@ -5,16 +5,42 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
-from django.db.models import Q, Prefetch
+from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 
 from django_filters.views import FilterMixin
 import json
 
-from ..models import Product, ProductSpecificationValue, ProductColorAndSizeValue, ProductComment
-from ..utils import sort_product_queryset
+from ..models import Product, ProductComment, TopProduct
+from ..utils import sort_product_queryset, optimize_product_query
 from ..filters import ProductFilter
 from ..forms import ProductCommentForm, SearchForm
+
+
+class HomePageView(generic.ListView):
+    template_name = 'store/product/home_page.html'
+    context_object_name = 'top_products'
+
+    def get_queryset(self):
+        top_product_pk_list = TopProduct.active_objs.values_list('pk')
+        product_queryset = Product.active_objs.filter(top_products__in=top_product_pk_list)
+
+        product_queryset = optimize_product_query(product_queryset)
+
+        product_queryset = product_queryset.order_by('top_products__level', '-top_products__is_top_level')
+
+        return product_queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.user.is_authenticated:
+            context['liked'] = Product.active_objs.filter(favorite=self.request.user.pk).values_list('pk', flat=True)
+
+        random_queryset = Product.active_objs.exclude(
+            pk__in=self.get_queryset().values_list('pk')).order_by('?')
+
+        context['random_products'] = optimize_product_query(random_queryset)[:5]
+        return context
 
 
 class ProductsListView(FilterMixin, generic.ListView):
@@ -24,17 +50,9 @@ class ProductsListView(FilterMixin, generic.ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        queryset = Product.active_objs.all().prefetch_related(
-            Prefetch(
-                'specs_values',
-                queryset=ProductSpecificationValue.objects.select_related('specification')
-            ),
-            Prefetch(
-                'color_size_values',
-                queryset=ProductColorAndSizeValue.objects.select_related('color', 'size')
-            ),
-            'images',
-        )
+        queryset = Product.active_objs.all()
+
+        queryset = optimize_product_query(queryset)
 
         sort_num = self.request.GET.get('sort')
         if sort_num:
@@ -57,17 +75,9 @@ class ProductsListView(FilterMixin, generic.ListView):
 class CategoryView(ProductsListView):
 
     def get_queryset(self):
-        queryset = Product.active_objs.filter(category__name=self.kwargs['slug']).prefetch_related(
-            Prefetch(
-                'specs_values',
-                queryset=ProductSpecificationValue.objects.select_related('specification')
-            ),
-            Prefetch(
-                'color_size_values',
-                queryset=ProductColorAndSizeValue.objects.select_related('color', 'size')
-            ),
-            'images',
-        )
+        queryset = Product.active_objs.filter(category__name=self.kwargs['slug'])
+
+        queryset = optimize_product_query(queryset)
 
         sort_num = self.request.GET.get('sort')
 
@@ -93,17 +103,8 @@ class ProductSearchView(ProductsListView):
                 queryset = Product.active_objs.filter(
                     Q(title__icontains=q) | Q(category__name__icontains=q)).distinct()
 
-                queryset = queryset.prefetch_related(
-                    Prefetch(
-                        'specs_values',
-                        queryset=ProductSpecificationValue.objects.select_related('specification')
-                    ),
-                    Prefetch(
-                        'color_size_values',
-                        queryset=ProductColorAndSizeValue.objects.select_related('color', 'size')
-                    ),
-                    'images',
-                )
+                queryset = optimize_product_query(queryset)
+
                 self.q = q
 
                 sort_num = self.request.GET.get('sort')
@@ -135,17 +136,7 @@ class ProductDetailView(generic.edit.FormMixin, generic.DetailView):
     form_class = ProductCommentForm
     template_name = 'store/product/product_detail.html'
     context_object_name = 'product'
-    queryset = Product.active_objs.prefetch_related(
-        Prefetch(
-            'specs_values',
-            queryset=ProductSpecificationValue.objects.select_related('specification')
-        ),
-        Prefetch(
-            'color_size_values',
-            queryset=ProductColorAndSizeValue.objects.select_related('color', 'size')
-        ),
-        'images',
-    )
+    queryset = optimize_product_query(Product.active_objs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -154,17 +145,17 @@ class ProductDetailView(generic.edit.FormMixin, generic.DetailView):
         return context
 
     def post(self, *args, **kwargs):
-        self.object = self.get_object()
+        obj = self.get_object()
         form = self.get_form()
         request = self.request
 
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.product = get_object_or_404(Product, pk=self.object.pk)
+            comment.product = get_object_or_404(Product, pk=obj.pk)
             comment.author = request.user
             messages.success(request, _('You comment after confirmation will show in comments.'))
             comment.save()
-            return redirect(self.object.get_absolute_url())
+            return redirect(obj.get_absolute_url())
         else:
             messages.error(request, _('Your comment have problem please try again!'))
             return super().form_invalid(form)
