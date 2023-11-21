@@ -5,8 +5,9 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
-from django.db.models import Q
+from django.db.models import Q, Max
 from django.http import HttpResponseRedirect, JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from django_filters.views import FilterMixin
 import json
@@ -140,6 +141,19 @@ class ProductDetailView(generic.edit.FormMixin, generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        obj = self.object
+
+        max_level_category = obj.category.all().aggregate(Max('level'))['level__max']
+        category_pk_list = obj.category.filter(level=max_level_category).values_list('pk')
+
+        related_product = self.get_queryset().filter(
+            category__in=category_pk_list,
+        ).exclude(pk=obj.pk).order_by('?')
+        context['related_products'] = related_product[:8]
+
+        if self.request.user.is_authenticated:
+            context['liked'] = Product.active_objs.filter(favorite=self.request.user.pk).values_list('pk', flat=True)
+
         context['comments'] = ProductComment.objects.filter(confirmation=True, product=self.object.pk).select_related(
             'author')
         return context
@@ -187,3 +201,22 @@ def favorite_view(request):
         messages.info(request, _('Please first login!'))
         response = {'authenticated': False, 'login': request.build_absolute_uri(reverse('account_login'))}
         return JsonResponse(response, safe=False)
+
+
+class ProductUserLikedView(LoginRequiredMixin, ProductsListView):
+    filterset_class = ProductFilter
+    template_name = 'store/product/product_list_user_like.html'
+    context_object_name = 'products'
+    paginate_by = 2
+
+    def get_queryset(self):
+        queryset = Product.active_objs.filter(favorite=self.request.user)
+
+        queryset = optimize_product_query(queryset)
+
+        sort_num = self.request.GET.get('sort')
+        if sort_num:
+            queryset = sort_product_queryset(sort_num, queryset)
+
+        queryset = self.filterset_class(self.request.GET, queryset=queryset).qs
+        return queryset
