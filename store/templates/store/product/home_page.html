@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+
+{% load crispy_forms_filters %}
+{% load product_temp_filters %}
+
+{% block title %} home {% endblock title %}
+
+{% block content %}
+
+    <div class="container">
+        <p>top product {{ top_products.count }}</p>
+        {% include 'store/product/_show_product_list.html' with products=top_products %}
+
+        <p>random products {{ random_products.count }}</p>
+        {% include 'store/product/_show_product_list.html' with products=random_products %}
+    </div>
+
+
+{% endblock content %}
