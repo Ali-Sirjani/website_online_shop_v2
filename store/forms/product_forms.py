@@ -1,7 +1,8 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from django.forms.models import BaseInlineFormSet
 
-from ..models import Product, ProductColorAndSizeValue, ProductImage, ProductComment
+from ..models import Product, ProductComment
 
 
 class ProductFormAdmin(forms.ModelForm):
@@ -35,56 +36,38 @@ class InventoryForm(forms.Form):
     inventory = forms.IntegerField(widget=forms.NumberInput(attrs={'min': 0}))
 
 
-class ProductColorAndSizeValueFormAdmin(forms.ModelForm):
-    class Meta:
-        model = ProductColorAndSizeValue
-        fields = ('color', 'size', 'size_price', 'inventory',)
-
+class ProductColorAndSizeValueFormSetAdmin(BaseInlineFormSet):
     def clean(self):
-        """
-        Custom clean method for ProductColorAndSizeValueFormAdmin.
-        Adjusts the product inventory by subtracting the form's 'inventory' value.
-        Validates that the sum of 'inventory' values across colors is equal to the total 'inventory' of the product.
+        sum_inventory = 0
 
-        Returns:
-        - clean_data: The cleaned form data.
-        """
+        for form in self.forms:
+            inventory = form.cleaned_data.get('inventory')
+            size = form.cleaned_data.get('size')
+            color = form.cleaned_data.get('color')
+            if not (size or color):
+                form.add_error(None, 'Please provide either the size or the color for the product.')
 
-        # Calling the clean method of the superclass to ensure basic validation
-        clean_data = super().clean()
+            if inventory:
+                sum_inventory += inventory
 
-        # Extracting 'product' and 'inventory' from the cleaned data
-        product = clean_data.get('product')
-        inventory = clean_data.get('inventory')
+        if self.product_inventory - sum_inventory < 0:
+            raise forms.ValidationError('Sum inventory of colors must be equal to product inventory')
 
-        # Checking if 'product' and 'inventory' are present
-        if product and inventory:
-            # Adjusting the product inventory based on the current form's inventory value
-            self.product_inventory[0] -= inventory
-
-            # Validating that the sum of color inventories is equal to the product inventory
-            if self.product_inventory[0] < 0:
-                self.add_error(None, 'Sum inventory of colors must be equal to product inventory')
-
-        return clean_data
+        return super().clean()
 
 
-class ProductImageValueFormAdmin(forms.ModelForm):
-    class Meta:
-        model = ProductImage
-        fields = ('image', 'is_main',)
-
+class ProductImageTabuFormSetAdmin(BaseInlineFormSet):
     def clean(self):
-        clean_data = super().clean()
-        is_main = clean_data.get('is_main')
+        main_count = 0
 
-        if is_main:
-            if self.is_main_set[0]:
-                self.add_error('is_main', 'One image can be main image')
-            else:
-                self.is_main_set[0] = True
+        for form in self.forms:
+            if form.cleaned_data.get('is_main'):
+                main_count += 1
 
-        return clean_data
+        if main_count != 1:
+            raise forms.ValidationError('Exactly one image should be marked as main.')
+
+        return super().clean()
 
 
 class SearchForm(forms.Form):
