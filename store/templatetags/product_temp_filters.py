@@ -21,3 +21,11 @@ def remove_obsolete_sorts(data):
         data.pop('page')
     data._mutable = False
     return data.urlencode()
+
+
+@register.filter
+def avg_stars(comments):
+    try:
+        return sum(map(int, [comment.star for comment in comments])) / len(comments)
+    except ZeroDivisionError:
+        return 'The product has no comments'

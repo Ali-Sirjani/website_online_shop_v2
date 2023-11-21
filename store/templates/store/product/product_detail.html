@@ -1,6 +1,7 @@
 {% extends '_base.html' %}
 
 {% load crispy_forms_filters %}
+{% load product_temp_filters %}
 
 {% block title %} products {% endblock title %}
 
@@ -13,7 +14,7 @@
             <div class="card-body">
                 {% for category in product.category.all %}
                     <p class="card-text">
-                        <strong>'{{ category.name }}'</strong>: {{ spec_value.value }}
+                        <strong>'category'</strong>: {{ category.name }}
                     </p>
                 {% endfor %}
 
@@ -67,14 +68,20 @@
                 {% endif %}
 
                 <!-- Display Comments -->
-                <h4 class="mt-4">Comments</h4>
+                <h4 class="mt-4">Comments | average comment stars: {{ comments|avg_stars }}</h4>
                 {% if comments %}
                     <ul class="list-group">
                         {% for comment in comments %}
                             <li class="list-group-item">
-                                <strong>{{ comment.author }}</strong> said:
-                                <p>{{ comment.text }}</p>
-                                <p><strong>star</strong>: {{ comment.star }}</p>
+                                <div class="media">
+                                    <img src="{{ comment.author.profile.picture.url }}" class="mr-3 rounded-circle"
+                                         alt="{{ comment.author }}'s picture" width="50" height="50">
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="mt-0">{{ comment }} said:</h5>
+                                    <p>{{ comment.text }}</p>
+                                    <p><strong>star</strong>: {{ comment.star }}</p>
+                                </div>
                             </li>
                         {% endfor %}
                     </ul>
@@ -83,6 +90,8 @@
                 {% endif %}
             </div>
         </div>
+        <p>related products</p>
+        {% include 'store/product/_show_product_list.html' with products=related_products %}
     </div>
 
 {% endblock content %}
