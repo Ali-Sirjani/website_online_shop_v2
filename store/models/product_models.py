@@ -132,7 +132,7 @@ class ProductColorAndSizeValue(models.Model):
     inventory = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('inventory'))
 
     class Meta:
-        unique_together = (('color', 'size'),)
+        unique_together = (('color', 'size', 'product'),)
         verbose_name = _('product color and size')
         verbose_name_plural = _('product color and size values')
 
