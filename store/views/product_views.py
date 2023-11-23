@@ -51,8 +51,12 @@ class ProductsListView(FilterMixin, generic.ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        queryset = Product.active_objs.all()
+        category_slug = self.kwargs.get('slug')
+        if category_slug:
+            queryset = Product.active_objs.filter(category__name=self.kwargs['slug'])
 
+        else:
+            queryset = Product.active_objs.all()
         queryset = optimize_product_query(queryset)
 
         sort_num = self.request.GET.get('sort')
@@ -71,23 +75,6 @@ class ProductsListView(FilterMixin, generic.ListView):
         if sort_num:
             context['sort'] = f'&sort={sort_num}'
         return context
-
-
-class CategoryView(ProductsListView):
-
-    def get_queryset(self):
-        queryset = Product.active_objs.filter(category__name=self.kwargs['slug'])
-
-        queryset = optimize_product_query(queryset)
-
-        sort_num = self.request.GET.get('sort')
-
-        if sort_num:
-            queryset = sort_product_queryset(sort_num, queryset)
-
-        queryset = self.filterset_class(self.request.GET, queryset=queryset).qs
-
-        return queryset
 
 
 class ProductSearchView(ProductsListView):
@@ -186,7 +173,7 @@ def favorite_view(request):
 
     if request.user.is_authenticated:
         pk = data.get('productId')
-        product_obj = get_object_or_404(Product.active_objs, pk=pk,)
+        product_obj = get_object_or_404(Product.active_objs, pk=pk, )
         user = request.user
         if product_obj.favorite.filter(pk=user.pk).exists():
             product_obj.favorite.remove(user)
