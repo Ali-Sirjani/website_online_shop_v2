@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from environ import Env
 
+from django.contrib.messages import constants as messages
 # Initialize environ
 env = Env()
 
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
     'colorfield',
     'mptt',
     'jalali_date',
+    'pytz',
 
     # local apps
     'core',
@@ -92,13 +94,14 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'store.context_processors.product_contexts'
             ],
         },
     },
 ]
 
 INTERNAL_IPS = [
-    '172.18.0.1',
+    '172.22.0.1',
 ]
 
 WSGI_APPLICATION = 'config.wsgi.application'
@@ -225,3 +228,8 @@ CELERY_TASK_DEFAULT_QUEUE = 'default'
 # config crispy
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+# config message
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}

@@ -1,2 +1,2 @@
-from .product_forms import (ProductFormAdmin, InventoryForm, ProductColorAndSizeValueFormAdmin,
-                            ProductImageValueFormAdmin)
+from .product_forms import (ProductFormAdmin, InventoryForm, ProductColorAndSizeValueFormSetAdmin, SearchForm,
+                            ProductCommentForm, ProductImageTabuFormSetAdmin)

@@ -1,0 +1,17 @@
+{% extends '_base.html' %}
+
+{% load crispy_forms_filters %}
+{% load product_temp_filters %}
+
+{% block title %} products {% endblock title %}
+
+{% block content %}
+    {% include 'store/product/_top_product_list.html' %}
+
+    <div class="container">
+        {% include 'store/product/_show_product_list.html' with products=products %}
+    </div>
+
+    {% include 'store/product/_pagination.html' %}
+
+{% endblock content %}

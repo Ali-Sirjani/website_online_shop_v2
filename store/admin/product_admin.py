@@ -8,13 +8,15 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from django.forms import Textarea
 from django.db import models
+from django.utils.text import Truncator
 
 from mptt.admin import MPTTModelAdmin
 from jalali_date.admin import ModelAdminJalaliMixin
 
 from ..models import (Category, Product, ProductSpecification, ProductSpecificationValue, ProductColor,
-                      ProductSize, ProductColorAndSizeValue, ProductImage, ProductComment)
-from ..forms import ProductFormAdmin, InventoryForm, ProductColorAndSizeValueFormAdmin, ProductImageValueFormAdmin
+                      ProductSize, ProductColorAndSizeValue, ProductImage, TopProduct, ProductComment)
+from ..forms import (ProductFormAdmin, InventoryForm, ProductColorAndSizeValueFormSetAdmin,
+                     ProductImageTabuFormSetAdmin)
 
 
 @admin.register(Category)
@@ -65,7 +67,7 @@ class ProductSizeAdmin(admin.ModelAdmin):
 
 class ProductColorAndSizeValueTabu(admin.TabularInline):
     model = ProductColorAndSizeValue
-    form = ProductColorAndSizeValueFormAdmin
+    formset = ProductColorAndSizeValueFormSetAdmin
     fields = ('color', 'color_image', 'size', 'size_price', 'inventory',)
     readonly_fields = ('color_image',)
     autocomplete_fields = ('color', 'size')
@@ -80,9 +82,10 @@ class ProductColorAndSizeValueTabu(admin.TabularInline):
 
 class ProductImageTabu(admin.TabularInline):
     model = ProductImage
-    form = ProductImageValueFormAdmin
+    formset = ProductImageTabuFormSetAdmin
     fields = ('image', 'is_main',)
     extra = 1
+    min_num = 1
 
 
 class ProductCommentTabu(admin.TabularInline):
@@ -116,7 +119,7 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     )
     readonly_fields = ('datetime_created', 'datetime_updated',)
     inlines = (ProductSpecificationValueTabu, ProductColorAndSizeValueTabu, ProductImageTabu, ProductCommentTabu)
-    list_display = ('title', 'price', 'datetime_created', 'datetime_updated', 'is_active')
+    list_display = ('limit_title', 'price', 'discount_price', 'inventory', 'datetime_updated', 'is_active')
     ordering = ('-datetime_updated',)
     search_fields = ('title',)
     autocomplete_fields = ('category',)
@@ -154,10 +157,7 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
             for formset, inline in result:
                 # Applying 'inventory' to specific formsets
                 if isinstance(inline, (ProductColorAndSizeValueTabu,)):
-                    formset.form.product_inventory = [inventory]
-
-                elif isinstance(inline, (ProductImageTabu,)):
-                    formset.form.is_main_set = [False]
+                    formset.product_inventory = inventory
 
             return result
 
@@ -166,12 +166,25 @@ class ProductAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
         for inline, formset in zip(inlines, formsets):
             # Applying 'inventory' to specific formsets
             if isinstance(inline, (ProductColorAndSizeValueTabu,)):
-                formset.form.product_inventory = [inventory]
-
-            elif isinstance(inline, (ProductImageTabu,)):
-                formset.form.is_main_set = [False]
+                formset.product_inventory = inventory
 
         return formsets, inlines
+
+    def limit_title(self, obj):
+        return Truncator(obj.title).words(15)
+
+
+@admin.register(TopProduct)
+class TopProductAdmin(admin.ModelAdmin):
+    fields = ('product', 'level', 'is_top_level', 'datetime_created', 'datetime_updated',)
+    readonly_fields = ('datetime_created', 'datetime_updated',)
+    autocomplete_fields = ('product',)
+    list_display = ('product', 'level', 'is_top_level')
+    ordering = ('level', '-is_top_level')
+    search_fields = ('products__title',)
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).filter(product__is_active=True, product__inventory__gt=0)
 
 
 @admin.register(ProductComment)

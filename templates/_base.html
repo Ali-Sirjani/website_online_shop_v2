@@ -1,11 +1,130 @@
+{% load static %}
+{% load i18n %}
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css' %}">
+    {% block style %}{% endblock style %}
     <title>{% block title %}{% endblock title %}</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <div class="">
+            {% if user.is_authenticated %}
+                <!-- Authentication options when the user is logged in -->
+                <div class="container">
+            <span class="navbar-text">
+                Welcome, {{ user.username }}!
+                <a href="{% url 'account_logout' %}">Logout</a>
+            </span>
+                </div>
+            {% else %}
+                <!-- Authentication options when the user is not logged in -->
+                <div class="container">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account_login' %}">{% trans 'Log In' %}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account_signup' %}">{% trans 'Sign Up' %}</a>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+
+
+        </div>
+
+        <!-- Header -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'store:product_list' %}">Products</a>
+                </li>
+                <li class="nav-link">
+                    <a id="btnGroupDrop1" type="button" class="mainmenu__link astext"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mm-text">{% trans 'Categories' %}</span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        {% for category in categories %}
+                            <a class="dropdown-item text-right"
+                               href="{% url 'store:category_page' category.slug %}"><h4
+                                    class="mm-text">{{ category.name }}</h4></a>
+                        {% endfor %}
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <form class="form-inline my-2 my-lg-0" method="get" action="{% url 'store:product_search' %}">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"
+                               name="q">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% if messages %}
+    <div class="container">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 {% block content %}
 {% endblock content %}
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="{% static 'admin/js/django_jalali.min.js' %}"></script>
+
+<!-- Var USER -->
+<script type="text/javascript">
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
+</script>
+
+<script>
+    // Assuming csrftoken is already defined in your template
+    var productLikeUrl = '{% url "store:set_favorite_product" %}';
+</script>
+
+<script src="{% static 'js/like_product.js' %}"></script>
+
 </body>
 </html>
