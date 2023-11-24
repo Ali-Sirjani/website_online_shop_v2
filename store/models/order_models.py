@@ -166,3 +166,19 @@ class OrderItem(models.Model):
     @property
     def get_total(self):
         return self.get_total_no_discount - self.get_total_profit
+
+
+class ShippingAddress(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.SET_NULL, related_name='address', null=True,
+                                 verbose_name=_('order'))
+
+    state = models.CharField(max_length=200, verbose_name=_('state'))
+    city = models.CharField(max_length=200, verbose_name=_('city'))
+    address = models.TextField(verbose_name=_('address'))
+    plate = models.PositiveSmallIntegerField(verbose_name=_('plate'))
+
+    datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
+    datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
+
+    def __str__(self):
+        return f'{self.address}'
