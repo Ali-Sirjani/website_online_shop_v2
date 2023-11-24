@@ -74,3 +74,59 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.pk}'
+
+
+class OrderItem(models.Model):
+    TRACK_ORDER_PAYED = 20
+    TRACK_ORDER_PROCESSING = 40
+    TRACK_ORDER_OUT_DELIVERY = 80
+    TRACK_ORDER_DELIVERED = 100
+    TRACK_ORDER_CHOICES = (
+        (TRACK_ORDER_PAYED, 'Payed'),
+        (TRACK_ORDER_PROCESSING, 'Processing'),
+        (TRACK_ORDER_OUT_DELIVERY, 'Out for delivery'),
+        (TRACK_ORDER_DELIVERED, 'Delivered'),
+    )
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='order_items',
+                                verbose_name=_('product'))
+    order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='items', verbose_name=_('order'))
+
+    quantity = models.PositiveIntegerField(null=True, blank=True, validators=[MinValueValidator(1)],
+                                           verbose_name=_('quantity'))
+    price = models.PositiveIntegerField(verbose_name=_('price'))
+    discount = models.BooleanField(default=False, verbose_name=_('discount'))
+    discount_price = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('discount price'))
+    track_order = models.PositiveSmallIntegerField(null=True, blank=True, choices=TRACK_ORDER_CHOICES,
+                                                   verbose_name=_('track order'))
+    datetime_processing = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime processing'))
+    datetime_process_finished = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime process finished'))
+
+    datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
+    datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
+
+    class Meta:
+        ordering = ('datetime_created',)
+        unique_together = ('order', 'product')
+
+    def __str__(self):
+        return f'order number: {self.order.pk}'
+
+    @property
+    def get_total_no_discount(self):
+        return self.price * self.quantity
+
+    @property
+    def get_total_with_discount(self):
+        if self.discount:
+            return self.discount_price * self.quantity
+        return 0
+
+    @property
+    def get_total_profit(self):
+        if self.discount:
+            return self.get_total_no_discount - self.get_total_with_discount
+        return 0
+
+    @property
+    def get_total(self):
+        return self.get_total_no_discount - self.get_total_profit
