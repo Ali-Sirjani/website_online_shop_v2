@@ -53,3 +53,24 @@ class CouponRule(models.Model):
 
     def __str__(self):
         return f"{self.coupon} - {self.discount_percentage}% off if order total is >= {self.start_price}"
+
+
+class Order(models.Model):
+    customer = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='orders', null=True,
+                                 blank=True, verbose_name=_('customer'))
+
+    first_name = models.CharField(max_length=200, verbose_name=_('first name'))
+    last_name = models.CharField(max_length=200, verbose_name=_('last name'))
+    email = models.EmailField(max_length=254, null=True, verbose_name=_('email'))
+    phone = PhoneNumberField(null=True, region='IR', verbose_name=_('phone'))
+    order_note = models.TextField(blank=True, verbose_name=_('order note'))
+    completed = models.BooleanField(default=False, blank=True, verbose_name=_('completed'))
+    tracking_code = models.CharField(max_length=200, blank=True, verbose_name=_('tracking code'))
+    datetime_payed = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime payed'))
+    datetime_delivered = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime delivered'))
+
+    datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime ordered'))
+    datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
+
+    def __str__(self):
+        return f'{self.pk}'
