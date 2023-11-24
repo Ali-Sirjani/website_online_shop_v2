@@ -52,7 +52,7 @@ class CouponRule(models.Model):
         return 0
 
     def __str__(self):
-        return f"{self.coupon} - {self.discount_percentage}% off if order total is >= {self.start_price}"
+        return _(f'{self.coupon} - {self.discount_percentage}% off if order total is >= {self.start_price}')
 
 
 class Order(models.Model):
@@ -74,6 +74,42 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.pk}'
+
+    @property
+    def get_cart_items(self):
+        return sum([item.quantity for item in self.items.all()])
+
+    @property
+    def get_cart_total_no_discount(self):
+        return sum([item.get_total_no_discount for item in self.items.all()])
+
+    @property
+    def get_cart_total_with_discount(self):
+        return sum([item.get_total_discount for item in self.items.all()])
+
+    @property
+    def get_cart_total_profit(self):
+        return sum([item.get_total_profit for item in self.items.all()])
+
+    @property
+    def get_cart_total(self):
+        return self.get_cart_total_no_discount - self.get_cart_total_profit
+
+    @property
+    def avg_track_items(self):
+        try:
+            avg = sum([item.track_order for item in self.items.all()]) / len(self.items.all())
+        except ZeroDivisionError:
+            return _('zero')
+
+        if 0 <= avg <= 20:
+            return _('Paid')
+        if 21 <= avg <= 40:
+            return _('Processing')
+        if 41 <= avg <= 99:
+            return _('Out for delivery')
+        if avg == 100:
+            return _('Delivered')
 
 
 class OrderItem(models.Model):
@@ -109,7 +145,7 @@ class OrderItem(models.Model):
         unique_together = ('order', 'product')
 
     def __str__(self):
-        return f'order number: {self.order.pk}'
+        return _(f'order number: {self.order.pk}')
 
     @property
     def get_total_no_discount(self):
