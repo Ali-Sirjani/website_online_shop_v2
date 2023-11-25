@@ -85,22 +85,27 @@ class Order(models.Model):
     @property
     def get_cart_items(self):
         return sum([item.quantity for item in self.items.all()])
+    get_cart_items.fget.short_description = _('Cart Items')
 
     @property
     def get_cart_total_no_discount(self):
         return sum([item.get_total_no_discount for item in self.items.all()])
+    get_cart_total_no_discount.fget.short_description = _('Cart Total (No Discount)')
 
     @property
     def get_cart_total_with_discount(self):
-        return sum([item.get_total_discount for item in self.items.all()])
+        return sum([item.get_total_with_discount for item in self.items.all()])
+    get_cart_total_with_discount.fget.short_description = _('Cart Total (With Discount)')
 
     @property
     def get_cart_total_profit(self):
         return sum([item.get_total_profit for item in self.items.all()])
+    get_cart_total_profit.fget.short_description = _('Cart Total Profit')
 
     @property
     def get_cart_total(self):
         return self.get_cart_total_no_discount - self.get_cart_total_profit
+    get_cart_total.fget.short_description = _('Cart Total')
 
     @property
     def avg_track_items(self):
@@ -108,8 +113,9 @@ class Order(models.Model):
             avg = sum([item.track_order for item in self.items.all()]) / len(self.items.all())
         except ZeroDivisionError:
             return _('zero')
-
-        if 0 <= avg <= 20:
+        if avg == 0:
+            return _('Unpaid')
+        if 0 < avg <= 20:
             return _('Paid')
         if 21 <= avg <= 40:
             return _('Processing')
@@ -117,6 +123,7 @@ class Order(models.Model):
             return _('Out for delivery')
         if avg == 100:
             return _('Delivered')
+    avg_track_items.fget.short_description = _('Average Track Items')
 
 
 class OrderItem(models.Model):
@@ -158,23 +165,29 @@ class OrderItem(models.Model):
 
     @property
     def get_total_no_discount(self):
-        return self.price * self.quantity
+        if self.price:
+            return self.price * self.quantity
+        return 0
+    get_total_no_discount.fget.short_description = _('Total (No Discount)')
 
     @property
     def get_total_with_discount(self):
         if self.discount:
             return self.discount_price * self.quantity
         return 0
+    get_total_with_discount.fget.short_description = _('Total (With Discount)')
 
     @property
     def get_total_profit(self):
         if self.discount:
             return self.get_total_no_discount - self.get_total_with_discount
         return 0
+    get_total_profit.fget.short_description = _('Total Profit')
 
     @property
     def get_total(self):
         return self.get_total_no_discount - self.get_total_profit
+    get_total.fget.short_description = _('Total')
 
 
 class ShippingAddress(models.Model):
