@@ -40,3 +40,32 @@ class CouponRuleAdminFormSet(forms.BaseInlineFormSet):
                 raise forms.ValidationError('Bigger discount must have bigger start price')
 
         return super().clean()
+
+
+class OrderAdminForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ('customer', 'first_name', 'last_name', 'email', 'phone', 'order_note', 'completed', 'tracking_code')
+
+    def clean(self):
+        clean_data = super().clean()
+
+        if not clean_data.get('completed'):
+            try:
+                user = clean_data.get('customer')
+
+                if user:
+                    order = Order.objects.get(customer=user, completed=False)
+                    order_pk = order.pk
+                    self.add_error('customer', _(f'There is an incomplete order with pk {order_pk} for user {user}'))
+
+            except Order.DoesNotExist:
+                pass
+
+        elif self.instance:
+            try:
+                self.instance.address
+            except ShippingAddress.DoesNotExist:
+                self.add_error(None, _('Complete order must have a shipping address'))
+
+        return clean_data
