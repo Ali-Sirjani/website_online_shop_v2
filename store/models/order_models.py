@@ -16,8 +16,12 @@ class Coupon(models.Model):
     end_date = models.DateTimeField(null=True, blank=True, verbose_name=_('end date'))
     num_available = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=_('number available'))
     num_used = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=_('number used'))
+    reason_make = models.TextField(verbose_name=_('reason make'))
 
     is_active = models.BooleanField(default=True, verbose_name=_('active'))
+
+    datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime ordered'))
+    datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
 
     def is_valid(self):
         start_date = self.start_date
@@ -45,6 +49,9 @@ class CouponRule(models.Model):
     discount_percentage = models.DecimalField(max_digits=5, decimal_places=2, verbose_name=_('discount percentage'))
     start_price = models.PositiveIntegerField(verbose_name=_('start price'))
 
+    class Meta:
+        unique_together = ('coupon', 'discount_percentage', 'start_price')
+
     def apply_discount(self, order_total):
         if order_total >= self.start_price:
             discount_amount = (self.discount_percentage / 100) * order_total
@@ -52,7 +59,7 @@ class CouponRule(models.Model):
         return 0
 
     def __str__(self):
-        return _(f'{self.coupon} - {self.discount_percentage}% off if order total is >= {self.start_price}')
+        return f'{self.coupon} - {self.discount_percentage}% off if order total is >= {self.start_price}'
 
 
 class Order(models.Model):
