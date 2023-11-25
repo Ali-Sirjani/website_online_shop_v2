@@ -120,3 +120,72 @@ class OrderAdmin(admin.ModelAdmin):
 
             obj.datetime_payed = datetime.datetime.now()
             obj.save()
+
+
+@admin.register(OrderItem)
+class OrderItemAdmin(admin.ModelAdmin):
+    form = OrderItemAdminForm
+    list_display = ('order', 'limit_product_title', 'quantity', 'datetime_created', 'is_order_completed')
+    autocomplete_fields = ('product', 'order',)
+    search_fields = ('order__id', 'order__tracking_code')
+    ordering = ('-datetime_created',)
+
+    def save_model(self, request, obj, form, change):
+        is_price_changed = 'product' in form.changed_data
+
+        if obj and not obj.price or is_price_changed:
+            if obj.product:
+                obj.price = obj.product.price
+                obj.discount = obj.product.discount
+                obj.discount_price = obj.product.discount_price
+
+        elif form.instance and not form.instance.price or is_price_changed:
+            if form.instance.product:
+                form.price = form.product.price
+                form.discount = form.product.discount
+                form.discount_price = form.product.discount_price
+
+        super().save_model(request, obj, form, change)
+
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = [
+            (_('General Information'), {
+                'fields': ('product', 'order', 'quantity', 'track_order'),
+            }),
+        ]
+
+        if obj:
+            fieldsets.extend([
+                (_('Pricing'), {
+                    'fields': ('price', 'discount', 'discount_price',),
+                }),
+                (_('Date and Time'), {
+                    'fields': ('datetime_created', 'datetime_updated',),
+                }),
+                (_('Calculations'), {
+                    'fields': ('get_total_no_discount', 'get_total_with_discount', 'get_total_profit', 'get_total',),
+                }),
+            ])
+        return fieldsets
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = ['price', 'discount', 'discount_price', 'datetime_created', 'datetime_updated',
+                           'get_total_no_discount', 'get_total_with_discount', 'get_total_profit', 'get_total', ]
+
+        if obj:
+            if obj.order.completed:
+                readonly_fields.extend(['product', 'quantity'])
+
+            readonly_fields.append('order')
+
+        return readonly_fields
+
+    @admin.display(ordering='order__completed', description='completed')
+    def is_order_completed(self, obj):
+        try:
+            return obj.order.completed
+        except AttributeError:
+            return None
+
+    def limit_product_title(self, obj):
+        return Truncator(obj.product.title).words(15)
