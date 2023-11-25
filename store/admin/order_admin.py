@@ -27,3 +27,28 @@ class CouponAdmin(ModelAdminJalaliMixin, admin.ModelAdmin):
     search_fields = ('code',)
     inlines = (CouponRuleTabular,)
     list_filter = ('is_active',)
+
+
+class OrderItemStacked(admin.StackedInline):
+    model = OrderItem
+    formset = OrderItemAdminFormSet
+    autocomplete_fields = ('product',)
+    extra = 0
+    min_num = 1
+
+    def get_fields(self, request, obj=None):
+        fields = ['product', 'quantity', ]
+
+        if obj:
+            fields.extend(['price', 'discount', 'discount_price', 'track_order', 'datetime_processing',
+                           'datetime_process_finished'])
+
+        return fields
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = ['price', 'discount', 'discount_price', 'datetime_processing', 'datetime_process_finished']
+
+        if obj and obj.completed:
+            readonly_fields.extend(['product', 'quantity'])
+
+        return readonly_fields
