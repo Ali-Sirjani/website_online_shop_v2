@@ -52,3 +52,71 @@ class OrderItemStacked(admin.StackedInline):
             readonly_fields.extend(['product', 'quantity'])
 
         return readonly_fields
+
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    form = OrderAdminForm
+    list_display = ('id', 'customer', 'phone', 'completed', 'get_cart_total')
+    ordering = ('-id',)
+    inlines = (OrderItemStacked,)
+    list_filter = ('completed',)
+    search_fields = ('tracking_code', 'id')
+    autocomplete_fields = ('customer',)
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('items').select_related('customer')
+
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = [
+            (_('Contact Info'), {'fields': ('customer', 'first_name', 'last_name', 'email', 'phone',)}),
+        ]
+
+        if obj:
+            fieldsets.extend([
+                (_('Order Info'),
+                 {'fields': ('completed', 'tracking_code', 'get_cart_items', 'get_cart_total_no_discount',
+                             'get_cart_total_with_discount', 'get_cart_total_profit',
+                             'get_cart_total', 'avg_track_items',),
+                  'classes': ('collapse',),
+                  }),
+                (_('Status and Timestamps'), {
+                    'fields': ('datetime_created', 'datetime_updated'),
+                    'classes': ('collapse',),
+                }),
+            ])
+        else:
+            fieldsets.extend([
+                (_('Order Info'),
+                 {'fields': ('completed',),
+                  }),
+            ])
+
+        return fieldsets
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = ['tracking_code', 'get_cart_items', 'get_cart_total_no_discount',
+                           'get_cart_total_with_discount', 'get_cart_total_profit', 'get_cart_total', 'avg_track_items',
+                           'datetime_created', 'datetime_updated', ]
+
+        if obj:
+            readonly_fields.append('customer')
+
+        return readonly_fields
+
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        obj = form.instance  # Get the saved object
+
+        if obj and form.cleaned_data.get('completed'):
+
+            if not obj.tracking_code:
+                obj.tracking_code = datetime.datetime.now().timestamp()
+
+            for item in obj.items.all():
+                if not item.track_order:
+                    item.track_order = 20
+                    item.save()
+
+            obj.datetime_payed = datetime.datetime.now()
+            obj.save()
