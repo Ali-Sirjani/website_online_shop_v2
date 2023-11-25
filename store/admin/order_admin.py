@@ -189,3 +189,29 @@ class OrderItemAdmin(admin.ModelAdmin):
 
     def limit_product_title(self, obj):
         return Truncator(obj.product.title).words(15)
+
+
+@admin.register(ShippingAddress)
+class ShippingAddressAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (_('General Information'), {
+            'fields': ('order',),
+        }),
+        (_('Location'), {
+            'fields': ('state', 'city', 'address', 'plate'),
+        }),
+        (_('Date and Time'), {
+            'fields': ('datetime_created', 'datetime_updated'),
+        }),
+    )
+    list_display = ('id', 'order', 'datetime_created',)
+    search_fields = ('order__id', 'order__tracking_code')
+    autocomplete_fields = ('order',)
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = ['datetime_created', 'datetime_updated']
+
+        if obj:
+            readonly_fields.extend(['customer', 'order', ])
+
+        return readonly_fields
