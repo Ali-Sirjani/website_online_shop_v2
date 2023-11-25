@@ -120,11 +120,13 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
+    TRACK_ORDER_UNPAID = 0
     TRACK_ORDER_PAYED = 20
     TRACK_ORDER_PROCESSING = 40
     TRACK_ORDER_OUT_DELIVERY = 80
     TRACK_ORDER_DELIVERED = 100
     TRACK_ORDER_CHOICES = (
+        (TRACK_ORDER_UNPAID, 'Unpaid'),
         (TRACK_ORDER_PAYED, 'Payed'),
         (TRACK_ORDER_PROCESSING, 'Processing'),
         (TRACK_ORDER_OUT_DELIVERY, 'Out for delivery'),
@@ -134,12 +136,12 @@ class OrderItem(models.Model):
                                 verbose_name=_('product'))
     order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='items', verbose_name=_('order'))
 
-    quantity = models.PositiveIntegerField(null=True, blank=True, validators=[MinValueValidator(1)],
+    quantity = models.PositiveIntegerField(default=1, blank=True, validators=[MinValueValidator(1)],
                                            verbose_name=_('quantity'))
-    price = models.PositiveIntegerField(verbose_name=_('price'))
+    price = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('price'))
     discount = models.BooleanField(default=False, verbose_name=_('discount'))
     discount_price = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('discount price'))
-    track_order = models.PositiveSmallIntegerField(null=True, blank=True, choices=TRACK_ORDER_CHOICES,
+    track_order = models.PositiveSmallIntegerField(default=TRACK_ORDER_UNPAID, blank=True, choices=TRACK_ORDER_CHOICES,
                                                    verbose_name=_('track order'))
     datetime_processing = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime processing'))
     datetime_process_finished = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime process finished'))
@@ -152,7 +154,7 @@ class OrderItem(models.Model):
         unique_together = ('order', 'product')
 
     def __str__(self):
-        return _(f'order number: {self.order.pk}')
+        return f'order number: {self.order.pk}'
 
     @property
     def get_total_no_discount(self):
