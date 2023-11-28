@@ -3,7 +3,7 @@ import copy
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from ..models import Coupon, Order, OrderItem, ShippingAddress
+from ..models import Coupon, Order, OrderItem, ShippingAddress, ProductColorAndSizeValue
 
 
 class CouponAdminForm(forms.ModelForm):
@@ -69,6 +69,43 @@ class OrderAdminForm(forms.ModelForm):
                 self.add_error(None, _('Complete order must have a shipping address'))
 
         return clean_data
+
+
+def validate_color_size_item_and_set_price(form, product, color_size):
+    if product:
+        if color_size:
+            try:
+                color_size_obj = product.color_size_values.get(pk=color_size.pk)
+            except ProductColorAndSizeValue.DoesNotExist:
+                form.add_error(None,
+                               _(f'there is no product with color or size {color_size}'))
+                return
+            except ValueError:
+                form.add_error('color_size',
+                               _(f'Enter valid data!'))
+                return
+
+        elif product.color_size_values.all().exists():
+            form.add_error(None, _('the product have color and size so size and color is required!'))
+            return
+
+        else:
+            color_size_obj = None
+
+        if not form.instance.price or any(item in form.changed_data for item in ['product', 'color_size']):
+
+            additional_cost = 0
+            if color_size_obj and color_size_obj.size_price:
+                additional_cost += color_size_obj.size_price
+
+            form.instance.price = product.price + additional_cost
+            form.instance.discount = product.discount
+            form.instance.discount_price = product.discount_price
+            if form.instance.discount:
+                form.instance.discount_price += additional_cost
+
+    else:
+        form.add_error('product', _('Enter a valid product'))
 
 
 class OrderItemAdminFormSet(forms.BaseInlineFormSet):
