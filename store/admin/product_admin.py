@@ -68,10 +68,10 @@ class ProductSizeAdmin(admin.ModelAdmin):
 class ProductColorAndSizeValueTabu(admin.TabularInline):
     model = ProductColorAndSizeValue
     formset = ProductColorAndSizeValueFormSetAdmin
-    fields = ('color', 'color_image', 'size', 'size_price', 'inventory',)
+    fields = ('color', 'color_image', 'size', 'size_price', 'inventory', 'is_active')
     readonly_fields = ('color_image',)
     autocomplete_fields = ('color', 'size')
-    extra = 1
+    extra = 0
 
     def color_image(self, obj):
         return format_html('<div style="background-color: {}; width: 20px; height: 20px;"></div>', obj.color.color)
