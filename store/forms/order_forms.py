@@ -2,6 +2,7 @@ import copy
 
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from django.db import transaction, IntegrityError
 
 from ..models import Coupon, Order, OrderItem, ShippingAddress, ProductColorAndSizeValue
 
@@ -112,15 +113,19 @@ class OrderItemAdminFormSet(forms.BaseInlineFormSet):
     def clean(self):
         for form in self.forms:
 
-            if not form.instance.price or 'product' in form.changed_data:
-                product = form.cleaned_data.get('product')
-                if product and form.is_valid():
-                    form.instance.price = product.price
-                    form.instance.discount = product.discount
-                    form.instance.discount_price = product.discount_price
-                    form.instance.save()
-                else:
-                    form.add_error('product', _('Enter a valid product'))
+            product = form.cleaned_data.get('product')
+
+            if product:
+                color_size = form.cleaned_data.get('color_size')
+                validate_color_size_item_and_set_price(form, product, color_size)
+
+            if form.is_valid():
+                with transaction.atomic():
+                    try:
+                        form.save()
+                    except IntegrityError:
+                        # Handling the case where the combination already exists
+                        form.add_error(None, _('This combination of order, product, size, and color already exists.'))
 
         return super().clean()
 
@@ -128,7 +133,7 @@ class OrderItemAdminFormSet(forms.BaseInlineFormSet):
 class OrderItemAdminForm(forms.ModelForm):
     class Meta:
         model = OrderItem
-        fields = ('product', 'order', 'quantity', 'price', 'discount', 'discount_price', 'track_order')
+        fields = ('product', 'color_size', 'order', 'quantity', 'price', 'discount', 'discount_price', 'track_order')
 
     def clean(self):
         clean_data = super().clean()
@@ -136,5 +141,11 @@ class OrderItemAdminForm(forms.ModelForm):
 
         if order and order.completed:
             self.add_error('order', _('This order is complete'))
+
+        else:
+            product = clean_data.get('product')
+            color_size = self.cleaned_data.get('color_size')
+            if product:
+                validate_color_size_item_and_set_price(self, product, color_size)
 
         return clean_data
