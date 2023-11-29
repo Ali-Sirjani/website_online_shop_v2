@@ -166,7 +166,18 @@ class OrderItem(models.Model):
 
     class Meta:
         ordering = ('datetime_created',)
-        unique_together = (('product', 'color_size', 'order'), ('product', 'order'))
+        unique_together = (('product', 'color_size', 'order'),)
+        constraints = [
+            models.UniqueConstraint(
+                fields=['order', 'product'],
+                condition=models.Q(color_size__isnull=True),
+                name='unique_order_product',
+                violation_error_message=_(
+                    'A record with the same combination of order and product already exists. Please ensure that the specified values meet the uniqueness criteria.'),
+            )
+        ]
+
+
 
     def __str__(self):
         return f'order number: {self.order.pk}'
