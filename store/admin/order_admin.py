@@ -72,6 +72,9 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ('tracking_code', 'id')
     autocomplete_fields = ('customer',)
 
+    class Media:
+        js = ("js/order_inline.js",)
+
     def get_queryset(self, request):
         return super().get_queryset(request).prefetch_related('items').select_related('customer')
 
@@ -137,6 +140,9 @@ class OrderItemAdmin(admin.ModelAdmin):
     autocomplete_fields = ('product', 'order',)
     search_fields = ('order__id', 'order__tracking_code')
     ordering = ('-datetime_created',)
+
+    class Media:
+        js = ('js/order_order_item_admin.js',)
 
     def get_fieldsets(self, request, obj=None):
         fieldsets = [
