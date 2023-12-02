@@ -1,8 +1,11 @@
+import math
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from django.contrib import messages
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -110,11 +113,43 @@ class Order(models.Model):
 
     get_cart_total_profit.fget.short_description = _('Cart Total Profit')
 
+    def calculate_coupon_price(self, request):
+        coupon = self.coupon
+        if coupon:
+            if coupon.can_use():
+                coupon_rules = coupon.rules.all().order_by('-start_price')
+                for coupon_rule in coupon_rules:
+                    new_cart_total = coupon_rule.apply_discount(self.get_cart_total)
+                    if new_cart_total:
+                        self.coupon_price = math.ceil(new_cart_total)
+                        self.save(update_fields=('coupon_price',))
+                        return True
+
+                messages.info(request, _(f'The minimum price for coupon is {coupon_rules.last().start_price}'))
+
+            else:
+                messages.error(request, _(f'The {coupon} is not valid'))
+
+            self.coupon = {}
+            self.coupon_price = 0
+            self.save()
+
+        return False
+
     @property
     def get_cart_total(self):
         return self.get_cart_total_no_discount - self.get_cart_total_profit
 
     get_cart_total.fget.short_description = _('Cart Total')
+
+    @property
+    def get_cart_total_with_coupon(self):
+        if self.coupon:
+            return (self.get_cart_total_no_discount - self.get_cart_total_profit) - self.coupon_price
+
+        return 0
+
+    get_cart_total_with_coupon.fget.short_description = _('Cart Total With Coupon')
 
     @property
     def avg_track_items(self):
