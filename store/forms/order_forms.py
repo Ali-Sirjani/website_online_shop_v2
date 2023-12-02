@@ -151,5 +151,19 @@ class OrderItemAdminForm(forms.ModelForm):
         return clean_data
 
 
+class OrderForm(forms.ModelForm):
+    total = forms.IntegerField(min_value=1, widget=forms.HiddenInput())
+
+    class Meta:
+        model = Order
+        fields = ('first_name', 'last_name', 'email', 'phone', 'order_note')
+
+
+class ShippingAddressForm(forms.ModelForm):
+    class Meta:
+        model = ShippingAddress
+        fields = ('state', 'city', 'address', 'plate')
+
+
 class CouponForm(forms.Form):
     code = forms.CharField()
