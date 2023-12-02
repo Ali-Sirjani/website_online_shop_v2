@@ -149,3 +149,7 @@ class OrderItemAdminForm(forms.ModelForm):
                 validate_color_size_item_and_set_price(self, product, color_size)
 
         return clean_data
+
+
+class CouponForm(forms.Form):
+    code = forms.CharField()
