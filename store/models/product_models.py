@@ -68,6 +68,9 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('store:product_detail', args=[self.slug])
 
+    def active_color_size(self):
+        return self.color_size_values.filter(models.Q(inventory__gt=0) | models.Q(inventory=None), is_active=True)
+
 
 class ProductSpecification(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name=_('name'))
