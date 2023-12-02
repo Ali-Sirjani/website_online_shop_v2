@@ -1,9 +1,11 @@
+import math
+
 from django.contrib import messages
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import get_object_or_404
 
-from .models import Product, ProductColorAndSizeValue
+from .models import Product, ProductColorAndSizeValue, Coupon
 
 
 class Cart:
@@ -36,6 +38,86 @@ class Cart:
             self.coupon = coupon
 
         self.save()
+
+    def __iter__(self, clac_price=False):
+        """
+        Iterate through the items in the shopping cart.
+
+        This iterator method fetches information about each product in the cart,
+        including color and size details if applicable. It yields dictionaries
+        containing relevant information for each item. The dictionaries are keyed
+        using a numeric flag variable starting from 1.
+
+        Example of yielded item:
+        {
+            '1': {
+                'product': Product instance,  # The product associated with the item.
+                'color_size': ColorSize instance or None,  # Color and size information if applicable.
+                'quantity': 2,  # The quantity of the product in the cart.
+                'price': 29.99,  # The unit price of the product.
+                'discount': 0.15,  # The discount percentage, if any.
+                'discount_price': 25.49,  # The discounted price after applying discounts.
+                'get_total_no_discount_item': 50.98,  # Total price without discounts for the item.
+                'get_total_with_discount_item': 42.98,  # Total price with discounts for the item.
+                'get_total_profit_item': 8.0,  # Total profit from the item.
+                'get_total_item': 42.98  # Total price after accounting for profit.
+            }
+        }
+        """
+        color_size_pks = {}
+        products_pk = []
+        for product_key in self.cart.keys():
+            products_pk.append(product_key[0])
+            color_size_pks[product_key] = []
+            for item in self.cart[product_key].keys():
+                color_size_pks[product_key].append(item)
+
+        items = {}
+        flag = 1
+
+        if products_pk:
+            if clac_price:
+                for product_key in products_pk:
+                    for item_key in self.cart[product_key]:
+                        flag_str = str(flag)
+                        items[flag_str] = {}
+                        items[flag_str]['get_total_no_discount_item'] = self.get_total_no_discount_item(product_key,
+                                                                                                        item_key)
+                        items[flag_str]['get_total_with_discount_item'] = self.get_total_with_discount_item(product_key,
+                                                                                                            item_key)
+                        items[flag_str]['get_total_profit_item'] = self.get_total_profit_item(product_key, item_key)
+                        items[flag_str]['get_total_item'] = self.get_total_item(product_key, item_key)
+
+                        flag += 1
+
+            else:
+                cart_products = Product.objects.filter(pk__in=products_pk).prefetch_related('images')
+                for product in cart_products:
+                    product_pk_str = str(product.pk)
+                    product_color_size_queryset = product.color_size_values.all().select_related('color', 'size')
+                    for item_key in color_size_pks[product_pk_str]:
+                        flag_str = str(flag)
+                        items[flag_str] = {}
+
+                        items[flag_str]['product'] = product
+                        if item_key != 'None':
+                            items[flag_str]['color_size'] = product_color_size_queryset.get(pk=item_key)
+                        items[flag_str]['quantity'] = self.cart[product_pk_str][item_key]['quantity']
+                        items[flag_str]['price'] = self.cart[product_pk_str][item_key]['price']
+                        items[flag_str]['discount'] = self.cart[product_pk_str][item_key]['discount']
+                        items[flag_str]['discount_price'] = self.cart[product_pk_str][item_key]['discount_price']
+                        items[flag_str]['get_total_no_discount_item'] = self.get_total_no_discount_item(product_pk_str,
+                                                                                                        item_key)
+                        items[flag_str]['get_total_with_discount_item'] = self.get_total_with_discount_item(
+                            product_pk_str,
+                            item_key)
+                        items[flag_str]['get_total_profit_item'] = self.get_total_profit_item(product_pk_str, item_key)
+                        items[flag_str]['get_total_item'] = self.get_total_item(product_pk_str, item_key)
+
+                        flag += 1
+
+        for item in items.values():
+            yield item
 
     def save(self):
         """
