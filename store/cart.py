@@ -184,3 +184,86 @@ class Cart:
         """
         del self.session['cart']
         self.save()
+
+    def get_total_no_discount_item(self, product_pk, item_key):
+        """
+        Calculate the total price for a specific item without considering discounts.
+
+        Args:
+            product_pk: The primary key of the associated product.
+            item_key: The key representing the specific item in the cart.
+
+        Returns:
+            int: The total price for the item without applying any discounts.
+
+        This method calculates the total price for a specific item in the shopping
+        cart by multiplying the item's quantity with its unit price. It returns an
+        integer value representing the total price without considering any discounts.
+        """
+        product_pk_str = str(product_pk)
+        product_in_cart = self.cart[product_pk_str]
+        price = product_in_cart[item_key]['price'] * product_in_cart[item_key]['quantity']
+        return price
+
+    def get_total_with_discount_item(self, product_pk, item_key):
+        """
+        Calculate the total price for a specific item, considering applied discounts.
+
+        Args:
+            product_pk: The primary key of the associated product.
+            item_key: The key representing the specific item in the cart.
+
+        Returns:
+            int: The total price for the item after applying any applicable discounts.
+
+        This method calculates the total price for a specific item in the shopping
+        cart, taking into account any discounts applied to the unit price. It returns
+        an int value representing the total price after applying discounts.
+        """
+        product_pk_str = str(product_pk)
+        product_in_cart = self.cart[product_pk_str]
+        price = 0
+        if product_in_cart[item_key]['discount']:
+            price = product_in_cart[item_key]['discount_price'] * product_in_cart[item_key]['quantity']
+        return price
+
+    def get_total_profit_item(self, product_pk, item_key):
+        """
+        Calculate the total profit for a specific item, accounting for discounts.
+
+        Args:
+            product_pk: The primary key of the associated product.
+            item_key: The key representing the specific item in the cart.
+
+        Returns:
+            int: The total profit for the item, considering applied discounts.
+
+        This method calculates the total profit for a specific item in the shopping
+        cart by subtracting the discounted total price from the total price without
+        discounts. It returns an int value representing the total profit after
+        accounting for any applied discounts.
+        """
+        product_pk_str = str(product_pk)
+        product_in_cart = self.cart[product_pk_str]
+        price = 0
+        if product_in_cart[item_key]['discount']:
+            price = self.get_total_no_discount_item(product_pk, item_key) - self.get_total_with_discount_item(
+                product_pk, item_key)
+        return price
+
+    def get_total_item(self, product_pk, item_key):
+        """
+        Calculate the net total price for a specific item, factoring in profit.
+
+        Args:
+            product_pk: The primary key of the associated product.
+            item_key: The key representing the specific item in the cart.
+
+        Returns:
+            int: The net total price for the item after accounting for profit.
+
+        This method calculates the net total price for a specific item in the shopping
+        cart by subtracting the total profit from the total price without discounts.
+        It returns an int value representing the net total price, considering profit.
+        """
+        return self.get_total_no_discount_item(product_pk, item_key) - self.get_total_profit_item(product_pk, item_key)
