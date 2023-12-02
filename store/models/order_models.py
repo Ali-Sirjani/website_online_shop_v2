@@ -11,7 +11,14 @@ from django.contrib import messages
 from phonenumber_field.modelfields import PhoneNumberField
 
 from .product_models import Product, ProductColorAndSizeValue
-from ..utils import generate_coupon_code
+
+
+def generate_coupon_code(length=8):
+    # Generate a random hex string with the specified length
+    coupon_code = secrets.token_hex(length // 2)
+
+    # Format the code to be uppercase and return it
+    return coupon_code.upper()
 
 
 class Coupon(models.Model):
