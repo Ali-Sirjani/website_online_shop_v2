@@ -1,3 +1,4 @@
+import secrets
 import math
 
 from django.db import models
@@ -88,6 +89,9 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.pk}'
+
+    def act_items(self):
+        return self.items.all()
 
     @property
     def get_cart_items(self):
