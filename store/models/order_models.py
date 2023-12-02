@@ -66,6 +66,8 @@ class CouponRule(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='orders', null=True,
                                  blank=True, verbose_name=_('customer'))
+    coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, related_name='orders', null=True, blank=True,
+                               verbose_name=_('coupon'))
 
     first_name = models.CharField(max_length=200, verbose_name=_('first name'))
     last_name = models.CharField(max_length=200, verbose_name=_('last name'))
@@ -73,6 +75,7 @@ class Order(models.Model):
     phone = PhoneNumberField(null=True, region='IR', verbose_name=_('phone'))
     order_note = models.TextField(blank=True, verbose_name=_('order note'))
     completed = models.BooleanField(default=False, blank=True, verbose_name=_('completed'))
+    coupon_price = models.PositiveIntegerField(blank=True, default=0, verbose_name=_('coupon price'))
     tracking_code = models.CharField(max_length=200, blank=True, verbose_name=_('tracking code'))
     datetime_payed = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime payed'))
     datetime_delivered = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime delivered'))
@@ -91,19 +94,19 @@ class Order(models.Model):
 
     @property
     def get_cart_total_no_discount(self):
-        return sum([item.get_total_no_discount for item in self.items.all()])
+        return sum([item.get_total_no_discount_item for item in self.items.all()])
 
     get_cart_total_no_discount.fget.short_description = _('Cart Total (No Discount)')
 
     @property
     def get_cart_total_with_discount(self):
-        return sum([item.get_total_with_discount for item in self.items.all()])
+        return sum([item.get_total_with_discount_item for item in self.items.all()])
 
     get_cart_total_with_discount.fget.short_description = _('Cart Total (With Discount)')
 
     @property
     def get_cart_total_profit(self):
-        return sum([item.get_total_profit for item in self.items.all()])
+        return sum([item.get_total_profit_item for item in self.items.all()])
 
     get_cart_total_profit.fget.short_description = _('Cart Total Profit')
 
@@ -199,34 +202,34 @@ class OrderItem(models.Model):
         return f'order number: {self.order.pk}'
 
     @property
-    def get_total_no_discount(self):
+    def get_total_no_discount_item(self):
         if self.price:
             return self.price * self.quantity
         return 0
 
-    get_total_no_discount.fget.short_description = _('Total (No Discount)')
+    get_total_no_discount_item.fget.short_description = _('Total (No Discount)')
 
     @property
-    def get_total_with_discount(self):
+    def get_total_with_discount_item(self):
         if self.discount:
             return self.discount_price * self.quantity
         return 0
 
-    get_total_with_discount.fget.short_description = _('Total (With Discount)')
+    get_total_with_discount_item.fget.short_description = _('Total (With Discount)')
 
     @property
-    def get_total_profit(self):
+    def get_total_profit_item(self):
         if self.discount:
-            return self.get_total_no_discount - self.get_total_with_discount
+            return self.get_total_no_discount_item - self.get_total_with_discount_item
         return 0
 
-    get_total_profit.fget.short_description = _('Total Profit')
+    get_total_profit_item.fget.short_description = _('Total Profit')
 
     @property
-    def get_total(self):
-        return self.get_total_no_discount - self.get_total_profit
+    def get_total_item(self):
+        return self.get_total_no_discount_item - self.get_total_profit_item
 
-    get_total.fget.short_description = _('Total')
+    get_total_item.fget.short_description = _('Total')
 
 
 class ShippingAddress(models.Model):
