@@ -1,6 +1,6 @@
 import json
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -9,6 +9,7 @@ from django.contrib import messages
 
 from ..models import Order, OrderItem, Product, ProductColor, ProductSize, ProductColorAndSizeValue, Coupon
 from ..cart import Cart
+from ..forms import CouponForm
 
 
 def update_color_size_drop(request):
@@ -135,3 +136,30 @@ def update_item(request):
         messages.warning(request, _('Please enter a correct number!'))
 
     return JsonResponse('finish 0', safe=False)
+
+
+def cart_view(request):
+    coupon_form = CouponForm(request.POST or None)
+    if coupon_form.is_valid():
+        try:
+            coupon = Coupon.objects.get(code__exact=coupon_form.cleaned_data.get('code'))
+
+            if coupon.can_use():
+                if request.user.is_authenticated:
+                    order, created = Order.objects.get_or_create(customer=request.user, completed=False)
+                    order.coupon = coupon
+                    order.calculate_coupon_price(request)
+                    order.save()
+                else:
+                    order = Cart(request)
+                    order.session['coupon'] = order.coupon = {'coupon_pk': coupon.pk}
+                    order.calculate_coupon_price(request)
+                    order.save()
+
+            else:
+                messages.error(request, _('The Coupon is not valid!'))
+
+        except Coupon.DoesNotExist:
+            messages.error(request, _('The Coupon is not valid!'))
+
+    return render(request, 'store/order/cart.html', context={'coupon_form': coupon_form})
