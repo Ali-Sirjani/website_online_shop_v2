@@ -6,7 +6,7 @@ from django.utils import timezone
 
 from phonenumber_field.modelfields import PhoneNumberField
 
-from .product_models import Product
+from .product_models import Product, ProductColorAndSizeValue
 from ..utils import generate_coupon_code
 
 
@@ -85,26 +85,31 @@ class Order(models.Model):
     @property
     def get_cart_items(self):
         return sum([item.quantity for item in self.items.all()])
+
     get_cart_items.fget.short_description = _('Cart Items')
 
     @property
     def get_cart_total_no_discount(self):
         return sum([item.get_total_no_discount for item in self.items.all()])
+
     get_cart_total_no_discount.fget.short_description = _('Cart Total (No Discount)')
 
     @property
     def get_cart_total_with_discount(self):
         return sum([item.get_total_with_discount for item in self.items.all()])
+
     get_cart_total_with_discount.fget.short_description = _('Cart Total (With Discount)')
 
     @property
     def get_cart_total_profit(self):
         return sum([item.get_total_profit for item in self.items.all()])
+
     get_cart_total_profit.fget.short_description = _('Cart Total Profit')
 
     @property
     def get_cart_total(self):
         return self.get_cart_total_no_discount - self.get_cart_total_profit
+
     get_cart_total.fget.short_description = _('Cart Total')
 
     @property
@@ -123,6 +128,7 @@ class Order(models.Model):
             return _('Out for delivery')
         if avg == 100:
             return _('Delivered')
+
     avg_track_items.fget.short_description = _('Average Track Items')
 
 
@@ -141,24 +147,37 @@ class OrderItem(models.Model):
     )
     product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='order_items',
                                 verbose_name=_('product'))
+    color_size = models.ForeignKey(ProductColorAndSizeValue, on_delete=models.PROTECT, null=True, blank=True,
+                                   related_name='color_size_items', verbose_name=_('color and size'))
     order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='items', verbose_name=_('order'))
 
-    quantity = models.PositiveIntegerField(default=1, blank=True, validators=[MinValueValidator(1)],
-                                           verbose_name=_('quantity'))
-    price = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('price'))
-    discount = models.BooleanField(default=False, verbose_name=_('discount'))
-    discount_price = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('discount price'))
+    quantity = models.PositiveIntegerField(default=0, validators=[MinValueValidator(1)], verbose_name=_('quantity'))
     track_order = models.PositiveSmallIntegerField(default=TRACK_ORDER_UNPAID, blank=True, choices=TRACK_ORDER_CHOICES,
                                                    verbose_name=_('track order'))
     datetime_processing = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime processing'))
     datetime_process_finished = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime process finished'))
+    # product info
+    price = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('price'))
+    discount = models.BooleanField(default=False, verbose_name=_('discount'))
+    discount_price = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('discount price'))
 
     datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
     datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
 
     class Meta:
         ordering = ('datetime_created',)
-        unique_together = ('order', 'product')
+        unique_together = (('product', 'color_size', 'order'),)
+        constraints = [
+            models.UniqueConstraint(
+                fields=['order', 'product'],
+                condition=models.Q(color_size__isnull=True),
+                name='unique_order_product',
+                violation_error_message=_(
+                    'A record with the same combination of order and product already exists. Please ensure that the specified values meet the uniqueness criteria.'),
+            )
+        ]
+
+
 
     def __str__(self):
         return f'order number: {self.order.pk}'
@@ -168,6 +187,7 @@ class OrderItem(models.Model):
         if self.price:
             return self.price * self.quantity
         return 0
+
     get_total_no_discount.fget.short_description = _('Total (No Discount)')
 
     @property
@@ -175,6 +195,7 @@ class OrderItem(models.Model):
         if self.discount:
             return self.discount_price * self.quantity
         return 0
+
     get_total_with_discount.fget.short_description = _('Total (With Discount)')
 
     @property
@@ -182,11 +203,13 @@ class OrderItem(models.Model):
         if self.discount:
             return self.get_total_no_discount - self.get_total_with_discount
         return 0
+
     get_total_profit.fget.short_description = _('Total Profit')
 
     @property
     def get_total(self):
         return self.get_total_no_discount - self.get_total_profit
+
     get_total.fget.short_description = _('Total')
 
 

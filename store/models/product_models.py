@@ -68,6 +68,9 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('store:product_detail', args=[self.slug])
 
+    def active_color_size(self):
+        return self.color_size_values.filter(models.Q(inventory__gt=0) | models.Q(inventory=None), is_active=True)
+
 
 class ProductSpecification(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name=_('name'))
@@ -110,7 +113,7 @@ class ProductColor(models.Model):
 
 
 class ProductSize(models.Model):
-    size = models.CharField(max_length=200, verbose_name=_('size'))
+    size = models.CharField(max_length=200, unique=True, verbose_name=_('size'))
 
     class Meta:
         verbose_name = _('product size')
@@ -130,6 +133,7 @@ class ProductColorAndSizeValue(models.Model):
 
     size_price = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('size price'))
     inventory = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('inventory'))
+    is_active = models.BooleanField(default=True, verbose_name=_('active'))
 
     class Meta:
         unique_together = (('color', 'size', 'product'),)
@@ -137,7 +141,19 @@ class ProductColorAndSizeValue(models.Model):
         verbose_name_plural = _('product color and size values')
 
     def __str__(self):
-        return f'{self.product.pk}'
+        color_size_str = 'None'
+        color = self.color
+        size = self.size
+        if color and size:
+            color_size_str = f'{color}--{size}'
+
+        elif color:
+            color_size_str = f'{color}'
+
+        elif size:
+            color_size_str = f'{size}'
+
+        return color_size_str
 
 
 class ProductImage(models.Model):

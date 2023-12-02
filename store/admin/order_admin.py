@@ -6,8 +6,9 @@ from django.utils.text import Truncator
 
 from jalali_date.admin import ModelAdminJalaliMixin
 
-from ..models import Coupon, CouponRule, Order, OrderItem, ShippingAddress
-from ..forms import OrderAdminForm, OrderItemAdminFormSet, OrderItemAdminForm, CouponAdminForm, CouponRuleAdminFormSet
+from ..models import (Coupon, CouponRule, Order, OrderItem, ShippingAddress, ProductColorAndSizeValue, )
+from ..forms import (OrderAdminForm, OrderItemAdminFormSet, OrderItemAdminForm, CouponAdminForm,
+                     CouponRuleAdminFormSet, )
 
 
 class CouponRuleTabular(admin.TabularInline):
@@ -36,8 +37,15 @@ class OrderItemStacked(admin.StackedInline):
     extra = 0
     min_num = 1
 
+    def get_field_queryset(self, db, db_field, request):
+        if db_field.name == 'color_size':
+            # Customize the queryset for the 'color_size' field
+            return ProductColorAndSizeValue.objects.select_related('color', 'size')
+
+        return super().get_field_queryset(db, db_field, request)
+
     def get_fields(self, request, obj=None):
-        fields = ['product', 'quantity', ]
+        fields = ['product', 'color_size', 'quantity']
 
         if obj:
             fields.extend(['price', 'discount', 'discount_price', 'track_order', 'datetime_processing',
@@ -49,7 +57,7 @@ class OrderItemStacked(admin.StackedInline):
         readonly_fields = ['price', 'discount', 'discount_price', 'datetime_processing', 'datetime_process_finished']
 
         if obj and obj.completed:
-            readonly_fields.extend(['product', 'quantity'])
+            readonly_fields.extend(['product', 'quantity', 'color_size'])
 
         return readonly_fields
 
@@ -63,6 +71,9 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ('completed',)
     search_fields = ('tracking_code', 'id')
     autocomplete_fields = ('customer',)
+
+    class Media:
+        js = ("js/order_inline.js",)
 
     def get_queryset(self, request):
         return super().get_queryset(request).prefetch_related('items').select_related('customer')
@@ -114,7 +125,7 @@ class OrderAdmin(admin.ModelAdmin):
                 obj.tracking_code = datetime.datetime.now().timestamp()
 
             for item in obj.items.all():
-                if not item.track_order:
+                if not item.track_order or item.track_order != 20:
                     item.track_order = 20
                     item.save()
 
@@ -130,27 +141,13 @@ class OrderItemAdmin(admin.ModelAdmin):
     search_fields = ('order__id', 'order__tracking_code')
     ordering = ('-datetime_created',)
 
-    def save_model(self, request, obj, form, change):
-        is_price_changed = 'product' in form.changed_data
-
-        if obj and not obj.price or is_price_changed:
-            if obj.product:
-                obj.price = obj.product.price
-                obj.discount = obj.product.discount
-                obj.discount_price = obj.product.discount_price
-
-        elif form.instance and not form.instance.price or is_price_changed:
-            if form.instance.product:
-                form.price = form.product.price
-                form.discount = form.product.discount
-                form.discount_price = form.product.discount_price
-
-        super().save_model(request, obj, form, change)
+    class Media:
+        js = ('js/order_order_item_admin.js',)
 
     def get_fieldsets(self, request, obj=None):
         fieldsets = [
             (_('General Information'), {
-                'fields': ('product', 'order', 'quantity', 'track_order'),
+                'fields': ('product', 'color_size', 'order', 'quantity', 'track_order'),
             }),
         ]
 
@@ -174,7 +171,7 @@ class OrderItemAdmin(admin.ModelAdmin):
 
         if obj:
             if obj.order.completed:
-                readonly_fields.extend(['product', 'quantity'])
+                readonly_fields.extend(['product', 'color_size', 'quantity'])
 
             readonly_fields.append('order')
 
