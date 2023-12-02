@@ -23,20 +23,21 @@ class Coupon(models.Model):
     datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime ordered'))
     datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
 
-    def is_valid(self):
-        start_date = self.start_date
-        end_date = self.end_date
-        num_available = self.num_available
-        num_used = self.num_used
+    def can_use(self):
+        if self.is_active:
+            start_date = self.start_date
+            end_date = self.end_date
+            num_available = self.num_available
+            num_used = self.num_used
 
-        if start_date and num_available:
-            return (start_date <= timezone.now() <= end_date) and (num_available > num_used)
+            if start_date and num_available:
+                return (start_date <= timezone.now() <= end_date) and (num_available > num_used)
 
-        elif start_date:
-            return start_date <= timezone.now() <= end_date
+            elif start_date:
+                return start_date <= timezone.now() <= end_date
 
-        elif num_available:
-            return num_available > num_used
+            elif num_available:
+                return num_available > num_used
 
         return False
 
@@ -177,7 +178,22 @@ class OrderItem(models.Model):
             )
         ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
+        if self.pk and self.product and not self.price:
+            additional_cost = 0
+            if self.color_size and self.color_size.size_price:
+                additional_cost = self.color_size.size_price
+
+            self.price = self.product.price
+            self.discount = self.product.discount
+            self.discount_price = self.product.discount_price
+
+            if self.discount:
+                self.discount_price += additional_cost
+
+            self.save()
 
     def __str__(self):
         return f'order number: {self.order.pk}'
@@ -220,7 +236,7 @@ class ShippingAddress(models.Model):
     state = models.CharField(max_length=200, verbose_name=_('state'))
     city = models.CharField(max_length=200, verbose_name=_('city'))
     address = models.TextField(verbose_name=_('address'))
-    plate = models.PositiveSmallIntegerField(verbose_name=_('plate'))
+    plate = models.PositiveSmallIntegerField(null=True, verbose_name=_('plate'))
 
     datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
     datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
