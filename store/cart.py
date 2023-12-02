@@ -371,6 +371,88 @@ class Cart:
         """
         return self.get_total_no_discount_item(product_pk, item_key) - self.get_total_profit_item(product_pk, item_key)
 
+    @property
+    def get_cart_items(self):
+        """
+        Retrieve the total quantity of items in the shopping cart.
+
+        Returns:
+            int: The total quantity of items in the cart.
+
+        This method returns the total quantity of items in the shopping cart,
+        summing up the quantities of all active items.
+        """
+        quantity = 0
+        for product_key in self.cart.keys():
+            for item in self.cart[product_key].values():
+                quantity += item['quantity']
+        return quantity
+
+    @property
+    def get_cart_total_no_discount(self):
+        """
+        Calculate the total price of items in the shopping cart without considering discounts.
+
+        Returns:
+            int: The total price of all items in the cart without applying any discounts.
+
+        This method calculates the total price of all items in the shopping cart by
+        summing up the individual total prices of each item, without considering any discounts.
+        """
+        total_no_discount = 0
+        for item in self.__iter__(True):
+            total_no_discount += item['get_total_no_discount_item']
+        return total_no_discount
+
+    @property
+    def get_cart_total_with_discount(self):
+        """
+        Calculate the total price of items in the shopping cart considering applied discounts.
+
+        Returns:
+            int: The total price of all items in the cart after applying any applicable discounts.
+
+        This method calculates the total price of all items in the shopping cart by
+        summing up the individual total prices of each item, taking into account any
+        discounts applied to the unit prices.
+        """
+        total_with_discount = 0
+        for item in self.__iter__(True):
+            total_with_discount += item['get_total_with_discount_item']
+        return total_with_discount
+
+    @property
+    def get_cart_total_profit(self):
+        """
+        Calculate the total profit from items in the shopping cart, accounting for discounts.
+
+        Returns:
+            int: The total profit from all items in the cart, considering applied discounts.
+
+        This method calculates the total profit from all items in the shopping cart by
+        summing up the individual total profits of each item, accounting for any discounts.
+        """
+        total_profit = 0
+        for item in self.__iter__(True):
+            total_profit += item['get_total_profit_item']
+        return total_profit
+
+    @property
+    def get_cart_total(self):
+        """
+        Calculate the net total price of items in the shopping cart, factoring in profit.
+
+        Returns:
+            int: The net total price of all items in the cart after accounting for profit.
+
+        This method calculates the net total price of all items in the shopping cart by
+        subtracting the total profit from the total price without discounts.
+        """
+        cart_total = 0
+        for item in self.__iter__(True):
+            cart_total += item['get_total_item']
+        return cart_total
+
     def calculate_coupon_price(self, request):
         coupon_pk = self.coupon.get('coupon_pk')
 
@@ -399,3 +481,11 @@ class Cart:
     @property
     def coupon_price(self):
         return self.coupon.get('coupon_price')
+
+    @property
+    def get_cart_total_with_coupon(self):
+        coupon_price = self.coupon.get('coupon_price')
+        if self.coupon.get('coupon_pk') and coupon_price:
+            return (self.get_cart_total_no_discount - self.get_cart_total_profit) - self.coupon_price
+
+        return 0
