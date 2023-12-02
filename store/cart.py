@@ -129,6 +129,27 @@ class Cart:
         """
         self.session.modified = True
 
+    def act_items(self):
+        """
+        Retrieve active items from the shopping cart.
+
+        This method returns an iterator of dictionaries containing information
+        about each active item in the shopping cart. The structure of the yielded
+        items is designed to align with the usage in templates, mirroring the Order
+        model's structure for seamless integration and consistency.
+
+        The method name 'act_items' is chosen to resemble the terminology used in
+        the Order model, ensuring a consistent and intuitive interface for template
+        usage.
+        :return: self.__iter__()
+        """
+        try:
+            first = next(self.__iter__())
+        except StopIteration:
+            return None
+
+        return self.__iter__()
+
     def remove_inactive_items(self):
         """
         Remove inactive products and associated color-size combinations from the cart.
@@ -349,3 +370,32 @@ class Cart:
         It returns an int value representing the net total price, considering profit.
         """
         return self.get_total_no_discount_item(product_pk, item_key) - self.get_total_profit_item(product_pk, item_key)
+
+    def calculate_coupon_price(self, request):
+        coupon_pk = self.coupon.get('coupon_pk')
+
+        if coupon_pk:
+            coupon_obj = get_object_or_404(Coupon, pk=coupon_pk)
+            if coupon_obj and coupon_obj.can_use():
+                coupon_rules = coupon_obj.rules.all().order_by('-start_price')
+                for coupon_rule in coupon_rules:
+                    new_cart_total = coupon_rule.apply_discount(self.get_cart_total)
+                    if new_cart_total:
+                        self.coupon['coupon_price'] = math.ceil(new_cart_total)
+                        self.save()
+                        return True
+
+                messages.info(request, _(f'The minimum price for coupon is {coupon_rules.last().start_price}'))
+
+            else:
+                messages.error(request, _(f'The {coupon_obj} is not valid'))
+
+            self.coupon['coupon_pk'] = None
+            self.coupon['coupon_price'] = 0
+            self.save()
+
+        return False
+
+    @property
+    def coupon_price(self):
+        return self.coupon.get('coupon_price')
