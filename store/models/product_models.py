@@ -45,7 +45,7 @@ class Product(models.Model):
     discount = models.BooleanField(default=False, verbose_name=_('discount'))
     discount_price = models.PositiveIntegerField(blank=True, null=True, verbose_name=_('discount price'))
     discount_timer = models.DateTimeField(null=True, blank=True, verbose_name=_('discount timer'))
-    inventory = models.PositiveIntegerField(default=0, verbose_name=_('inventory'))
+    inventory = models.IntegerField(default=0, verbose_name=_('inventory'))
     slug_change = models.BooleanField(default=False, verbose_name=_('slug change'),
                                       help_text=_('If you want change the slug by name'))
     slug = models.SlugField(blank=True, allow_unicode=True, max_length=300, verbose_name=_('slug'),

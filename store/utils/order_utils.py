@@ -83,11 +83,11 @@ def check_out_user_anonymous(request, cart):
             messages.error(request, _('You change the data of checkout form!'))
 
         final_order_total = None
-        if order.coupon and order.calculate_coupon_price(request):
-            final_order_total = order.get_cart_total_with_coupon
+        if cart.coupon and cart.calculate_coupon_price(request):
+            final_order_total = cart.get_cart_total_with_coupon
 
         else:
-            final_order_total = order.get_cart_total
+            final_order_total = cart.get_cart_total
 
         if total == final_order_total:
             form_order = OrderForm(request.POST, instance=order)
