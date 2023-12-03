@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.contrib import messages
+from django.db import transaction
 
 from ..models import Order
 from ..cart import Cart
@@ -56,8 +57,8 @@ def sandbox_process_payment(request):
 
     if 'errors' not in data or len(data['errors']) == 0:
         return redirect(f'https://sandbox.zarinpal.com/pg/StartPay/{authority}')
-    else:
 
+    else:
         return render(request, 'store/order/success.html')
 
 
@@ -96,19 +97,22 @@ def sandbox_callback_payment(request):
         payment_code = data['Status']
 
         if payment_code == 100:
-            if not user.is_authenticated:
-                cart_obj = Cart(request)
-                cart_obj.clear_cart()
+            with transaction.atomic():
+                if not user.is_authenticated:
+                    cart_obj = Cart(request)
+                    cart_obj.clear_cart()
 
-            order.completed = True
-            for item in order.items.all():
-                item.track_order = 20
-                item.save()
-            order.datetime_payed = datetime.datetime.now()
-            # order.ref_id = data['ref_id']
-            # order.zarinpal_data = data
-            order.save()
-            return render(request, 'store/order/success.html')
+                order.completed = True
+                for item in order.items.all():
+                    item.track_order = 20
+                    item.save()
+                    item.product.inventory -= item.quantity
+                    item.product.save()
+                order.datetime_payed = datetime.datetime.now()
+                # order.ref_id = data['ref_id']
+                # order.zarinpal_data = data
+                order.save()
+                return render(request, 'store/order/success.html')
 
         return utils.zarin_errors(request, payment_code)
 
