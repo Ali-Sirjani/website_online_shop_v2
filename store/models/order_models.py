@@ -1,13 +1,24 @@
+import secrets
+import math
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
+from django.contrib import messages
 
 from phonenumber_field.modelfields import PhoneNumberField
 
 from .product_models import Product, ProductColorAndSizeValue
-from ..utils import generate_coupon_code
+
+
+def generate_coupon_code(length=8):
+    # Generate a random hex string with the specified length
+    coupon_code = secrets.token_hex(length // 2)
+
+    # Format the code to be uppercase and return it
+    return coupon_code.upper()
 
 
 class Coupon(models.Model):
@@ -23,20 +34,21 @@ class Coupon(models.Model):
     datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime ordered'))
     datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
 
-    def is_valid(self):
-        start_date = self.start_date
-        end_date = self.end_date
-        num_available = self.num_available
-        num_used = self.num_used
+    def can_use(self):
+        if self.is_active:
+            start_date = self.start_date
+            end_date = self.end_date
+            num_available = self.num_available
+            num_used = self.num_used
 
-        if start_date and num_available:
-            return (start_date <= timezone.now() <= end_date) and (num_available > num_used)
+            if start_date and num_available:
+                return (start_date <= timezone.now() <= end_date) and (num_available > num_used)
 
-        elif start_date:
-            return start_date <= timezone.now() <= end_date
+            elif start_date:
+                return start_date <= timezone.now() <= end_date
 
-        elif num_available:
-            return num_available > num_used
+            elif num_available:
+                return num_available > num_used
 
         return False
 
@@ -65,6 +77,8 @@ class CouponRule(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='orders', null=True,
                                  blank=True, verbose_name=_('customer'))
+    coupon = models.ForeignKey(Coupon, on_delete=models.SET_NULL, related_name='orders', null=True, blank=True,
+                               verbose_name=_('coupon'))
 
     first_name = models.CharField(max_length=200, verbose_name=_('first name'))
     last_name = models.CharField(max_length=200, verbose_name=_('last name'))
@@ -72,6 +86,7 @@ class Order(models.Model):
     phone = PhoneNumberField(null=True, region='IR', verbose_name=_('phone'))
     order_note = models.TextField(blank=True, verbose_name=_('order note'))
     completed = models.BooleanField(default=False, blank=True, verbose_name=_('completed'))
+    coupon_price = models.PositiveIntegerField(blank=True, default=0, verbose_name=_('coupon price'))
     tracking_code = models.CharField(max_length=200, blank=True, verbose_name=_('tracking code'))
     datetime_payed = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime payed'))
     datetime_delivered = models.DateTimeField(null=True, blank=True, verbose_name=_('datetime delivered'))
@@ -82,6 +97,9 @@ class Order(models.Model):
     def __str__(self):
         return f'{self.pk}'
 
+    def act_items(self):
+        return self.items.all()
+
     @property
     def get_cart_items(self):
         return sum([item.quantity for item in self.items.all()])
@@ -90,27 +108,59 @@ class Order(models.Model):
 
     @property
     def get_cart_total_no_discount(self):
-        return sum([item.get_total_no_discount for item in self.items.all()])
+        return sum([item.get_total_no_discount_item for item in self.items.all()])
 
     get_cart_total_no_discount.fget.short_description = _('Cart Total (No Discount)')
 
     @property
     def get_cart_total_with_discount(self):
-        return sum([item.get_total_with_discount for item in self.items.all()])
+        return sum([item.get_total_with_discount_item for item in self.items.all()])
 
     get_cart_total_with_discount.fget.short_description = _('Cart Total (With Discount)')
 
     @property
     def get_cart_total_profit(self):
-        return sum([item.get_total_profit for item in self.items.all()])
+        return sum([item.get_total_profit_item for item in self.items.all()])
 
     get_cart_total_profit.fget.short_description = _('Cart Total Profit')
+
+    def calculate_coupon_price(self, request):
+        coupon = self.coupon
+        if coupon:
+            if coupon.can_use():
+                coupon_rules = coupon.rules.all().order_by('-start_price')
+                for coupon_rule in coupon_rules:
+                    new_cart_total = coupon_rule.apply_discount(self.get_cart_total)
+                    if new_cart_total:
+                        self.coupon_price = math.ceil(new_cart_total)
+                        self.save(update_fields=('coupon_price',))
+                        return True
+
+                messages.info(request, _(f'The minimum price for coupon is {coupon_rules.last().start_price}'))
+
+            else:
+                messages.error(request, _(f'The {coupon} is not valid'))
+
+            self.coupon = {}
+            self.coupon_price = 0
+            self.save()
+
+        return False
 
     @property
     def get_cart_total(self):
         return self.get_cart_total_no_discount - self.get_cart_total_profit
 
     get_cart_total.fget.short_description = _('Cart Total')
+
+    @property
+    def get_cart_total_with_coupon(self):
+        if self.coupon:
+            return (self.get_cart_total_no_discount - self.get_cart_total_profit) - self.coupon_price
+
+        return 0
+
+    get_cart_total_with_coupon.fget.short_description = _('Cart Total With Coupon')
 
     @property
     def avg_track_items(self):
@@ -177,40 +227,55 @@ class OrderItem(models.Model):
             )
         ]
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
+        if self.pk and self.product and not self.price:
+            additional_cost = 0
+            if self.color_size and self.color_size.size_price:
+                additional_cost = self.color_size.size_price
+
+            self.price = self.product.price + additional_cost
+            self.discount = self.product.discount
+            self.discount_price = self.product.discount_price
+
+            if self.discount:
+                self.discount_price += additional_cost
+
+            self.save()
 
     def __str__(self):
         return f'order number: {self.order.pk}'
 
     @property
-    def get_total_no_discount(self):
+    def get_total_no_discount_item(self):
         if self.price:
             return self.price * self.quantity
         return 0
 
-    get_total_no_discount.fget.short_description = _('Total (No Discount)')
+    get_total_no_discount_item.fget.short_description = _('Total (No Discount)')
 
     @property
-    def get_total_with_discount(self):
+    def get_total_with_discount_item(self):
         if self.discount:
             return self.discount_price * self.quantity
         return 0
 
-    get_total_with_discount.fget.short_description = _('Total (With Discount)')
+    get_total_with_discount_item.fget.short_description = _('Total (With Discount)')
 
     @property
-    def get_total_profit(self):
+    def get_total_profit_item(self):
         if self.discount:
-            return self.get_total_no_discount - self.get_total_with_discount
+            return self.get_total_no_discount_item - self.get_total_with_discount_item
         return 0
 
-    get_total_profit.fget.short_description = _('Total Profit')
+    get_total_profit_item.fget.short_description = _('Total Profit')
 
     @property
-    def get_total(self):
-        return self.get_total_no_discount - self.get_total_profit
+    def get_total_item(self):
+        return self.get_total_no_discount_item - self.get_total_profit_item
 
-    get_total.fget.short_description = _('Total')
+    get_total_item.fget.short_description = _('Total')
 
 
 class ShippingAddress(models.Model):
@@ -220,7 +285,7 @@ class ShippingAddress(models.Model):
     state = models.CharField(max_length=200, verbose_name=_('state'))
     city = models.CharField(max_length=200, verbose_name=_('city'))
     address = models.TextField(verbose_name=_('address'))
-    plate = models.PositiveSmallIntegerField(verbose_name=_('plate'))
+    plate = models.PositiveSmallIntegerField(null=True, verbose_name=_('plate'))
 
     datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
     datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))

@@ -1,0 +1,48 @@
+{% extends '_base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block title %} checkout {% endblock title %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <!-- Cart Summary -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Cart Summary</h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">Total Items: {{ order.get_cart_items }}</li>
+                    <li class="list-group-item">Cart Total (No Discount): ${{ order.get_cart_total_no_discount }}</li>
+                    <li class="list-group-item">Cart Total (With Discount):
+                        ${{ order.get_cart_total_with_discount }}</li>
+                    <li class="list-group-item">Cart Total Profit: ${{ order.get_cart_total_profit }}</li>
+                    <li class="list-group-item">Cart Total: ${{ order.get_cart_total }}</li>
+                    {% if order.coupon_price %}
+                        <li class="list-group-item">Cart Total Coupon: ${{ order.coupon_price }}</li>
+                        <li class="list-group-item">Cart Total (With Coupon):
+                            ${{ order.get_cart_total_with_coupon }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <div class="card">
+            <div class="card-header">
+                <h4>Checkout</h4>
+            </div>
+            <div class="card-body pb-4">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form_order|crispy }}
+                    {{ form_shipping|crispy }}
+                    <button type="submit" class="btn btn-primary mt-3">Place Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

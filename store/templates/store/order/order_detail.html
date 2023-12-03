@@ -1,0 +1,102 @@
+
+
+{% extends '_base.html' %}
+
+{% block title %} Order Detail {% endblock title %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Order Detail - {{ order_finished.pk }}</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">Customer Information</h2>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Name:</strong> {{ order_finished.first_name }} {{ order_finished.last_name }}</li>
+                        <li class="list-group-item"><strong>Email:</strong> {{ order_finished.email }}</li>
+                        <li class="list-group-item"><strong>Phone:</strong> {{ order_finished.phone }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">Order Status</h2>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Completed:</strong> {% if order_finished.completed %}Yes{% else %}No{% endif %}</li>
+                        <li class="list-group-item"><strong>Tracking Code:</strong> {{ order_finished.tracking_code }}</li>
+                        <li class="list-group-item"><strong>Delivery Status:</strong> {{ order_finished.avg_track_items }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mt-4">Order Items</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Color/Size</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Discounted Price</th>
+                    <th>Total</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in order_finished.items.all %}
+                <tr>
+                    <td>{{ item.product.title|truncatewords:10 }}</td>
+                    <td>{{ item.color_size }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>${{ item.discount_price }}</td>
+                    <td>${{ item.get_total_item }}</td>
+                    <td>
+                        {% for image in item.product.images.all %}
+                        {% if image.is_main %}
+                        <img src="{{ image.image.url }}" alt="{{ item.product.name }}" class="img-thumbnail" style="max-width: 80px;">
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="mt-4">Order Summary</h2>
+    <div class="card mb-4">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Cart Total (No Discount):</strong> ${{ order_finished.get_cart_total_no_discount }}</li>
+                <li class="list-group-item"><strong>Cart Total (With Discount):</strong> ${{ order_finished.get_cart_total_with_discount }}</li>
+                <li class="list-group-item"><strong>Cart Total Profit:</strong> ${{ order_finished.get_cart_total_profit }}</li>
+                <li class="list-group-item"><strong>Coupon Price:</strong> ${{ order_finished.coupon_price }}</li>
+                <li class="list-group-item"><strong>Cart Total:</strong> ${{ order_finished.get_cart_total }}</li>
+                <li class="list-group-item"><strong>Cart Total With Coupon:</strong> ${{ order_finished.get_cart_total_with_coupon }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <h2 class="mt-4">Additional Information</h2>
+    <div class="card">
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Order Note:</strong> {{ order_finished.order_note }}</li>
+                <li class="list-group-item"><strong>Ordered on:</strong> {{ order_finished.datetime_created }}</li>
+                <li class="list-group-item"><strong>Last Updated:</strong> {{ order_finished.datetime_updated }}</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

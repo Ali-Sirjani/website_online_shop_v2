@@ -69,9 +69,16 @@ class ProductColorAndSizeValueTabu(admin.TabularInline):
     model = ProductColorAndSizeValue
     formset = ProductColorAndSizeValueFormSetAdmin
     fields = ('color', 'color_image', 'size', 'size_price', 'inventory', 'is_active')
-    readonly_fields = ('color_image',)
     autocomplete_fields = ('color', 'size')
     extra = 0
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = ['color_image']
+
+        if obj and obj.inventory <= 0:
+            readonly_fields.extend(['color', 'size', 'size_price', 'inventory', 'is_active'])
+
+        return readonly_fields
 
     def color_image(self, obj):
         return format_html('<div style="background-color: {}; width: 20px; height: 20px;"></div>', obj.color.color)

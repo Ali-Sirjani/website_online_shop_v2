@@ -7,3 +7,4 @@ class StoreConfig(AppConfig):
 
     def ready(self):
         import store.signals.product_signals
+        import store.signals.order_signals

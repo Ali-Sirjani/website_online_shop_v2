@@ -19,6 +19,8 @@ class ProductFormAdmin(forms.ModelForm):
         price = clean_data.get('price')
         discount = clean_data.get('discount')
         discount_price = clean_data.get('discount_price')
+        inventory = clean_data.get('inventory')
+        is_active = clean_data.get('is_active')
 
         if not discount and discount_price:
             self.add_error('discount', _('You must set discount because you fill out discount price'))
@@ -29,6 +31,9 @@ class ProductFormAdmin(forms.ModelForm):
         elif discount_price is not None and price <= discount_price:
             self.add_error('discount_price', _('The value of discount price must be less than from price'))
 
+        if (inventory is not None) and (inventory <= 0) and is_active:
+            self.add_error('inventory', _('Products with 0 or negative inventory cannot be activated'))
+
         return clean_data
 
 
@@ -38,20 +43,21 @@ class InventoryForm(forms.Form):
 
 class ProductColorAndSizeValueFormSetAdmin(BaseInlineFormSet):
     def clean(self):
-        sum_inventory = 0
+        if self.product_inventory > 0:
+            sum_inventory = 0
 
-        for form in self.forms:
-            inventory = form.cleaned_data.get('inventory')
-            size = form.cleaned_data.get('size')
-            color = form.cleaned_data.get('color')
-            if not (size or color):
-                form.add_error(None, 'Please provide either the size or the color for the product.')
+            for form in self.forms:
+                inventory = form.cleaned_data.get('inventory')
+                size = form.cleaned_data.get('size')
+                color = form.cleaned_data.get('color')
+                if not (size or color):
+                    form.add_error(None, 'Please provide either the size or the color for the product.')
 
-            if inventory:
-                sum_inventory += inventory
+                if inventory:
+                    sum_inventory += inventory
 
-        if self.product_inventory - sum_inventory < 0:
-            raise forms.ValidationError('Sum inventory of colors must be equal to product inventory')
+            if self.product_inventory - sum_inventory < 0:
+                raise forms.ValidationError('Sum inventory of colors must be equal to product inventory')
 
         return super().clean()
 

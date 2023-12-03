@@ -42,13 +42,123 @@
                 <a type="button" href="{{ product.get_absolute_url }}" class="btn btn-success">detail</a>
 
                 {% if product.pk in liked %}
-                    <button name="like-product" data-product="{{ product.pk }}" class="btn btn-dark like-product">Unlike</button>
+                    <button name="like-product" data-product="{{ product.pk }}" class="btn btn-dark like-product">
+                        Unlike
+                    </button>
                 {% else %}
-                    <button name="like-product" data-product="{{ product.pk }}" class="btn btn-danger like-product">Like</button>
+                    <button name="like-product" data-product="{{ product.pk }}" class="btn btn-danger like-product">
+                        Like
+                    </button>
                 {% endif %}
 
+            </p>
+            <p>
+
+                <!-- Add to Cart Button -->
+            <div>
+                <button class="update-cart"
+                        data-product="{{ product.id }}"
+                        data-action="add"
+                        data-colorId=""
+                        data-sizeId="">
+                    Add to Cart
+                </button>
+
+                <input type="number" id="qty" value="1">
+                <button class="updateQtyPlus">plus</button>
+                <button class="updateQtyMinus">minus</button>
+
+            </div>
+            {% for color_size_value in product.active_color_size %}
+
+                <!-- Color Selection (if applicable) -->
+                {% if color_size_value.color %}
+                    <p>Choose Color:</p>
+                    <div>
+                    <button class="color-button"
+                            data-product="{{ product.id }}"
+                            data-color-id="{{ color_size_value.color.id }}"
+                            data-action="color">
+                        {{ color_size_value.color.name }}
+                    </button>
+                {% endif %}
+            {% if color_size_value.size %}
+                <!-- Size Selection (if applicable) -->
+                <p>Choose Size:</p>
+                <div>
+                    <button class="size-button"
+                            data-product="{{ product.id }}"
+                            data-size-id="{{ color_size_value.size.id }}"
+                            data-action="size">
+                        {{ color_size_value.size.size }}
+                    </button>
+                </div>
+            {% endif %}
+            </div>
+            {% endfor %}
             </p>
 
         </div>
     </div>
 {% endfor %}
+<script>
+
+    var updateBtns = document.getElementsByClassName('update-cart');
+    var colorButtons = document.getElementsByClassName('color-button');
+    var sizeButtons = document.getElementsByClassName('size-button');
+    var qtyInput = document.getElementById("qty");
+    var buttonQtyPlus = document.getElementsByClassName("updateQtyPlus");
+    var buttonQtyMinus = document.getElementsByClassName("updateQtyMinus");
+    var selectedColorId = null;
+    var selectedSizeId = null;
+
+    // Event listener for color buttons
+    for (var i = 0; i < buttonQtyPlus.length; i++) {
+        buttonQtyPlus[i].addEventListener('click', function () {
+            var value = parseInt(qtyInput.value)
+            qtyInput.value = value + 1
+            console.log('this is value :', qtyInput.value)
+        });
+    }
+
+    for (var i = 0; i < buttonQtyMinus.length; i++) {
+        buttonQtyMinus[i].addEventListener('click', function () {
+            var value = parseInt(qtyInput.value)
+            qtyInput.value = value - 1
+            console.log('this is value :', qtyInput.value)
+
+        });
+    }
+
+    // Event listener for color buttons
+    for (var i = 0; i < colorButtons.length; i++) {
+        colorButtons[i].addEventListener('click', function () {
+            // Update the data-color-id attribute of the "Add to Cart" button
+            var addToCartButton = document.querySelector('.update-cart[data-product="' + this.dataset.product + '"]');
+            if (addToCartButton) {
+                addToCartButton.dataset.colorId = this.dataset.colorId;
+                console.log('Updated Color ID on Add to Cart button:', addToCartButton.dataset.colorId);
+            }
+
+            // Store the selected color ID
+            selectedColorId = this.dataset.colorId;
+            console.log('Selected Color ID:', selectedColorId);
+        });
+    }
+
+    // Event listener for size buttons
+    for (var i = 0; i < sizeButtons.length; i++) {
+        sizeButtons[i].addEventListener('click', function () {
+            // Update the data-size-id attribute of the "Add to Cart" button
+            var addToCartButton = document.querySelector('.update-cart[data-product="' + this.dataset.product + '"]');
+            if (addToCartButton) {
+                addToCartButton.dataset.sizeId = this.dataset.sizeId;
+                console.log('Updated Size ID on Add to Cart button:', addToCartButton.dataset.sizeId);
+            }
+
+            // Store the selected size ID
+            selectedSizeId = this.dataset.sizeId;
+            console.log('Selected Size ID:', selectedSizeId);
+        });
+    }
+</script>
