@@ -41,6 +41,12 @@ def delete_inactive_product_in_top_product(sender, instance, *args, **kwargs):
             pass
 
 
+@receiver(pre_save, sender=Product)
+def set_products_inactive_for_inventory(sender, instance, *args, **kwargs):
+    if instance.inventory <= 0 and instance.is_active:
+        instance.is_active = False
+
+
 @receiver(pre_save, sender=ProductColorAndSizeValue)
 def set_product_color_size_value_as_inactive(sender, instance, *args, **kwargs):
     if (type(instance.inventory) is int) and (instance.inventory <= 0):

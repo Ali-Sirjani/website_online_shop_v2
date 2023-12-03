@@ -132,7 +132,7 @@ class ProductColorAndSizeValue(models.Model):
                              related_name='color_size_values', verbose_name=_('size'))
 
     size_price = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('size price'))
-    inventory = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('inventory'))
+    inventory = models.IntegerField(null=True, blank=True, verbose_name=_('inventory'))
     is_active = models.BooleanField(default=True, verbose_name=_('active'))
 
     class Meta:
