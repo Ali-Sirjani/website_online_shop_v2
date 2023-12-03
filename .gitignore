@@ -7,3 +7,4 @@ store/migrations/
 celerybeat-schedule
 media/
 staticfiles/
+blog/migrations
