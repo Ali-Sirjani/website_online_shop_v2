@@ -22,3 +22,17 @@ def create_unique_slug_for_blog(instance, create_by, slug_primitive=None):
         return create_unique_slug_for_blog(instance, create_by, slug)
 
     return slug
+
+
+@receiver(pre_save, sender=Post)
+def create_slug_post(sender, instance, *args, **kwargs):
+    if not instance.slug or instance.slug_change:
+        instance.slug = create_unique_slug_for_blog(instance, instance.title)
+        instance.slug_change = False
+
+
+@receiver(pre_save, sender=Tag)
+def create_slug_tag(sender, instance, *args, **kwargs):
+    if not instance.slug or instance.slug_change:
+        instance.slug = create_unique_slug_for_blog(instance, instance.name)
+        instance.slug_change = False
