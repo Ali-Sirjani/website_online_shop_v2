@@ -251,7 +251,7 @@ class Cart:
         cart_product = self.cart[product_pk_str]
 
         if product_color_size_pk not in cart_product:
-            cart_product[product_color_size_pk] = {'quantity': quantity}
+            cart_product[product_color_size_pk] = {'quantity': 0}
             self.set_price_item(cart_product[product_color_size_pk], product_pk_str, product_color_size_pk)
 
         if cart_product[product_color_size_pk]['quantity'] * -1 > quantity or action == 'delete_item':

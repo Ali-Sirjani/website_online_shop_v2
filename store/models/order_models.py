@@ -235,7 +235,7 @@ class OrderItem(models.Model):
             if self.color_size and self.color_size.size_price:
                 additional_cost = self.color_size.size_price
 
-            self.price = self.product.price
+            self.price = self.product.price + additional_cost
             self.discount = self.product.discount
             self.discount_price = self.product.discount_price
 
