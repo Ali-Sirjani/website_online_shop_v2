@@ -53,3 +53,20 @@ class PostAdmin(admin.ModelAdmin):
             obj.author = request.user
 
         super().save_model(request, obj, form, change)
+
+
+class PostCommentAdmin(admin.ModelAdmin):
+    fields = ('post', 'author', 'text', 'confirmation',
+              'datetime_created', 'datetime_updated',)
+
+    list_display = ('post', 'confirmation', 'datetime_updated',)
+    ordering = ('datetime_updated',)
+    autocomplete_fields = ('post', 'author')
+    list_filter = ('confirmation',)
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly_fields = ['datetime_created', 'datetime_updated', ]
+        if obj:
+            readonly_fields.extend(['post', 'author'])
+
+        return readonly_fields
