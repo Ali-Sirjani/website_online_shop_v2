@@ -142,8 +142,14 @@ def sandbox_callback_payment(request):
                 for item in order.items.all():
                     item.track_order = 20
                     item.save()
+
                     item.product.inventory -= item.quantity
                     item.product.save()
+
+                    if item.color_size is not None and item.color_size.inventory is not None:
+                        item.color_size.inventory -= item.quantity
+                        item.color_size.save()
+
                 order.datetime_payed = datetime.datetime.now()
                 # order.ref_id = data['ref_id']
                 # order.zarinpal_data = data
