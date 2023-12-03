@@ -190,4 +190,4 @@ def zarin_errors(request, payment_code):
         error_messages = _('Verified')
 
     messages.warning(request, f'{error_messages}')
-    return render(request, 'store/order/fail.html')
+    return render(request, 'store/payment/fail.html')

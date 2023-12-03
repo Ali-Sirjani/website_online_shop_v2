@@ -46,7 +46,7 @@ def checkout_view(request):
         'form_shipping': form_shipping,
     }
 
-    return render(request, 'store/order/checkout.html', context)
+    return render(request, 'store/payment/checkout.html', context)
 
 
 def sandbox_process_payment(request):
@@ -95,7 +95,7 @@ def sandbox_process_payment(request):
         return redirect(f'https://sandbox.zarinpal.com/pg/StartPay/{authority}')
 
     else:
-        return render(request, 'store/order/success.html')
+        return render(request, 'store/payment/success.html')
 
 
 def sandbox_callback_payment(request):
@@ -148,9 +148,9 @@ def sandbox_callback_payment(request):
                 # order.ref_id = data['ref_id']
                 # order.zarinpal_data = data
                 order.save()
-                return render(request, 'store/order/success.html')
+                return render(request, 'store/payment/success.html')
 
         return utils.zarin_errors(request, payment_code)
 
     else:
-        return render(request, 'store/order/fail.html')
+        return render(request, 'store/payment/fail.html')
