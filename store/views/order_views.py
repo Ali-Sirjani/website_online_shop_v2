@@ -1,11 +1,13 @@
 import json
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.http.response import JsonResponse
 from django.contrib import messages
+from django.views.generic import DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from ..models import Order, OrderItem, Product, ProductColor, ProductSize, ProductColorAndSizeValue, Coupon
 from ..cart import Cart
@@ -163,3 +165,23 @@ def cart_view(request):
             messages.error(request, _('The Coupon is not valid!'))
 
     return render(request, 'store/order/cart.html', context={'coupon_form': coupon_form})
+
+
+class OrderDetailView(LoginRequiredMixin, DetailView):
+    template_name = 'store/order/order_detail.html'
+    context_object_name = 'order_finished'
+
+    def get_object(self, queryset=None):
+        order_pk = self.kwargs.get('pk')
+        if self.request.user.is_authenticated:
+            order = get_object_or_404(
+                Order.objects.prefetch_related(
+                    'items__product__images',
+                    'items__color_size__color',
+                    'items__color_size__size'),
+                pk=order_pk, customer=self.request.user, completed=True)
+
+        else:
+            order = None
+
+        return order
