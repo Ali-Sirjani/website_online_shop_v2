@@ -41,3 +41,23 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.title}'
+
+
+class PostComment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', verbose_name=_('post'))
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='post_comments',
+                               verbose_name=_('author'))
+
+    text = models.TextField(verbose_name=_('text'))
+
+    confirmation = models.BooleanField(default=False, verbose_name=_('confirmation'))
+
+    datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
+    datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
+
+    class Meta:
+        verbose_name = _('post comment')
+        verbose_name_plural = _('post comments')
+
+    def __str__(self):
+        return f'{self.author}'
