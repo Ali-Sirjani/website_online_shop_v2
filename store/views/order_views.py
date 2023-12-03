@@ -9,7 +9,6 @@ from django.contrib import messages
 
 from ..models import Order, OrderItem, Product, ProductColor, ProductSize, ProductColorAndSizeValue, Coupon
 from ..cart import Cart
-from .. import utils
 from ..forms import CouponForm
 
 
@@ -164,39 +163,3 @@ def cart_view(request):
             messages.error(request, _('The Coupon is not valid!'))
 
     return render(request, 'store/order/cart.html', context={'coupon_form': coupon_form})
-
-
-def checkout_view(request):
-    # user with account
-    if request.user.is_authenticated:
-        checkout_login = utils.check_out_user_login(request)
-        try:
-            form_order, form_shipping, order, items = checkout_login
-        except ValueError:
-            return checkout_login
-
-    # user without account
-    else:
-        order = cart = Cart(request)
-        items = None
-
-        checkout_anonymous = utils.check_out_user_anonymous(request, cart)
-        try:
-            form_order, form_shipping = checkout_anonymous
-        except ValueError:
-            return checkout_anonymous
-
-    if request.method == 'GET':
-        if order.calculate_coupon_price(request):
-            form_order.initial['total'] = order.get_cart_total_with_coupon
-        else:
-            form_order.initial['total'] = order.get_cart_total
-
-    context = {
-        'order': order,
-        'items': items,
-        'form_order': form_order,
-        'form_shipping': form_shipping,
-    }
-
-    return render(request, 'store/order/checkout.html', context)
