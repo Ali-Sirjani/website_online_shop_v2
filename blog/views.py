@@ -64,3 +64,44 @@ class PostSearchView(generic.ListView):
         if not q or q.isspace():
             return render(self.request, 'blog/search_q_none.html')
         return super().dispatch(request, *args, **kwargs)
+
+
+@method_decorator(login_required, name='post')
+class PostDetailView(generic.edit.FormMixin, generic.DetailView):
+    model = Post
+    form_class = PostCommentForm
+    template_name = 'blog/post_detail.html'
+    context_object_name = 'post'
+    queryset = Post.active_objs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        obj = self.object
+
+        if obj.tags.exists():
+            context['next_previous_posts'] = Post.active_objs.filter(tags__in=obj.tags.all()).exclude(
+                pk=obj.pk).order_by('datetime_updated')[0:2]
+
+        else:
+            context['next_previous_posts'] = Post.active_objs.all().exclude(pk=obj.pk).order_by('datetime_updated')[0:2]
+
+        context['comments'] = PostComment.objects.filter(confirmation=True, post_id=obj.pk).select_related(
+            'author__profile')
+
+        return context
+
+    def post(self, *args, **kwargs):
+        obj = self.get_object()
+        form = self.get_form()
+        request = self.request
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = obj
+            comment.author = request.user
+            messages.success(request, _('You comment after confirmation will show in comments.'))
+            comment.save()
+            return redirect(obj.get_absolute_url())
+        else:
+            messages.error(request, _('Your comment have problem please try again!'))
+            return super().form_invalid(form)
