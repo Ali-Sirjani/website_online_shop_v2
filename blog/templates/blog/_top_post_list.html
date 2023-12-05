@@ -1,0 +1,23 @@
+{% load i18n %}
+{% load blog_temp_filters %}
+
+<!-- Content for Special Page -->
+<div class="container mt-4">
+    <a id="btnGroupDrop2" type="button" class="astext mb-3"
+       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {% trans 'sort' %}
+    </a>
+
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+        {% for name, num in sort_dict.items %}
+            <a class="dropdown-item text-right"
+               href="?sort={{ num }}&{{ request.GET|remove_obsolete_sorts_blog }}"><h4
+                    class="mm-text">{{ name }}</h4></a>
+        {% endfor %}
+    </div>
+
+    <p>{% trans 'Showing' %} {{ page_obj.start_index }}-{{ page_obj.end_index }} {% trans 'of' %} {{ page_obj.paginator.count }}</p>
+
+</div>
+
+
