@@ -48,12 +48,18 @@ class TopTag(models.Model):
         return f'{self.tag}'
 
 
+class ActivePostManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(can_published=True)
+
+
 class Post(models.Model):
     tags = models.ManyToManyField(Tag, blank=True, verbose_name=_('tags'))
     author = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, verbose_name=_('author'))
 
     title = models.CharField(max_length=250, verbose_name=_('title'))
     description = RichTextField(verbose_name=_('description'))
+    image = models.ImageField(upload_to='post_images/', null=True, verbose_name=_('image'))
     can_published = models.BooleanField(default=True, verbose_name=_('can published'))
     slug_change = models.BooleanField(verbose_name=_('slug change'), help_text=_('If you want change the slug by name'))
     slug = models.SlugField(unique=True, allow_unicode=True, blank=True, max_length=300, verbose_name=_('slug'),
@@ -61,6 +67,9 @@ class Post(models.Model):
 
     datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
     datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
+
+    objects = models.Manager()
+    active_objs = ActivePostManager()
 
     class Meta:
         verbose_name = _('post')
