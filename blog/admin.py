@@ -3,7 +3,7 @@ from django.forms import Textarea
 from django.db.models import TextField
 from django.utils.translation import gettext_lazy as _
 
-from .models import Tag, Post, PostComment
+from .models import Tag, TopTag, Post, PostComment
 
 
 @admin.register(Tag)
@@ -11,6 +11,16 @@ class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug', 'datetime_created', 'datetime_updated')
     search_fields = ('name',)
     ordering = ('datetime_updated',)
+
+
+@admin.register(TopTag)
+class TopTagAdmin(admin.ModelAdmin):
+    fields = ('tag', 'level', 'is_top_level', 'datetime_created', 'datetime_updated',)
+    readonly_fields = ('datetime_created', 'datetime_updated',)
+    autocomplete_fields = ('tag',)
+    list_display = ('tag', 'level', 'is_top_level')
+    ordering = ('level', '-is_top_level')
+    search_fields = ('tag__name',)
 
 
 class PostCommentInline(admin.TabularInline):
@@ -29,7 +39,7 @@ class PostCommentInline(admin.TabularInline):
 class PostAdmin(admin.ModelAdmin):
     fieldsets = (
         (_('Post Information'), {
-            'fields': ('title', 'description', 'author', 'tags', 'can_published')
+            'fields': ('title', 'description', 'image', 'author', 'tags', 'can_published')
         }),
         (_('Slug Settings'), {
             'classes': ('collapse',),
