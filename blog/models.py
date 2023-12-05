@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from ckeditor.fields import RichTextField
+from django.shortcuts import reverse
 
 
 class Tag(models.Model):
@@ -78,6 +79,9 @@ class Post(models.Model):
     def __str__(self):
         return f'{self.title}'
 
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', args=[self.slug])
+
 
 class PostComment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', verbose_name=_('post'))
@@ -97,3 +101,6 @@ class PostComment(models.Model):
 
     def __str__(self):
         return f'{self.author}'
+
+    def get_absolute_url(self):
+        return reverse('blog:post_detail', args=[self.post.slug])
