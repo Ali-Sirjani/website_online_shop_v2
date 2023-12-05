@@ -1,0 +1,18 @@
+{% extends 'blog/_base_blog.html' %}
+
+{% block title %} search {% endblock title %}
+
+{% block content %}
+    {% include 'blog/_top_post_list.html' %}
+    <div class="container">
+        {% if posts %}
+            {% include 'blog/_show_post_list.html' with posts=posts %}
+
+        {% else %}
+            <h2>None</h2>
+        {% endif %}
+    </div>
+
+    {% include 'blog/_pagination.html' %}
+
+{% endblock content %}
