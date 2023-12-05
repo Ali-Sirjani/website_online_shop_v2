@@ -21,6 +21,33 @@ class Tag(models.Model):
         return f'{self.name}'
 
 
+class TopTag(models.Model):
+    LEVEL_CHOICES = (
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+    )
+
+    tag = models.OneToOneField(Tag, on_delete=models.CASCADE, related_name='top_tags', verbose_name=_('tag'))
+
+    level = models.CharField(max_length=1, choices=LEVEL_CHOICES,
+                             help_text=_('Levels are ordered from top to bottom, with 1 being the highest.'),
+                             verbose_name=_('level'))
+    is_top_level = models.BooleanField(default=False,
+                                       help_text='Check this box if you want the product to be at the top of its specified level.',
+                                       verbose_name='is_top_level')
+
+    datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
+    datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
+
+    class Meta:
+        verbose_name = _('top tag')
+        verbose_name_plural = _('top tags')
+
+    def __str__(self):
+        return f'{self.tag}'
+
+
 class Post(models.Model):
     tags = models.ManyToManyField(Tag, blank=True, verbose_name=_('tags'))
     author = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, verbose_name=_('author'))
