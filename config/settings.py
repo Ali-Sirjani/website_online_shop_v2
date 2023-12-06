@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     # local apps
     'core',
     'store',
+    'blog',
 ]
 
 MIDDLEWARE = [
