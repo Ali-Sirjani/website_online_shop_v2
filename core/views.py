@@ -1,9 +1,12 @@
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
+
 
 from .models import Profile
-from .forms import ProfileForm
+from .forms import ProfileForm, ContactUsForm
 from store.models import Product, TopProduct
 from store.utils import optimize_product_query
 
@@ -44,3 +47,13 @@ class ProfileView(LoginRequiredMixin, generic.UpdateView):
     def get_object(self, queryset=None):
         profile_user, create = Profile.objects.get_or_create(user=self.request.user)
         return profile_user
+
+
+class ContactUsView(generic.CreateView):
+    form_class = ContactUsForm
+    context_object_name = 'form'
+    template_name = 'core/contact_us.html'
+
+    def get_success_url(self):
+        messages.success(self.request, _('We will soon answer your message'))
+        return reverse_lazy('store:product_list')
