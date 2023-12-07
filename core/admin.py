@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Profile
+from .models import Profile, ContactUs
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 
@@ -45,3 +45,16 @@ class ProfileAdmin(admin.ModelAdmin):
             return name
 
         return None
+
+
+@admin.register(ContactUs)
+class ContactUsAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'datetime_created', 'answer',)
+    ordering = ('answer', '-datetime_created',)
+    fields = ('full_name', 'phone', 'email', 'message', 'answer', 'datetime_created', 'datetime_updated',)
+    readonly_fields = ('datetime_created', 'datetime_updated',)
+    list_filter = ('answer',)
+    search_fields = ('full_name', 'phone', 'email',)
+
+    def has_add_permission(self, request):
+        return False
