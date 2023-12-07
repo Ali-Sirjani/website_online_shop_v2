@@ -67,3 +67,7 @@ class ContactUsView(generic.CreateView):
 
 class AboutUsView(generic.TemplateView):
     template_name = 'core/about_us.html'
+
+
+class FAQView(generic.TemplateView):
+    template_name = 'core/faq.html'
