@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 
+from allauth.account.forms import ChangePasswordForm
 
 from .models import Profile
 from .forms import ProfileForm, ContactUsForm
@@ -47,6 +48,11 @@ class ProfileView(LoginRequiredMixin, generic.UpdateView):
     def get_object(self, queryset=None):
         profile_user, create = Profile.objects.get_or_create(user=self.request.user)
         return profile_user
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['change_pass_form'] = ChangePasswordForm()
+        return context
 
 
 class ContactUsView(generic.CreateView):

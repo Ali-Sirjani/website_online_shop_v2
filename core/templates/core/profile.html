@@ -1,26 +1,163 @@
 {% extends '_base.html' %}
 
 {% load crispy_forms_filters %}
+{% load widget_tweaks %}
 
 {% block title %} profile {% endblock title %}
 
 {% block content %}
 
-    <p>****************</p>
-    <p>
-    'first_name': {{ profile.first_name }} <br>
-    'last_name': {{ profile.last_name }} <br>
-    'phone': {{ profile.phone }} <br>
-    'picture': <img src="{{ profile.picture.url }}" style="width: 100px; height: 100px;"> <br>
-    'state': {{ profile.state }} <br>
-    'city': {{ profile.city }} <br>
-    'address': {{ profile.address }} <br>
-    'plate': {{ profile.plate }} <br>
-    </p>
-    <p>****************</p>
-    <form action="" method="post" enctype='multipart/form-data'>
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit">Click</button>
-    </form>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <hr>
+                <h4>Profile Information</h4>
+                <hr>
+
+                <dl class="row">
+                    <dt class="col-sm-3">First Name:</dt>
+                    <dd class="col-sm-9">{{ profile.first_name }}</dd>
+
+                    <dt class="col-sm-3">Last Name:</dt>
+                    <dd class="col-sm-9">{{ profile.last_name }}</dd>
+
+                    <dt class="col-sm-3">Phone:</dt>
+                    <dd class="col-sm-9">{{ profile.phone }}</dd>
+
+                    <dt class="col-sm-3">Picture:</dt>
+                    <dd class="col-sm-9">
+                        <img src="{{ profile.picture.url }}" alt="Profile Picture" class="img-fluid"
+                             style="max-width: 100px; max-height: 100px;">
+                    </dd>
+
+                    <dt class="col-sm-3">State:</dt>
+                    <dd class="col-sm-9">{{ profile.state }}</dd>
+
+                    <dt class="col-sm-3">City:</dt>
+                    <dd class="col-sm-9">{{ profile.city }}</dd>
+
+                    <dt class="col-sm-3">Address:</dt>
+                    <dd class="col-sm-9">{{ profile.address }}</dd>
+
+                    <dt class="col-sm-3">Plate:</dt>
+                    <dd class="col-sm-9">{{ profile.plate }}</dd>
+                </dl>
+
+                <hr>
+                <h4>Edit Profile</h4>
+                <hr>
+
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+
+                <br><br>
+                <hr>
+                <h4>change password</h4>
+                <hr>
+                <form id="change_password_form" method="post" class="container">
+                    {% csrf_token %}
+
+                    {% for field in change_pass_form %}
+                        <div class="mb-3">
+                            {{ field.errors }}
+                            {{ field.label_tag }}
+                            {% render_field field class="form-control" placeholder=field.label %}
+                            <div class="invalid-feedback text-block" id="invalid-feedback-{{ field.name }}"
+                                 style="display: none;"></div>
+                        </div>
+                    {% endfor %}
+
+                    <button id="changePasswordBtn" onclick="changePassword()"
+                            class="btn btn-lg btn-primary btn-block mt-4" type="button">Change Password
+                    </button>
+                </form>
+                <br><br>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        const notyf = new Notyf();
+
+        function changePassword() {
+            // Similar structure to the Login function
+            // old password
+            let oldPassword_id = document.getElementById(`id_oldpassword`);
+            let oldPasswordFeedbackArea = document.querySelector(`#invalid-feedback-oldpassword`);
+            // password1
+            let password1Id = document.getElementById(`id_password1`);
+            let password1IdFeedbackArea = document.querySelector(`#invalid-feedback-password1`);
+            // password2
+            let password2Id = document.getElementById(`id_password2`);
+            let password2IdFeedbackArea = document.querySelector(`#invalid-feedback-password2`);
+
+            // Repeat for other fields in the form
+            // old password
+            oldPassword_id.classList.remove('is-invalid');
+            oldPasswordFeedbackArea.style.display = "none";
+            // password1
+            password1Id.classList.remove('is-invalid');
+            password1IdFeedbackArea.style.display = "none";
+            // password2
+            password2Id.classList.remove('is-invalid');
+            password2IdFeedbackArea.style.display = "none";
+            // Repeat for other fields
+
+            let changePasswordBtn = document.getElementById('changePasswordBtn');
+            changePasswordBtn.innerHTML = `Changing Password....`;
+            let myForm = document.getElementById('change_password_form');
+
+            var data = new FormData(myForm);
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'account_change_password' %}",
+                data: data,
+                cache: false,
+                processData: false,
+                contentType: false,
+
+                success: function (response) {
+                    changePasswordBtn.innerHTML = `Change Password`;
+                    console.log('success');
+                    location.reload();
+                    window.scrollTo(0, 0);
+                },
+                error: function (response) {
+                    let form_errors = response.responseJSON.form.errors;
+                    if (form_errors) {
+                        for (var key in form_errors) {
+                            notyf.error({
+                                message: form_errors[key],
+                                duration: 0,
+                                dismissible: true
+                            })
+                        }
+                    }
+
+                    let fields_name = response.responseJSON.form.fields;
+                    for (var key in fields_name) {
+                        let field_id = document.getElementById(`id_${key}`)
+                        let feedbackAreaa = document.querySelector(`#invalid-feedback-${key}`);
+                        if (fields_name[key].errors.length > 0) {
+                            for (var fieldkey in fields_name[key].errors) {
+                                field_id.classList.add('is-invalid');
+                                feedbackAreaa.style.display = "block";
+                                feedbackAreaa.innerHTML = `${fields_name[key].errors[fieldkey]}`
+                            }
+                        } else {
+                            field_id.classList.remove('is-invalid');
+                            feedbackAreaa.style.display = "none";
+                            field_id.classList.add('is-valid');
+                        }
+                    }
+                    LoginBtn.innerHTML = 'Login';
+                }
+            });
+        }
+    </script>
+
 {% endblock content %}
