@@ -63,3 +63,7 @@ class ContactUsView(generic.CreateView):
     def get_success_url(self):
         messages.success(self.request, _('We will soon answer your message'))
         return reverse_lazy('store:product_list')
+
+
+class AboutUsView(generic.TemplateView):
+    template_name = 'core/about_us.html'
