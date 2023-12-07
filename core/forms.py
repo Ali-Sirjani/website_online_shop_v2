@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, UsernameField
+from django.utils.translation import gettext_lazy as _
 
-from .models import Profile
+from .models import Profile, ContactUs
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -40,3 +41,21 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ('first_name', 'last_name', 'phone', 'picture', 'state', 'city', 'address', 'plate')
         widgets = {'picture': forms.FileInput}
+
+
+class ContactUsForm(forms.ModelForm):
+    class Meta:
+        model = ContactUs
+        fields = ('full_name', 'email', 'phone', 'message')
+
+    def clean(self):
+        clean_data = super().clean()
+        if self.is_valid():
+
+            email = clean_data.get('email')
+            phone = clean_data.get('phone')
+
+            if not (email or phone):
+                self.add_error(None, _('You must fill email or phone'))
+
+        return clean_data

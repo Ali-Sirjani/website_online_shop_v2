@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'mptt',
     'jalali_date',
     'pytz',
+    'widget_tweaks',
 
     # local apps
     'core',
