@@ -264,6 +264,10 @@ class Cart:
             cart_product[product_color_size_pk]['quantity'] += quantity
             messages.success(self.request, _('Add product'))
 
+        elif action == 'replace':
+            cart_product[product_color_size_pk]['quantity'] = quantity
+            messages.success(self.request, _('Cart update'))
+
         elif action == 'remove':
             if quantity < 0:
                 quantity *= -1
@@ -453,7 +457,7 @@ class Cart:
             cart_total += item['get_total_item']
         return cart_total
 
-    def calculate_coupon_price(self, request):
+    def calculate_coupon_price(self, success_message=True):
         coupon_pk = self.coupon.get('coupon_pk')
 
         if coupon_pk:
@@ -465,12 +469,16 @@ class Cart:
                     if new_cart_total:
                         self.coupon['coupon_price'] = math.ceil(new_cart_total)
                         self.save()
+                        if success_message:
+                            messages.success(self.request,
+                                             _('Congratulations! 🎉 Your coupon has been successfully applied. Thank you for choosing us! Happy shopping!')
+                                             )
                         return True
 
-                messages.info(request, _(f'The minimum price for coupon is {coupon_rules.last().start_price}'))
+                messages.info(self.request, _(f'The minimum price for coupon is {coupon_rules.last().start_price}'))
 
             else:
-                messages.error(request, _(f'The {coupon_obj} is not valid'))
+                messages.error(self.request, _(f'The {coupon_obj} is not valid'))
 
             self.coupon['coupon_pk'] = None
             self.coupon['coupon_price'] = 0
