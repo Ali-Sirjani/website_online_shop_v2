@@ -26,6 +26,9 @@ class Category(MPTTModel):
     def __str__(self):
         return f'{self.name}'
 
+    def get_absolute_url(self):
+        return reverse('store:category_page', args=[self.slug])
+
 
 class ActiveProductsManager(models.Manager):
     def get_queryset(self):
@@ -123,6 +126,12 @@ class ProductSize(models.Model):
         return f'{self.size}'
 
 
+class ActiveProductColorAndSizeValueManager(models.Manager):
+    def get_queryset(self):
+        return super(ActiveProductColorAndSizeValueManager, self).get_queryset().filter(
+            models.Q(inventory=None) | models.Q(inventory__gt=0), is_active=True)
+
+
 class ProductColorAndSizeValue(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='color_size_values',
                                 verbose_name=_('product'))
@@ -134,6 +143,9 @@ class ProductColorAndSizeValue(models.Model):
     size_price = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('size price'))
     inventory = models.IntegerField(null=True, blank=True, verbose_name=_('inventory'))
     is_active = models.BooleanField(default=True, verbose_name=_('active'))
+
+    objects = models.Manager()
+    active_objs = ActiveProductColorAndSizeValueManager()
 
     class Meta:
         unique_together = (('color', 'size', 'product'),)
