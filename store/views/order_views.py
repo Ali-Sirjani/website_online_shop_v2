@@ -8,6 +8,7 @@ from django.http.response import JsonResponse
 from django.contrib import messages
 from django.views.generic import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.http import require_POST
 
 from ..models import Order, OrderItem, Product, ProductColor, ProductSize, ProductColorAndSizeValue, Coupon
 from ..cart import Cart
@@ -106,9 +107,13 @@ def update_item(request):
                 messages.success(request, _('Delete product'))
                 return JsonResponse('Delete product', safe=False)
 
-            elif action == 'add' and quantity > 0:
-                item.quantity += quantity
-                messages.success(request, _('Add product'))
+            elif quantity > 0:
+                if action == 'add':
+                    item.quantity += quantity
+                    messages.success(request, _('Add product'))
+                elif action == 'replace':
+                    item.quantity = quantity
+                    messages.success(request, _('Cart update'))
 
             elif action == 'remove':
                 if quantity < 0:
