@@ -7,6 +7,7 @@ from django.core.validators import MinValueValidator
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib import messages
+from django.shortcuts import reverse
 
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -97,6 +98,9 @@ class Order(models.Model):
     def __str__(self):
         return f'{self.pk}'
 
+    def get_absolute_url(self):
+        return reverse('store:order_detail', args=[self.pk])
+
     def act_items(self):
         return self.items.all()
 
@@ -124,7 +128,7 @@ class Order(models.Model):
 
     get_cart_total_profit.fget.short_description = _('Cart Total Profit')
 
-    def calculate_coupon_price(self, request):
+    def calculate_coupon_price(self, request, success_message=True):
         coupon = self.coupon
         if coupon:
             if coupon.can_use():
@@ -134,6 +138,10 @@ class Order(models.Model):
                     if new_cart_total:
                         self.coupon_price = math.ceil(new_cart_total)
                         self.save(update_fields=('coupon_price',))
+                        if success_message:
+                            messages.success(request,
+                                             _('Congratulations! 🎉 Your coupon has been successfully applied. Thank you for choosing us! Happy shopping!')
+                                             )
                         return True
 
                 messages.info(request, _(f'The minimum price for coupon is {coupon_rules.last().start_price}'))
@@ -141,7 +149,7 @@ class Order(models.Model):
             else:
                 messages.error(request, _(f'The {coupon} is not valid'))
 
-            self.coupon = {}
+            self.coupon = None
             self.coupon_price = 0
             self.save()
 
