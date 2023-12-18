@@ -13,6 +13,7 @@ urlpatterns = [
     path('favorite/list/', views.ProductUserLikedView.as_view(), name='favorite_product_list'),
     path('cart/', views.cart_view, name='cart_page'),
     path('cart/update-item/', views.update_item, name='update_item'),
+    path('apply-coupon/', views.apply_coupon_view, name='apply_coupon'),
     path('order/<int:pk>/', views.OrderDetailView.as_view(), name='order_detail'),
     path('checkout/', views.checkout_view, name='checkout'),
     path('process/checkout/', views.sandbox_process_payment, name='sandbox_process'),
