@@ -175,8 +175,8 @@
                 content: "";
             }
             .footer-address-icon {
-                float: left;
-                margin-right: 15px;
+                float: right;
+                margin-left: 15px;
             }
             .footer-address-info {
                 overflow: hidden;
@@ -205,40 +205,40 @@
             &::before {
                 position: absolute;
                 content: "//";
-                left: 0;
+                right: 0;
                 top: 50%;
                 transform: translateY(-50%);
                 transition: inherit;
                 opacity: 0;
                 visibility: hidden;
-                margin-left: -20px;
+                margin-right: -20px;
                 color: var(--ltn__secondary-color);
             }
         }
         &:hover {
             a {
-                padding-left: 20px;
+                padding-right: 20px;
                 &::before {
                     opacity: 1;
                     visibility: visible;
-                    margin-left: 0;
+                    margin-right: 0;
                 }
             }
         }
     }
 }
 .footer-menu ul ul {
-    margin-left: 15px;
+    margin-right: 15px;
 }
 
 /* footer-menu-widget-2-column */
 .footer-menu-widget-2-column {
-    padding-left: 30px;
+    padding-right: 30px;
     .footer-menu {
         width: 50%;
-        float: left;
+        float: right;
         &:nth-child(odd) {
-            padding-left: 20px;
+            padding-right: 20px;
         }
     }
     ul {
@@ -258,12 +258,12 @@
     }
     input[type="email"] {
         margin: 0;
-        padding-right: 50px;
+        padding-left: 50px;
     }
     .btn-wrapper {
         position: absolute;
         top: 0;
-        right: 0;
+        left: 0;
         margin: 0;
         height: 100%;
         .btn {
@@ -303,7 +303,7 @@
                 }
             }
             span {
-                float: right;
+                float: left;
                 font-weight: 600;
             }
         }
@@ -326,7 +326,7 @@
         margin-bottom: 5px;
         i {
             color: var(--ltn__secondary-color);
-            margin-right: 5px;
+            margin-left: 5px;
         }
     }
     .ltn__blog-title {
@@ -344,7 +344,7 @@
         padding-bottom: 15px;
     }
     .payment-method {
-        text-align: right;
+        text-align: left;
     }
 }
 
@@ -366,12 +366,12 @@
             list-style: none;
             display: inline-block;
             margin-top: 0;
-            margin-right: 20px;
+            margin-left: 20px;
             font-size: 14px;
             font-family: var(--ltn__heading-font);
             font-weight: 700;
             &:last-child {
-                margin-right: 0;
+                margin-left: 0;
             }
             a {
                 margin: 0;
@@ -415,7 +415,7 @@
         padding: 50px 25px 40px;
     }
     .footer-menu-widget-2-column {
-        padding-left: 0;
+        padding-right: 0;
     } 
     .ltn__copyright-menu {
         margin-top: 25px;
@@ -455,7 +455,7 @@
         .footer-menu {
             width: 100%;
             &:nth-child(odd) {
-                padding-left: 0px;
+                padding-right: 0px;
             }
         }
     } 

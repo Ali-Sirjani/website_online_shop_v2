@@ -185,7 +185,7 @@
         var $backgroundImage = $('.bg-image, .bg-image-top, .bg-image-right');
         $backgroundImage.each(function() {
             var $this = $(this),
-                $bgImage = $this.data('bs-bg');
+                $bgImage = $this.data('bg');
             $this.css('background-image', 'url('+$bgImage+')');
         });
 
@@ -199,7 +199,7 @@
         /* ---------------------------------------------------------
             9. Tooltip
         --------------------------------------------------------- */
-        $('[data-bs-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip();
 
 
         /* --------------------------------------------------------
@@ -235,8 +235,8 @@
             arrows: false,
             vertical: true,
             focusOnSelect: true,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 992,
@@ -261,7 +261,7 @@
                 }
             ]
         });
-                        
+
         /* --------------------------------------------------------
             13. Isotope Gallery Active  ( Gallery / Portfolio )
         -------------------------------------------------------- */
@@ -301,9 +301,10 @@
         });
 
         /* --------------------------------------------------------
-            15. Slider One Active 
+            15. Slider One Active
         --------------------------------------------------------- */
         $('.ltn__slide-one-active').slick({
+            rtl: true,
             autoplay: false,
             autoplaySpeed: 2000,
             arrows: true,
@@ -314,8 +315,8 @@
             speed: 300,
             slidesToShow: 1,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 1200,
@@ -331,6 +332,7 @@
 
         /* ltn__slide-two-active */
         $('.ltn__slide-two-active').slick({
+            rtl: true,
             autoplay: false,
             autoplaySpeed: 2000,
             arrows: false,
@@ -341,8 +343,8 @@
             speed: 300,
             slidesToShow: 1,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 1200,
@@ -361,14 +363,15 @@
             16. Product Slider One
         --------------------------------------------------------- */
         $('.ltn__product-slider-one-active').slick({
+            rtl: true,
             arrows: true,
             dots: false,
             infinite: true,
             speed: 300,
             slidesToShow: 3,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 992,
@@ -399,14 +402,15 @@
             16. Product Slider One
         --------------------------------------------------------- */
         $('.ltn__product-slider-item-four-active').slick({
+            rtl: true,
             arrows: true,
             dots: false,
             infinite: true,
             speed: 300,
             slidesToShow: 4,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 992,
@@ -441,14 +445,15 @@
             16. Product Slider One
         --------------------------------------------------------- */
         $('.ltn__related-product-slider-one-active').slick({
+            rtl: true,
             arrows: true,
             dots: false,
             infinite: true,
             speed: 300,
             slidesToShow: 4,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 992,
@@ -478,14 +483,15 @@
             17. Tab Product Slider One
         --------------------------------------------------------- */
         $('.ltn__tab-product-slider-one-active').slick({
+            rtl: true,
             arrows: true,
             dots: false,
             infinite: true,
             speed: 300,
             slidesToShow: 4,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 1200,
@@ -528,14 +534,15 @@
             18. Blog Slider One
         --------------------------------------------------------- */
         $('.ltn__blog-slider-one-active').slick({
+            rtl: true,
             arrows: true,
             dots: false,
             infinite: true,
             speed: 300,
             slidesToShow: 3,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 1200,
@@ -580,14 +587,15 @@
             19. Testimonial Slider - 1
         --------------------------------------------------------- */
         $('.ltn__testimonial-slider-active').slick({
+            rtl: true,
             arrows: true,
             dots: true,
             infinite: true,
             speed: 300,
             slidesToShow: 1,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 992,
@@ -620,14 +628,15 @@
             20. Testimonial Slider - 2
         --------------------------------------------------------- */
         $('.ltn__testimonial-slider-2-active').slick({
+            rtl: true,
             arrows: true,
             dots: false,
             infinite: true,
             speed: 300,
             slidesToShow: 3,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 1200,
@@ -666,6 +675,7 @@
             21. Testimonial Slider - 3
         --------------------------------------------------------- */
         $('.ltn__testimonial-slider-3-active').slick({
+            rtl: true,
             arrows: true,
             centerMode: true,
             centerPadding: '80px',
@@ -674,8 +684,8 @@
             speed: 300,
             slidesToShow: 3,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 1600,
@@ -721,14 +731,15 @@
             22. Category Slider
         --------------------------------------------------------- */
         $('.ltn__category-slider-active').slick({
+            rtl: true,
             arrows: true,
             dots: false,
             infinite: true,
             speed: 300,
             slidesToShow: 6,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 1200,
@@ -763,9 +774,10 @@
 
 
         /* --------------------------------------------------------
-            23. Image Slide  - 1 (Screenshot) 
+            23. Image Slide  - 1 (Screenshot)
         --------------------------------------------------------- */
         $('.ltn__image-slider-1-active').slick({
+            rtl: true,
             arrows: true,
             dots: false,
             infinite: true,
@@ -774,8 +786,8 @@
             slidesToScroll: 1,
             centerMode: true,
             centerPadding: '0px',
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 992,
@@ -807,7 +819,7 @@
             24. Image Slide - 2
         --------------------------------------------------------- */
         $('.ltn__image-slider-2-active').slick({
-            rtl: false,
+            rtl: true,
             arrows: true,
             dots: false,
             infinite: true,
@@ -816,8 +828,8 @@
             slidesToScroll: 1,
             centerMode: true,
             centerPadding: '80px',
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 992,
@@ -855,7 +867,7 @@
             25. Image Slide - 3
         --------------------------------------------------------- */
         $('.ltn__image-slider-3-active').slick({
-            rtl: false,
+            rtl: true,
             arrows: true,
             dots: false,
             infinite: true,
@@ -864,8 +876,8 @@
             slidesToScroll: 1,
             centerMode: true,
             centerPadding: '0px',
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 992,
@@ -899,10 +911,10 @@
 
 
         /* --------------------------------------------------------
-            26. Image Slide - 4 
+            26. Image Slide - 4
         --------------------------------------------------------- */
         $('.ltn__image-slider-4-active').slick({
-            rtl: false,
+            rtl: true,
             arrows: true,
             dots: false,
             infinite: true,
@@ -911,8 +923,8 @@
             slidesToScroll: 1,
             centerMode: true,
             centerPadding: '0px',
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 1200,
@@ -957,7 +969,7 @@
         --------------------------------------------------------- */
         if($('.ltn__brand-logo-active').length){
             $('.ltn__brand-logo-active').slick({
-                rtl: false,
+                rtl: true,
                 arrows: false,
                 dots: false,
                 infinite: true,
@@ -998,7 +1010,7 @@
         --------------------------------------------------------- */
         if($('.ltn__blog-gallery-active').length){
             $('.ltn__blog-gallery-active').slick({
-                rtl: false,
+                rtl: true,
                 arrows: true,
                 dots: false,
                 infinite: true,
@@ -1039,9 +1051,9 @@
           delay: 10,
           time: 2000
         });
-        $('.counter').addClass('animated fadeInDownBig');  
+        $('.counter').addClass('animated fadeInDownBig');
         $('h3').addClass('animated fadeIn');
-        
+
 
         /* --------------------------------------------------------
             31. Instagram Feed
@@ -1123,7 +1135,7 @@
             }
         });
         $( ".amount" ).val( "$" + $( ".slider-range" ).slider( "values", 0 ) +
-        " - $" + $( ".slider-range" ).slider( "values", 1 ) ); 
+        " - $" + $( ".slider-range" ).slider( "values", 1 ) );
 
 
         /* --------------------------------------------------------
@@ -1136,11 +1148,11 @@
             var oldValue = $button.parent().find("input").val();
             if ($button.text() == "+") {
                 var newVal = parseFloat(oldValue) + 1;
-            } 
+            }
             else {
                 if (oldValue > 0) {
                     var newVal = parseFloat(oldValue) - 1;
-                } 
+                }
                 else {
                     newVal = 0;
                 }
@@ -1163,8 +1175,8 @@
 	    /* --------------------------------------------------------
             35. Parallax active ( About Section  )
         -------------------------------------------------------- */
-        /* 
-        > 1 page e 2 ta call korle 1 ta kaj kore 
+        /*
+        > 1 page e 2 ta call korle 1 ta kaj kore
         */
         if($('.ltn__parallax-effect-active').length){
             var scene = $('.ltn__parallax-effect-active').get(0);
@@ -1177,6 +1189,7 @@
         -------------------------------------------------------- */
         var ltn__testimonial_quote_slider = $('.ltn__testimonial-slider-4-active');
         ltn__testimonial_quote_slider.slick({
+            rtl: true,
             autoplay: true,
             autoplaySpeed: 3000,
             dots: false,
@@ -1185,8 +1198,8 @@
             speed: 1500,
             slidesToShow: 1,
             slidesToScroll: 1,
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                     breakpoint: 992,
@@ -1274,11 +1287,12 @@
         }
 
 
-        /*------------------------------------    
+        /*------------------------------------
         Slick Carousel
         --------------------------------------*/
 
         $('.ltn__testimonial-7-image-slider').slick({
+            rtl: true,
             slidesToShow: 2,
             asNavFor: '.ltn__testimonial-7-text-slider',
             dots: false,
@@ -1294,8 +1308,8 @@
             draggable: false,
             fade: true,
             asNavFor: '.ltn__testimonial-7-image-slider',
-            prevArrow: '<a class="slick-prev"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
-            nextArrow: '<a class="slick-next"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
+            nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [
                 {
                 breakpoint: 600,
