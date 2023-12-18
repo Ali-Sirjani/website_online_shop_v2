@@ -12,7 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django_filters.views import FilterMixin
 import json
 
-from ..models import Product, ProductComment
+from ..models import Product, ProductComment, Category, ProductColorAndSizeValue
 from ..utils import sort_product_queryset, optimize_product_query
 from ..filters import ProductFilter
 from ..forms import ProductCommentForm, SearchForm
@@ -22,12 +22,14 @@ class ProductsListView(FilterMixin, generic.ListView):
     filterset_class = ProductFilter
     template_name = 'store/product/product_list.html'
     context_object_name = 'products'
-    paginate_by = 2
+    paginate_by = 5
 
     def get_queryset(self):
         category_slug = self.kwargs.get('slug')
         if category_slug:
-            queryset = Product.active_objs.filter(category__name=self.kwargs['slug'])
+            category_obj = get_object_or_404(Category, slug=category_slug)
+            category_descendants = category_obj.get_descendants(True)
+            queryset = Product.active_objs.filter(category__in=category_descendants).distinct()
 
         else:
             queryset = Product.active_objs.all()
@@ -116,21 +118,21 @@ class ProductDetailView(generic.edit.FormMixin, generic.DetailView):
             context['liked'] = Product.active_objs.filter(favorite=self.request.user.pk).values_list('pk', flat=True)
 
         context['comments'] = ProductComment.objects.filter(confirmation=True, product=self.object.pk).select_related(
-            'author')
+            'author').order_by('-datetime_updated')
         return context
 
     def post(self, *args, **kwargs):
-        obj = self.get_object()
+        self.object = self.get_object()
         form = self.get_form()
         request = self.request
 
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.product = get_object_or_404(Product, pk=obj.pk)
+            comment.product = self.object
             comment.author = request.user
             messages.success(request, _('You comment after confirmation will show in comments.'))
             comment.save()
-            return redirect(obj.get_absolute_url())
+            return redirect(self.object.get_absolute_url())
         else:
             messages.error(request, _('Your comment have problem please try again!'))
             return super().form_invalid(form)
@@ -168,7 +170,6 @@ class ProductUserLikedView(LoginRequiredMixin, ProductsListView):
     filterset_class = ProductFilter
     template_name = 'store/product/product_list_user_like.html'
     context_object_name = 'products'
-    paginate_by = 2
 
     def get_queryset(self):
         queryset = Product.active_objs.filter(favorite=self.request.user)
