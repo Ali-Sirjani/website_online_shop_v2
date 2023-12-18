@@ -91,17 +91,17 @@ class PostDetailView(generic.edit.FormMixin, generic.DetailView):
         return context
 
     def post(self, *args, **kwargs):
-        obj = self.get_object()
+        self.object = self.get_object()
         form = self.get_form()
         request = self.request
 
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.post = obj
+            comment.post = self.object
             comment.author = request.user
             messages.success(request, _('You comment after confirmation will show in comments.'))
             comment.save()
-            return redirect(obj.get_absolute_url())
+            return redirect(self.object.get_absolute_url())
         else:
             messages.error(request, _('Your comment have problem please try again!'))
             return super().form_invalid(form)
