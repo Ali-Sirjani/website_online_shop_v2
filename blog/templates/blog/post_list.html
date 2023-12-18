@@ -1,16 +1,12 @@
 {% extends 'blog/_base_blog.html' %}
 
 {% load blog_temp_filters %}
+{% load i18n %}
 
-{% block title %} post {% endblock title %}
+{% block title %} {% trans 'Posts' %} {% endblock title %}
 
 {% block content %}
-    {% include 'blog/_top_post_list.html' %}
 
-    <div class="container">
-        {% include 'blog/_show_post_list.html' with posts=posts %}
-    </div>
-
-    {% include 'blog/_pagination.html' %}
+    {% include 'blog/_post_list_master.html' with posts=posts %}
 
 {% endblock content %}
