@@ -85,3 +85,8 @@ class ProductCommentForm(forms.ModelForm):
         model = ProductComment
         fields = ('text', 'star')
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        text_field = self.fields.get('text')
+        if text_field:
+            text_field.widget.attrs['class'] = ''

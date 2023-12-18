@@ -188,7 +188,7 @@ class TopProductAdmin(admin.ModelAdmin):
     autocomplete_fields = ('product',)
     list_display = ('product', 'level', 'is_top_level')
     ordering = ('level', '-is_top_level')
-    search_fields = ('products__title',)
+    search_fields = ('product__title',)
 
     def get_queryset(self, request):
         return super().get_queryset(request).filter(product__is_active=True, product__inventory__gt=0)

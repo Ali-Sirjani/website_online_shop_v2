@@ -1,7 +1,7 @@
 from django.utils.translation import gettext_lazy as _
 from django.db.models import Prefetch
 
-from .models import Category, Order, OrderItem
+from .models import Category, Order, OrderItem, Product
 from .cart import Cart
 
 
@@ -19,8 +19,13 @@ def order_contexts(request):
         order, created = Order.objects.prefetch_related(
             Prefetch(
                 'items',
-                queryset=OrderItem.objects.select_related('product').all()
-            )).get_or_create(customer=request.user, completed=False)
+                queryset=OrderItem.objects.select_related('color_size__color', 'color_size__size').all()
+            ),
+            Prefetch(
+                'items__product',
+                queryset=Product.objects.prefetch_related('images')
+            )
+        ).get_or_create(customer=request.user, completed=False)
     else:
         order = Cart(request)
 
