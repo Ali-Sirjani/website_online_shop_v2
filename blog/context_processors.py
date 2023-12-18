@@ -7,7 +7,7 @@ def top_tag_list(request):
 
     tag_queryset = tag_queryset.order_by('top_tags__level', '-top_tags__is_top_level')
 
-    context = {'top_tag': tag_queryset}
+    context = {'top_tags': tag_queryset}
 
     return context
 
