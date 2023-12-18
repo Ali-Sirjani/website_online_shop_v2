@@ -1,3 +1,5 @@
+from math import floor
+
 from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth import get_user_model
@@ -25,6 +27,9 @@ class Category(MPTTModel):
 
     def __str__(self):
         return f'{self.name}'
+
+    def get_absolute_url(self):
+        return reverse('store:category_page', args=[self.slug])
 
 
 class ActiveProductsManager(models.Manager):
@@ -70,6 +75,52 @@ class Product(models.Model):
 
     def active_color_size(self):
         return self.color_size_values.filter(models.Q(inventory__gt=0) | models.Q(inventory=None), is_active=True)
+
+    def color_dict(self):
+        query = self.color_size_values.all()
+        color_dict = {}
+
+        for color_size in query:
+            if color_size.color and color_size.is_active and (color_size.inventory is None or color_size.inventory > 0):
+                color_dict[str(color_size.color.pk)] = color_size.color
+
+        return color_dict
+
+    def size_dict(self):
+        query = self.color_size_values.all()
+        color_dict = {}
+
+        for color_size in query:
+            if color_size.size and color_size.is_active and (color_size.inventory is None or color_size.inventory > 0):
+                color_dict[str(color_size.size.pk)] = color_size.size
+
+        return color_dict
+
+    def main_image(self):
+        for image in self.images.all():
+            if image.is_main:
+                return image.image.url
+
+        return None
+
+    def avg_star(self):
+        half_star = False
+
+        try:
+            comments = self.comments.all()
+            confirmed_comments_star = [int(comment.star) for comment in comments if comment.confirmation]
+            comments_len = len(confirmed_comments_star)
+            avg = sum(confirmed_comments_star) / comments_len
+        except ZeroDivisionError:
+            full_star = 0
+            return full_star, half_star, 0
+
+        if avg % 1 >= 0.5:
+            half_star = True
+
+        full_star = floor(avg)
+
+        return full_star, half_star, comments_len
 
 
 class ProductSpecification(models.Model):
@@ -123,6 +174,12 @@ class ProductSize(models.Model):
         return f'{self.size}'
 
 
+class ActiveProductColorAndSizeValueManager(models.Manager):
+    def get_queryset(self):
+        return super(ActiveProductColorAndSizeValueManager, self).get_queryset().filter(
+            models.Q(inventory=None) | models.Q(inventory__gt=0), is_active=True)
+
+
 class ProductColorAndSizeValue(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='color_size_values',
                                 verbose_name=_('product'))
@@ -134,6 +191,9 @@ class ProductColorAndSizeValue(models.Model):
     size_price = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('size price'))
     inventory = models.IntegerField(null=True, blank=True, verbose_name=_('inventory'))
     is_active = models.BooleanField(default=True, verbose_name=_('active'))
+
+    objects = models.Manager()
+    active_objs = ActiveProductColorAndSizeValueManager()
 
     class Meta:
         unique_together = (('color', 'size', 'product'),)

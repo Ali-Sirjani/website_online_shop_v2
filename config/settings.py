@@ -99,6 +99,9 @@ TEMPLATES = [
                 # store app
                 'store.context_processors.product_contexts',
                 'store.context_processors.order_contexts',
+                # blog app
+                'blog.context_processors.top_tag_list',
+                'blog.context_processors.recent_posts'
             ],
         },
     },
@@ -147,11 +150,18 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa'
+
+LANGUAGES = (
+    ('fa', 'Persian'),
+    ('en', 'English'),
+)
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
@@ -192,11 +202,14 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 SOCIALACCOUNT_EMAIL_VERIFICATION = ACCOUNT_EMAIL_VERIFICATION
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
 ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_ADAPTER = 'core.adapter.CustomAccountAdapter'
+
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {

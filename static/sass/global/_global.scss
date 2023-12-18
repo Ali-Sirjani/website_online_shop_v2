@@ -46,103 +46,19 @@ font-family: 'Poppins', sans-serif;
 /* ====================================================
     Gutter Code 
 ==================================================== */
-.container,
-.container-fluid {
-    padding-right: 15px;
-    padding-left: 15px;
-}
-.row {
-    margin-left: -15px;
-    margin-right: -15px;
-}
-.col, 
-.col-1, 
-.col-10, 
-.col-11, 
-.col-12, 
-.col-2, 
-.col-3, 
-.col-4, 
-.col-5, 
-.col-6, 
-.col-7, 
-.col-8, 
-.col-9, 
-.col-auto, 
-.col-lg, 
-.col-lg-1, 
-.col-lg-10, 
-.col-lg-11, 
-.col-lg-12, 
-.col-lg-2, 
-.col-lg-3, 
-.col-lg-4, 
-.col-lg-5, 
-.col-lg-6, 
-.col-lg-7, 
-.col-lg-8, 
-.col-lg-9, 
-.col-lg-auto, 
-.col-md, 
-.col-md-1, 
-.col-md-10, 
-.col-md-11, 
-.col-md-12, 
-.col-md-2, 
-.col-md-3, 
-.col-md-4, 
-.col-md-5, 
-.col-md-6, 
-.col-md-7, 
-.col-md-8, 
-.col-md-9, 
-.col-md-auto, 
-.col-sm, 
-.col-sm-1, 
-.col-sm-10, 
-.col-sm-11, 
-.col-sm-12, 
-.col-sm-2, 
-.col-sm-3, 
-.col-sm-4, 
-.col-sm-5, 
-.col-sm-6, 
-.col-sm-7, 
-.col-sm-8, 
-.col-sm-9, 
-.col-sm-auto, 
-.col-xl, 
-.col-xl-1, 
-.col-xl-10, 
-.col-xl-11, 
-.col-xl-12, 
-.col-xl-2, 
-.col-xl-3, 
-.col-xl-4, 
-.col-xl-5, 
-.col-xl-6, 
-.col-xl-7, 
-.col-xl-8, 
-.col-xl-9, 
-.col-xl-auto {
-    padding-right: 15px;
-    padding-left: 15px;
-    position: relative;
-}
-
  .ltn__no-gutter > [class*='col-'] { /* No padding only for child columns */
-    padding-right: 0;
     padding-left: 0;
+    padding-right: 0;
 }
 .ltn__no-gutter-all [class*='col-'] { /* No padding for every columns */
-    padding-right: 0;
     padding-left: 0;
+    padding-right: 0;
 }
 
 @media(min-width:992px) {  /* Modify this based on column def */
     .row {
-        margin-left: -20px;
         margin-right: -20px;
+        margin-left: -20px;
     }
     .col, 
     .col-1, 
@@ -214,25 +130,25 @@ font-family: 'Poppins', sans-serif;
     .col-xl-8, 
     .col-xl-9, 
     .col-xl-auto {
-        padding-right: 20px;
         padding-left: 20px;
+        padding-right: 20px;
     }
 
     .ltn__custom-gutter {
-        margin-left: -20px;
         margin-right: -20px;
+        margin-left: -20px;
     }
     .ltn__custom-gutter > [class*='col-'] {
-        padding-right: 20px;
-        padding-left: 20px; 
+        padding-left: 20px;
+        padding-right: 20px; 
     }
     .ltn__custom-gutter-all {
         .row {
-            margin-left: -20px;
             margin-right: -20px;
+            margin-left: -20px;
             & [class*='col-'] {
-                padding-right: 20px;
-                padding-left: 20px; 
+                padding-left: 20px;
+                padding-right: 20px; 
             }
         }
     }
@@ -243,20 +159,20 @@ font-family: 'Poppins', sans-serif;
 
 @media(max-width:991px) {  /* Modify this based on column def */
     .ltn__custom-gutter {
-        margin-left: -15px;
         margin-right: -15px;
+        margin-left: -15px;
     }
     .ltn__custom-gutter > [class*='col-'] {
-        padding-right: 15px;
-        padding-left: 15px; 
+        padding-left: 15px;
+        padding-right: 15px; 
     }
     .ltn__custom-gutter-all {
-        margin-left: -15px;
         margin-right: -15px;
+        margin-left: -15px;
     }
     .ltn__custom-gutter-all [class*='col-'] {
-        padding-right: 15px;
-        padding-left: 15px; 
+        padding-left: 15px;
+        padding-right: 15px; 
     }
 
 }
@@ -264,13 +180,13 @@ font-family: 'Poppins', sans-serif;
 @media(max-width:576px) {  /* Modify this based on column def */
     .ltn__product-gutter {
         .row {
-            margin-left: -8px;
             margin-right: -8px;
+            margin-left: -8px;
         }
     }
     .ltn__product-gutter [class*='col-'] {
-        padding-right: 8px;
-        padding-left: 8px; 
+        padding-left: 8px;
+        padding-right: 8px; 
     }
 
 }
@@ -430,6 +346,7 @@ html {
     /* WebKit  */
 }
 body {
+    direction: rtl;
     color: var(--ltn__body-color);
     font-weight: 400;
     font-style: normal;
@@ -575,8 +492,8 @@ ol li {
         position: absolute;
         content: "";
         top: 0;
-        left: 0;
         right: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         background: var(--gradient-color-1);
@@ -746,7 +663,7 @@ ol li {
         content: "";
         width: 100%;
         height: 34.2%;
-        left: 0;
+        right: 0;
         bottom: 0;
         background-color: var(--section-bg-1);
     }
@@ -758,7 +675,7 @@ ol li {
         content: "";
         width: 100%;
         height: 55%;
-        left: 0;
+        right: 0;
         bottom: 0;
         background-color: var(--section-bg-2);
     }
@@ -770,7 +687,7 @@ ol li {
         content: "";
         width: 100%;
         height: 50%;
-        left: 0;
+        right: 0;
         bottom: 0;
         background-color: var(--section-bg-1);
     }
@@ -782,8 +699,8 @@ ol li {
         content: "";
         width: 25%;
         height: 100%;
-        left: auto;
-        right: 0;
+        right: auto;
+        left: 0;
         top: 0;
         background-color: var(--ltn__primary-color);
     }
@@ -795,8 +712,8 @@ ol li {
         content: "";
         width: 25%;
         height: 100%;
-        left: 0;
-        right: auto;
+        right: 0;
+        left: auto;
         top: 0;
         background-color: var(--ltn__primary-color);
     }
@@ -921,13 +838,13 @@ textarea {
     border-color: var(--border-color-9);
     height: 50px;
     box-shadow: none;
-    padding-left: 20px;
+    padding-right: 20px;
     font-size: 16px;
     color: var(--ltn__paragraph-color);
     width: 100%;
     margin-bottom: 30px;
     border-radius: 0;
-    padding-right: 40px;
+    padding-left: 40px;
 }
 input[type="text"]::-webkit-input-placeholder, 
 input[type="email"]::-webkit-input-placeholder, 
@@ -966,8 +883,8 @@ button:focus {
 .form-input-box input[type="text"] {
     width: 100%;
     height: 50px;
-    padding: 0 70px 0 15px;
-    border-radius: 0 15px 0px 0px;
+    padding: 0 15px 0 70px;
+    border-radius: 15px 0 0px 0px;
     border: 1px solid var(--ltn__primary-color);
     margin-bottom: 0;
 }
@@ -978,7 +895,7 @@ button:focus {
     height: 100%;
     border: 1px solid var(--ltn__primary-color);
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
     cursor: pointer;
     transition: all 0.3s ease 0s;
@@ -996,7 +913,7 @@ button:focus {
         position: absolute;
         top: 35%;
         transform: translateY(-50%);
-        right: 20px;
+        left: 20px;
         color: var(--ltn__secondary-color);
     }
 }
@@ -1057,7 +974,7 @@ label.checkbox-inline {
     font-size: 0.875rem;
     font-weight: bold;
     height: auto;
-    left: 5px;
+    right: 5px;
     line-height: normal;
     padding: 15px 23px 14px;
     text-decoration: none;
@@ -1084,14 +1001,14 @@ $transition-long: all .5s ease-in;
     Alignments
 ---------------------------------------------------- */
 .alignleft {
-    float: left;
-    clear: both;
-    margin-right: 20px;
-}
-.alignright {
     float: right;
     clear: both;
     margin-left: 20px;
+}
+.alignright {
+    float: left;
+    clear: both;
+    margin-right: 20px;
 }
 .aligncenter {
     clear: both;
@@ -1214,8 +1131,8 @@ object {
 }
 .wp-caption img[class*="wp-image-"] {
     display: block;
-    margin-left: auto;
     margin-right: auto;
+    margin-left: auto;
 }
 .wp-caption .wp-caption-text {
     margin: 0.8075em 0;
@@ -1302,13 +1219,13 @@ object {
 }
 
 .wp-link-pages span:first-child {
-    margin-right: 5px;
+    margin-left: 5px;
 }
 
 dl,
 ol,
 ul {
-    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .post-password-form input {
@@ -1357,17 +1274,17 @@ ul {
     font-weight: bold;
     height: 40px;
     width: 40px;
-    right: 3%;
+    left: 3%;
     text-align: center;
-    -webkit-transform: rotate(45deg);
-    transform: rotate(45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
     box-shadow: var(--ltn__box-shadow-3);
     i {
         line-height: 40px;
-        -webkit-transform: rotate(-45deg);
-        transform: rotate(-45deg);
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
     }
     &:hover {
         background-color: var(--ltn__secondary-color);
@@ -1388,11 +1305,11 @@ ul {
     background-color: var(--ltn__secondary-color);
     height: 10px;
     width: 10px;
-    margin-right: 30px;
+    margin-left: 30px;
     border-radius: 100%;
 }
 .owl-dots .owl-dot:last-child {
-    margin-right: 0px;
+    margin-left: 0px;
 }
 .owl-dots .owl-dot:hover,
 .owl-dots .owl-dot.active {
@@ -1401,23 +1318,23 @@ ul {
 /* owl-arrow-1 */
 .owl-arrow-1 .owl-nav > div {
     position: absolute;
-    left: -60px;
+    right: -60px;
     top: 50%;
     transform: translateY(-50%);
-    right: auto;
+    left: auto;
 }
 .owl-arrow-1 .owl-nav > div.owl-next {
-    left: auto;
-    right: -60px;
+    right: auto;
+    left: -60px;
 }
 @media only screen and (max-width: 1200px) { 
     .owl-arrow-1 .owl-nav > div {
-        right: auto;
-        left: 0px;
+        left: auto;
+        right: 0px;
     }
     .owl-arrow-1 .owl-nav > div.owl-next {
-        right: 0px;
-        left: auto;
+        left: 0px;
+        right: auto;
     }
 }
 
@@ -1439,7 +1356,7 @@ ul {
         height: 10px;
         width: 10px;
         border-radius: 100%;
-        margin-right: 20px;
+        margin-left: 20px;
         background-color: var(--silver);
         cursor: pointer;
         margin-top: 0;
@@ -1466,8 +1383,8 @@ ul {
         cursor: pointer;
         position: absolute;
         top: 50%;
-        left: 15px;
-        right: auto;
+        right: 15px;
+        left: auto;
         transform: translateY(-50%);
         width: 50px;
         height: 50px;
@@ -1491,8 +1408,8 @@ ul {
         }
     }
     .slick-next {
-        right: 15px;
-        left: auto;
+        left: 15px;
+        right: auto;
     }
     &:hover {
         .slick-arrow {
@@ -1504,12 +1421,12 @@ ul {
 .slick-arrow-1-inner {
     &.slick-arrow-1:hover {
         .slick-arrow {
-            left: 50px;
-            right: auto;
-        }
-        .slick-next {
             right: 50px;
             left: auto;
+        }
+        .slick-next {
+            left: 50px;
+            right: auto;
         }
     }
 }
@@ -1517,12 +1434,12 @@ ul {
 @media (min-width: 1350px) {
     .slick-arrow-1:hover {
         .slick-arrow {
-            left: -50px;
-            right: auto;
-        }
-        .slick-next {
             right: -50px;
             left: auto;
+        }
+        .slick-next {
+            left: -50px;
+            right: auto;
         }
     }
 }
@@ -1538,7 +1455,7 @@ ul {
         width: 30px;
         line-height: 28px;
         display: block;
-        left: 15px;
+        right: 15px;
         border: 1px solid var(--border-color-1);
         text-align: center;
         &:hover {
@@ -1548,7 +1465,7 @@ ul {
         }
     }
     .slick-next {
-        left: 60px;
+        right: 60px;
     }
 }
 
@@ -1562,8 +1479,8 @@ ul {
         width: 60px;
         line-height: 58px;
         display: block;
-        left: auto;
-        right: 100px;
+        right: auto;
+        left: 100px;
         border: 2px solid;
         text-align: center;
         box-shadow: var(--ltn__box-shadow-2);
@@ -1574,7 +1491,7 @@ ul {
         }
     }
     .slick-next {
-        right: 15px;
+        left: 15px;
         background-color: var(--white);
         border-color: var(--white);
         color: var(--ltn__primary-color) !important;
@@ -1592,8 +1509,8 @@ ul {
     .slick-arrow {
         position: absolute;
         bottom: -50px;
-        left: 0;
         right: 0;
+        left: 0;
         text-align: center;
         height: 50px;
         width: 50px;
@@ -1608,10 +1525,10 @@ ul {
         }
     }
     .slick-next {
-        right: -60px;
+        left: -60px;
     }
     .slick-prev {
-        left: -60px;
+        right: -60px;
     }
 }
 
@@ -1666,7 +1583,7 @@ ul {
  .bg-overlay-white-90:before{
     position: absolute; 
     content: ""; 
-    left: 0;
+    right: 0;
     top: 0; 
     height: 100%;
     width: 100%;  
@@ -1717,7 +1634,7 @@ ul {
 .bg-overlay-theme-90:before{
    position: absolute; 
    content: ""; 
-   left: 0;
+   right: 0;
    top: 0; 
    height: 100%;
    width: 100%;  
@@ -1756,7 +1673,7 @@ ul {
 .bg-overlay-theme-black-90:before{
    position: absolute; 
    content: ""; 
-   left: 0;
+   right: 0;
    top: 0; 
    height: 100%;
    width: 100%;  
@@ -1982,61 +1899,61 @@ ul {
     Custom margin Padding
 ---------------------------------------------------- */
 .mr-30 {
-    margin-right: 30px;
-}
-.ml-30 {
     margin-left: 30px;
 }
+.ml-30 {
+    margin-right: 30px;
+}
 .pl-70 {
-    padding-left: 70px;
+    padding-right: 70px;
 }
 .pr-70 {
-    padding-right: 70px;
+    padding-left: 70px;
 }
 /* Padding left right */
 .plr--2 {
-    padding-left: 2%;
     padding-right: 2%;
+    padding-left: 2%;
 }
 .plr--3 {
-    padding-left: 3%;
     padding-right: 3%;
+    padding-left: 3%;
 }
 .plr--4 {
-    padding-left: 4%;
     padding-right: 4%;
+    padding-left: 4%;
 }
 .plr--5 {
-    padding-left: 5%;
     padding-right: 5%;
+    padding-left: 5%;
 }
 .plr--6 {
-    padding-left: 6%;
     padding-right: 6%;
+    padding-left: 6%;
 }
 .plr--7 {
-    padding-left: 7%;
     padding-right: 7%;
+    padding-left: 7%;
 }
 .plr--8 {
-    padding-left: 8%;
     padding-right: 8%;
+    padding-left: 8%;
 }
 .plr--9 { /* used */
-    padding-left: 9%;
     padding-right: 9%;
+    padding-left: 9%;
 }
 .plr--10 {
-    padding-left: 10%;
     padding-right: 10%;
+    padding-left: 10%;
 }
 .plr--11 {
-    padding-left: 11%;
     padding-right: 11%;
+    padding-left: 11%;
 }
 .plr--12 {
-    padding-left: 12%;
     padding-right: 12%;
+    padding-left: 12%;
 }
 @media (max-width: 1599px) {
     .plr--2,
@@ -2050,8 +1967,8 @@ ul {
     .plr--10,
     .plr--11,
     .plr--12 {
-        padding-left: 2%;
         padding-right: 2%;
+        padding-left: 2%;
     }
 }
 @media (max-width: 1399px) {
@@ -2066,8 +1983,8 @@ ul {
     .plr--10,
     .plr--11,
     .plr--12 {
-        padding-left: 15px;
         padding-right: 15px;
+        padding-left: 15px;
     }
 }
 @media (min-width: 1200px) {

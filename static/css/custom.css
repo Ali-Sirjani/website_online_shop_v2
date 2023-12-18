@@ -1,0 +1,70 @@
+@font-face {
+    font-family: 'num_fa_font';
+    src: url('../fonts/Qs_Iranyekan bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+.num_fa_font {
+    font-family: 'num_fa_font', sans-serif;
+}
+
+.discount-color {
+    color: #808080;
+}
+
+.color-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* This creates a circular shape */
+}
+
+/* Add this to your CSS file */
+.color-button {
+    margin: 12px; /* Add space around the color button */
+}
+
+.color-button.selected {
+    margin: 0; /* Remove the margin for the selected color button */
+}
+
+.size-button.selected {
+    color: #e05670; /* Change text color for better visibility */
+    font-weight: 900;
+}
+
+.star-rating {
+    font-size: 24px;
+    color: #ffd700;
+    display: inline-block;
+}
+
+.star-rating::before {
+    content: '\2606 \2606 \2606 \2606 \2606';
+    letter-spacing: 5px;
+}
+
+.star-rating.star-5::before {
+    content: '\2605 \2605 \2605 \2605 \2605';
+    letter-spacing: 5px;
+}
+
+.star-rating.star-4::before {
+    content: '\2605 \2605 \2605 \2605 \2606';
+    letter-spacing: 5px;
+}
+
+.star-rating.star-3::before {
+    content: '\2605 \2605 \2605 \2606 \2606';
+    letter-spacing: 5px;
+}
+
+.star-rating.star-2::before {
+    content: '\2605 \2605 \2606 \2606 \2606';
+    letter-spacing: 5px;
+}
+
+.star-rating.star-1::before {
+    content: '\2605 \2606 \2606 \2606 \2606';
+    letter-spacing: 5px;
+}

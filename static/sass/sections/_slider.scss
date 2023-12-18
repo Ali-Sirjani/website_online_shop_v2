@@ -97,7 +97,7 @@
         cursor: pointer;
         position: absolute;
         top: 50%;
-        left: 40px;
+        right: 40px;
         transform: translateY(-50%);
         width: 50px;
         height: 50px;
@@ -116,18 +116,18 @@
         }
     }
     .slick-next {
-        right: 40px;
-        left: auto;
+        left: 40px;
+        right: auto;
     }
     &:hover {
         .slick-arrow {
             opacity: 1;
             visibility: visible;
-            left: 20px;
+            right: 20px;
         }
         .slick-next {
-            right: 20px;
-            left: auto;
+            left: 20px;
+            right: auto;
         }
     }
 }
@@ -151,11 +151,11 @@
             .slick-arrow {
                 opacity: 1;
                 visibility: visible;
-                left: 60px;
+                right: 60px;
             }
             .slick-next {
-                right: 60px;
-                left: auto;
+                left: 60px;
+                right: auto;
             }
         }
     }
@@ -186,8 +186,8 @@
         margin-top: 40px;
     }
     .slide-brief {
-        padding-left: 30px;
-        border-left: 1px solid #576466;
+        padding-right: 30px;
+        border-right: 1px solid #576466;
     }
 
 
@@ -197,31 +197,31 @@
 .ltn__slide-item-2 { 
     .text-right {
         .slide-brief {
-            padding-left: 0px;
-            border-left: 0;
-            padding-right: 30px;
-            border-right: 1px solid #576466;
-            margin-left: auto;
+            padding-right: 0px;
+            border-right: 0;
+            padding-left: 30px;
+            border-left: 1px solid #576466;
+            margin-right: auto;
         }
     }
     .text-center {
         .slide-brief {
-            padding-left: 0px;
-            border-left: 0;
             padding-right: 0px;
             border-right: 0;
+            padding-left: 0px;
+            border-left: 0;
         }
     }
 }
 .text-right {
     .slide-item-info {
-        margin-left: auto;
+        margin-right: auto;
     }
 }
 .text-center {
     .slide-item-info {
-        margin-left: auto;
         margin-right: auto;
+        margin-left: auto;
     }
 }
 
@@ -230,20 +230,20 @@
 }
 .text-right {
     .slide-brief {
-        margin-left: auto;
+        margin-right: auto;
     }
 }
 .text-center {
     .slide-brief {
-        margin-left: auto;
         margin-right: auto;
+        margin-left: auto;
     }
 }
 
 .ltn__product-pointer {
         position: absolute;
         top: 50%;
-        left: 50%;
+        right: 50%;
         z-index: 9;
     & > ul {
         padding: 0;
@@ -258,11 +258,11 @@
                 min-width: 300px;
                 padding: 0;
                 background-color: white;
-                right: 80px;
+                left: 80px;
                 box-shadow: var(--ltn__box-shadow-3);
                 transform: translateY(-50%);
                 transition: all 0.3s ease 0s;
-                text-align: left;
+                text-align: right;
                 opacity: 0;
                 visibility: hidden;
                 & > li {
@@ -276,7 +276,7 @@
                     visibility: visible;
                 }
                 .ltn__pointer-icon {
-                    transform: rotate(45deg);
+                    transform: rotate(-45deg);
                 }
             }
         }
@@ -312,9 +312,9 @@
             width: 0;
             height: 0;
             border-top: 15px solid transparent;
-            border-left: 15px solid var(--white);
+            border-right: 15px solid var(--white);
             border-bottom: 15px solid transparent;
-            right: -15px;
+            left: -15px;
             top: 50%;
             transform: translateY(-50%);
         }
@@ -327,16 +327,16 @@
     }
     &.ltn__product-pointer-1 {
         top: 38%;
-        left: auto;
-        right: 24%;
+        right: auto;
+        left: 24%;
     }
     &.ltn__product-pointer-2 {
         top: 60%;
-        left: 20%;
+        right: 20%;
     }
     &.ltn__product-pointer-3 {
         top: 10%;
-        left: 40%;
+        right: 40%;
     }
 }
 .slide-img-left {
@@ -344,17 +344,17 @@
         & > ul {
             & > li {
                 & > ul {
-                    left: 80px;
-                    right: auto;
+                    right: 80px;
+                    left: auto;
                 }
             }
         }
         .ltn__product-pointer-inner {
             &::before {
-                border-right: 15px solid var(--white);
-                border-left: 0;
-                right: auto;
-                left: -15px;
+                border-left: 15px solid var(--white);
+                border-right: 0;
+                left: auto;
+                right: -15px;
             }
         }
     }
@@ -372,13 +372,13 @@
     .slide-item-img {
         width: 45%;
         position: absolute;
-        right: 150px;
+        left: 150px;
         top: auto;
         bottom: 100px;
         height: 70%;
         img {
-            text-align: right;
-            margin-left: auto;
+            text-align: left;
+            margin-right: auto;
             height: 100%;
             -o-object-fit: contain;
             object-fit: contain;
@@ -388,8 +388,8 @@
     }
     .text-right {
         .slide-item-img {
-            right: auto;
-            left: 150px;
+            left: auto;
+            right: 150px;
         }
     }
 }
@@ -411,25 +411,25 @@
 /* slide-item-5 */
 .ltn__slide-item-5 {
     .slide-item-img {
-        right: 200px;
+        left: 200px;
         bottom: 0;
         height: 80%;
     }
     .call-to-circle-1 {
-        right: 14%;
-        left: auto;
+        left: 14%;
+        right: auto;
         top: 30%;
         z-index: -1;
         animation: wave 8s 0.1s infinite linear;
     }
     .text-right {
         .slide-item-img {
-            right: auto;
-            left: 150px;
+            left: auto;
+            right: 150px;
         }
         .call-to-circle-1 {
-            left: 20%;
-            right: auto;
+            right: 20%;
+            left: auto;
         }
     }
 }
@@ -497,7 +497,7 @@
     &::before {
         position: absolute;
         content: "";
-        left: 0;
+        right: 0;
         bottom: 0;
         width: 90px;
         height: 2px;
@@ -505,18 +505,18 @@
     }
 }
 .text-right .slide-title-line::before {
-    left: auto;
-    right: 0;
+    right: auto;
+    left: 0;
 }
 .slide-title-line-2 {
     position: relative;
     padding-bottom: 0;
     margin-bottom: 25px;
-    padding-left: 100px;
+    padding-right: 100px;
     &::before {
         position: absolute;
         content: "";
-        left: 0;
+        right: 0;
         bottom: 50%;
         width: 90px;
         height: 2px;
@@ -572,12 +572,12 @@
     .ltn__slide-item-3 {
         .slide-item-img {
             width: 45%;
-            right: 60px;
+            left: 60px;
             top: 60%;
             transform: translateY(-50%);
             &.slide-img-left {
-                right: auto;
-                left: 60px;
+                left: auto;
+                right: 60px;
             }
         }
     }
@@ -585,8 +585,8 @@
         .slide-item-img {
             margin-top: 50px;
             width: 50%;
-            margin-left: auto;
             margin-right: auto;
+            margin-left: auto;
         }
     }
 }
@@ -595,12 +595,12 @@
     .ltn__slide-item-3 {
         .slide-item-img {
             width: 45%;
-            right: 60px;
+            left: 60px;
             top: 65%;
             transform: translateY(-50%);
             &.slide-img-left {
-                right: auto;
-                left: 60px;
+                left: auto;
+                right: 60px;
             }
         }
     }
@@ -608,8 +608,8 @@
         .slide-item-img {
             margin-top: 50px;
             width: 50%;
-            margin-left: auto;
             margin-right: auto;
+            margin-left: auto;
         }
     }
 }
@@ -618,10 +618,10 @@
     .ltn__slide-item-3 {
         .slide-item-img {
             width: 45%;
-            right: 60px;
+            left: 60px;
             &.slide-img-left {
-                right: auto;
-                left: 60px;
+                left: auto;
+                right: 60px;
             }
         }
     }
@@ -652,7 +652,7 @@
             font-size: 56px;
         }
         .slide-brief {
-            padding-left: 15px;
+            padding-right: 15px;
         }
     }
     .ltn__slide-item-6 {
@@ -686,7 +686,7 @@
             font-size: 40px;
         }
         .slide-brief {
-            padding-left: 15px;
+            padding-right: 15px;
         }
     }
     .ltn__slide-item-3 {
@@ -694,7 +694,7 @@
             width: 100%;
             position: relative;
             height: auto;
-            right: auto;
+            left: auto;
             bottom: auto;
             img {
                 height: auto;
@@ -702,8 +702,8 @@
         } 
     }
     .ltn__slide-item-3 .text-right .slide-item-img {
-        right: auto;
         left: auto;
+        right: auto;
     }
 
     .ltn__product-pointer > ul > li > ul {
@@ -711,20 +711,20 @@
     }
     .ltn__product-pointer > ul > li > ul {
         top: 110%;
-        left: 50%;
-        transform: translateX(-50%);
+        right: 50%;
+        transform: translateX(50%);
     }
     .ltn__product-pointer > ul > li:hover ul {
         top: 130%;
     }
     .ltn__product-pointer .ltn__product-pointer-inner::before {
-        left: 50%;
+        right: 50%;
         top: -25px;
-        transform: translateX(-50%) rotate(-90deg);
+        transform: translateX(50%) rotate(90deg);
     }
     .slide-img-left .ltn__product-pointer .ltn__product-pointer-inner::before {
-        left: 50%;
-        transform: translateX(-50%) rotate(90deg);
+        right: 50%;
+        transform: translateX(50%) rotate(-90deg);
     }
     .ltn__slide-item-5 {
         .slide-item-img {
@@ -775,7 +775,7 @@
             font-size: 30px;
         }
         .slide-brief {
-            padding-left: 15px;
+            padding-right: 15px;
         }
     }
     .ltn__product-pointer {

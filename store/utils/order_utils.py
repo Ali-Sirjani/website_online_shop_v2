@@ -34,8 +34,10 @@ def check_out_user_login(request):
         except ValueError:
             messages.error(request, _('You change the data of checkout form!'))
 
-        if order.coupon and order.coupon.can_use():
+        final_order_total = None
+        if order.coupon and order.calculate_coupon_price(request, success_message=False):
             final_order_total = order.get_cart_total_with_coupon
+
         else:
             final_order_total = order.get_cart_total
 
@@ -83,7 +85,7 @@ def check_out_user_anonymous(request, cart):
             messages.error(request, _('You change the data of checkout form!'))
 
         final_order_total = None
-        if cart.coupon and cart.calculate_coupon_price(request):
+        if cart.coupon and cart.calculate_coupon_price(success_message=False):
             final_order_total = cart.get_cart_total_with_coupon
 
         else:

@@ -34,10 +34,17 @@ def checkout_view(request):
             return checkout_anonymous
 
     if request.method == 'GET':
-        if order.calculate_coupon_price(request):
-            form_order.initial['total'] = order.get_cart_total_with_coupon
+        if request.user.is_authenticated:
+            if order.calculate_coupon_price(request, success_message=False):
+                form_order.initial['total'] = order.get_cart_total_with_coupon
+            else:
+                form_order.initial['total'] = order.get_cart_total
+
         else:
-            form_order.initial['total'] = order.get_cart_total
+            if order.calculate_coupon_price(success_message=False):
+                form_order.initial['total'] = order.get_cart_total_with_coupon
+            else:
+                form_order.initial['total'] = order.get_cart_total
 
     context = {
         'order': order,

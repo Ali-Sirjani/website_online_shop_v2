@@ -21,6 +21,9 @@ class Tag(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+    def get_absolute_url(self):
+        return reverse('blog:tag_list', args=[self.slug])
+
 
 class TopTag(models.Model):
     LEVEL_CHOICES = (
@@ -81,6 +84,9 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:post_detail', args=[self.slug])
+
+    def count_act_comments(self):
+        return self.post_comments.filter(confirmation=True).count()
 
 
 class PostComment(models.Model):

@@ -8,12 +8,12 @@ from allauth.account.forms import ChangePasswordForm
 
 from .models import Profile
 from .forms import ProfileForm, ContactUsForm
-from store.models import Product, TopProduct
+from store.models import Product, TopProduct, Order
 from store.utils import optimize_product_query
 
 
 class HomePageView(generic.ListView):
-    template_name = 'store/product/home_page.html'
+    template_name = 'core/home_page.html'
     context_object_name = 'top_products'
 
     def get_queryset(self):
@@ -52,6 +52,9 @@ class ProfileView(LoginRequiredMixin, generic.UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['change_pass_form'] = ChangePasswordForm()
+        context['orders_completed'] = Order.objects.filter(customer=self.request.user, completed=True).order_by(
+            '-datetime_payed')
+
         return context
 
 
