@@ -8,6 +8,7 @@ app_name = 'store'
 urlpatterns = [
     path('list/', views.ProductsListView.as_view(), name='product_list'),
     path('search/', views.ProductSearchView.as_view(), name='product_search'),
+    path('filter-size/', views.filter_size_based_color, name='filter_size_ajax'),
     path('favorite/', views.favorite_view, name='set_favorite_product'),
     path('favorite/list/', views.ProductUserLikedView.as_view(), name='favorite_product_list'),
     path('cart/', views.cart_view, name='cart_page'),

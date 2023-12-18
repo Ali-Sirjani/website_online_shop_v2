@@ -182,3 +182,32 @@ class ProductUserLikedView(LoginRequiredMixin, ProductsListView):
 
         queryset = self.filterset_class(self.request.GET, queryset=queryset).qs
         return queryset
+
+
+def filter_size_based_color(request):
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        messages.warning(request, _('Oops! Something went wrong with your request. Please try again.'
+                                    ' If the issue persists, contact our support team for assistance.'))
+        return JsonResponse('Something went wrong', safe=False)
+
+    product_pk = data.get('productId')
+    color_pk = data.get('colorId')
+
+    if not (color_pk or product_pk):
+        messages.warning(request, _('Something went wrong with your request.'))
+        return JsonResponse('Something went wrong', safe=False)
+
+    color_size_query = ProductColorAndSizeValue.active_objs.filter(product_id=product_pk, color_id=color_pk)
+
+    size_pk_set = set()
+
+    for color_size in color_size_query:
+        if color_size.size:
+            size_pk_set.add(str(color_size.size.pk))
+
+    size_pk_list = list(size_pk_set)
+
+    data_response = {'sizeIds': size_pk_list}
+    return JsonResponse(data_response, safe=False)
