@@ -1,48 +1,224 @@
 {% extends '_base.html' %}
 
-{% load crispy_forms_filters %}
+{% load i18n %}
+{% load trans_fa %}
+{% load order_temp_filters %}
 
-{% block title %} checkout {% endblock title %}
+{% block title %} {% trans 'checkout' %} {% endblock title %}
 
 {% block content %}
 
-    <div class="container mt-5">
-        <!-- Cart Summary -->
-        <div class="card mb-4">
-            <div class="card-header">
-                <h4>Cart Summary</h4>
-            </div>
-            <div class="card-body">
-                <ul class="list-group">
-                    <li class="list-group-item">Total Items: {{ order.get_cart_items }}</li>
-                    <li class="list-group-item">Cart Total (No Discount): ${{ order.get_cart_total_no_discount }}</li>
-                    <li class="list-group-item">Cart Total (With Discount):
-                        ${{ order.get_cart_total_with_discount }}</li>
-                    <li class="list-group-item">Cart Total Profit: ${{ order.get_cart_total_profit }}</li>
-                    <li class="list-group-item">Cart Total: ${{ order.get_cart_total }}</li>
-                    {% if order.coupon_price %}
-                        <li class="list-group-item">Cart Total Coupon: ${{ order.coupon_price }}</li>
-                        <li class="list-group-item">Cart Total (With Coupon):
-                            ${{ order.get_cart_total_with_coupon }}</li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
+    <!-- CHECKOUT AREA START -->
+    <div class="ltn__checkout-area mb-100 mt-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__checkout-inner">
+                        <div class="ltn__checkout-single-content ltn__coupon-code-wrap">
+                            <h5>{% trans 'Have a coupon?' %} <a class="ltn__secondary-color" href="#ltn__coupon-code"
+                                                                data-toggle="collapse">{% trans 'Click here to enter your code' %}</a>
+                            </h5>
+                            <div id="ltn__coupon-code" class="collapse ltn__checkout-single-content-info">
+                                <div class="ltn__coupon-code-form">
+                                    <p>{% trans 'If you have a coupon code, please apply it below.' %}</p>
+                                    <form action="{% url 'store:apply_coupon' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" name="code" placeholder="Coupon code">
+                                        <button class="btn theme-btn-2 btn-effect-2 text-uppercase">{% trans 'Apply Coupon' %}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ltn__checkout-single-content mt-50">
+                            <h4 class="title-2">{% trans 'Billing Details' %}</h4>
+                            <div class="ltn__checkout-single-content-info">
+                                <form method="post" id="payment_form">
+                                    {% csrf_token %}
+                                    {% if form_order.errors %}
+                                        <div class="container">
+                                            {% for field ,error in form_order.errors.items %}
+                                                <div class="alert alert-danger" role="alert">
+                                                    {{ field|verbose_name_order }}{{ error }}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    {% if form_shipping.errors %}
+                                        <div class="container">
+                                            {% for field ,error in form_shipping.errors.items %}
+                                                <div class="alert alert-danger" role="alert">
+                                                    {{ field|verbose_name_shipping }}{{ error }}
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                    {% if order|coupon_is_valid:request %}
+                                        <input type="hidden" value="{{ order.get_cart_total_with_coupon }}" name="total">
+                                    {% else %}
+                                        <input type="hidden" value="{{ order.get_cart_total }}" name="total">
+                                    {% endif %}
+                                    <h6>{% trans 'Personal Information' %}</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="input-item input-item-name ltn__custom-icon">
+                                                <input type="text" name="first_name"
+                                                       placeholder="{% trans 'First name' %}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-item input-item-name ltn__custom-icon">
+                                                <input type="text" name="last_name"
+                                                       placeholder="{% trans 'Last name' %}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-item input-item-email ltn__custom-icon">
+                                                <input type="email" name="email"
+                                                       placeholder="{% trans 'email address' %}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-item input-item-phone ltn__custom-icon">
+                                                <input type="text" name="phone"
+                                                       placeholder="{% trans 'phone number' %}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6">
+                                            <h6>{% trans 'City' %}</h6>
+                                            <div class="input-item">
+                                                <input type="text" placeholder="{% trans 'City' %}" name="city">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6">
+                                            <h6>{% trans 'State' %} </h6>
+                                            <div class="input-item">
+                                                <input type="text" placeholder="{% trans 'State' %}" name="state">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6">
+                                            <h6>{% trans 'Zip' %}</h6>
+                                            <div class="input-item">
+                                                <input type="text" placeholder="{% trans 'Zip' %}" name="plate">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-5">
+                                            <h6>{% trans 'Address' %}</h6>
+                                            <div class="input-item input-item-textarea ltn__custom-icon">
+                                            <textarea name="address"
+                                                      placeholder=""></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h6>{% trans 'Order Notes (optional)' %}</h6>
+                                    <div class="input-item input-item-textarea ltn__custom-icon">
+                                        <textarea name="order_note"
+                                                  placeholder="{% trans 'Notes about your order, e.g. special notes for delivery.' %}"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ltn__checkout-payment-method mt-50">
+                        <div class="ltn__payment-note mt-30 mb-30">
+                            <p>{% blocktrans %}Your personal data will be used to process your order, support your
+                                experience throughout this website, and for other purposes described in our privacy
+                                policy.{% endblocktrans %}</p>
+                        </div>
+                        <button class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                id="payment_button" type="submit">{% trans 'Payment' %}</button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping-cart-total mt-50">
+                        <h4 class="title-2">{% trans 'Items' %}</h4>
+                        <table class="table">
+                            <tbody>
+                            {% for item in order.act_items %}
+                                <tr>
+                                    <td>{{ item.product.title|truncatechars:30 }}<strong>× {{ item.quantity|num_fa_20 }}</strong>
+                                    </td>
+                                    {% if item.color_size %}
+                                        {% if item.color_size.color %}
+                                            <td>{{ item.color_size.color.name }}</td>
+                                        {% else %}
+                                            <td>-</td>
+                                        {% endif %}
 
-        <!-- Checkout Form -->
-        <div class="card">
-            <div class="card-header">
-                <h4>Checkout</h4>
-            </div>
-            <div class="card-body pb-4">
-                <form method="post">
-                    {% csrf_token %}
-                    {{ form_order|crispy }}
-                    {{ form_shipping|crispy }}
-                    <button type="submit" class="btn btn-primary mt-3">Place Order</button>
-                </form>
+                                        {% if item.color_size.size %}
+                                            <td>{{ item.color_size.size.size }}</td>
+                                        {% else %}
+                                            <td>-</td>
+                                        {% endif %}
+
+                                    {% else %}
+                                        <td>-</td>
+                                        <td>-</td>
+                                    {% endif %}
+
+                                    {% if item.discount %}
+                                        <td>{{ item.discount_price|num_fa_20 }}</td>
+                                    {% else %}
+                                        <td>{{ item.price|num_fa_20 }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        <h4 class="title-2 mt-50">{% trans 'Cart Totals' %}</h4>
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>{% trans 'Quantity Items' %}</td>
+                                <td>{{ order.get_cart_items|num_fa_20 }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Total (No Discount)' %}</td>
+                                <td>{{ order.get_cart_total_no_discount|num_fa_20 }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Total (With Discount)' %}</td>
+                                <td>{{ order.get_cart_total_with_discount|num_fa_20 }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Total Profit' %}</td>
+                                <td>{{ order.get_cart_total_profit|num_fa_20 }}</td>
+                            </tr>
+                            {% if order|coupon_is_valid:request %}
+                                <tr>
+                                    <td>{% trans 'Total Coupon' %}</td>
+                                    <td>{{ order.coupon_price|num_fa_20 }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>{% trans 'Order Total' %}</strong></td>
+                                    <td><strong>{{ order.get_cart_total|num_fa_20 }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>{% trans 'Total (With Coupon)' %}</strong></td>
+                                    <td><strong>{{ order.get_cart_total_with_coupon|num_fa_20 }}</strong></td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td><strong>{% trans 'Order Total' %}</strong></td>
+                                    <td><strong>{{ order.get_cart_total|num_fa_20 }}</strong></td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <!-- CHECKOUT AREA START -->
 
+
+    <script>
+        document.getElementById("payment_button").addEventListener("click", function () {
+            document.getElementById("payment_form").submit();
+        });
+    </script>
 {% endblock content %}
