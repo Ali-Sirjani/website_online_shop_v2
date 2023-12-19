@@ -2,16 +2,12 @@
 
 {% load crispy_forms_filters %}
 {% load product_temp_filters %}
+{% load i18n %}
 
-{% block title %} products {% endblock title %}
+{% block title %} {% trans 'products' %} {% endblock title %}
 
 {% block content %}
-    {% include 'store/product/_top_product_list.html' %}
 
-    <div class="container">
-        {% include 'store/product/_show_product_list.html' with products=products %}
-    </div>
-
-    {% include 'store/product/_pagination.html' %}
+    {% include 'store/product/_product_list_master.html' with products=products sort=sort %}
 
 {% endblock content %}
