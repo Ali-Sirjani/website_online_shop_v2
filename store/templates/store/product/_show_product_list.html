@@ -1,164 +1,137 @@
-{% for product in products %}
-    <div class="card mb-3">
-        <div class="card-header">
-            <h5 class="card-title">'title: {{ product.title }}'</h5>
-        </div>
-        <div class="card-body">
-            {% for spec_value in product.specs_values.all %}
-                <p class="card-text">
-                    <strong>'{{ spec_value.specification.name }}'</strong>: {{ spec_value.value }}
-                </p>
-            {% endfor %}
+{% load i18n %}
+{% load trans_fa %}
 
-            {% for color_or_size in product.color_size_values.all %}
-                <p class="card-text">
-                    <strong>'Color'</strong>: {{ color_or_size.color.name }} <br>
-                    <strong>'Size'</strong>: {{ color_or_size.size.size }} <br>
-                    <strong>'Size Price'</strong>: {{ color_or_size.size_price }}
-                </p>
-            {% endfor %}
 
-            <p class="card-text">
-                <strong>'Short Description'</strong>: {{ product.short_description }}
-            </p>
-
-            {% for product_image in product.images.all %}
-                {% if product_image.is_main %}
-                    <img src="{{ product_image.image.url }}" alt="Main Image" class="img-thumbnail"
-                         style="width: 120px; height: 120px;">
-                {% else %}
-                    <img src="{{ product_image.image.url }}" alt="Image" class="img-thumbnail"
-                         style="width: 60px; height: 60px;">
-                {% endif %}
-            {% endfor %}
-
-            <p class="card-text">
-                <strong>'Price'</strong>: {{ product.price }} <br>
-                <strong>'Discount'</strong>: {{ product.discount }} <br>
-                <strong>'Discount Price'</strong>: {{ product.discount_price }} <br>
-                <strong>'Slug'</strong>: {{ product.slug }}
-            </p>
-            <p class="card-text">
-                <a type="button" href="{{ product.get_absolute_url }}" class="btn btn-success">detail</a>
-
-                {% if product.pk in liked %}
-                    <button name="like-product" data-product="{{ product.pk }}" class="btn btn-dark like-product">
-                        Unlike
-                    </button>
-                {% else %}
-                    <button name="like-product" data-product="{{ product.pk }}" class="btn btn-danger like-product">
-                        Like
-                    </button>
-                {% endif %}
-
-            </p>
-            <p>
-
-                <!-- Add to Cart Button -->
-            <div>
-                <button class="update-cart"
-                        data-product="{{ product.id }}"
-                        data-action="add"
-                        data-colorId=""
-                        data-sizeId="">
-                    Add to Cart
-                </button>
-
-                <input type="number" id="qty" value="1">
-                <button class="updateQtyPlus">plus</button>
-                <button class="updateQtyMinus">minus</button>
-
+<div class="tab-content">
+    <div class="tab-pane fade active show" id="liton_product_grid">
+        <div class="ltn__product-tab-content-inner ltn__product-grid-view">
+            <div class="row">
+                {% for product in products %}
+                    <!-- ltn__product-item -->
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="ltn__product-item text-center">
+                            <div class="product-img">
+                                <a href="{{ product.get_absolute_url }}"><img
+                                        src="{{ product.main_image }}"
+                                        alt="#"></a>
+                                <div class="product-badge">
+                                    {% if product.discount %}
+                                        <ul>
+                                            <li class="badge-1">{% trans 'Off' %}</li>
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                                <div class="product-hover-action product-hover-action-2">
+                                    <ul>
+                                        <li>
+                                            <a href="#" title="Quick View" data-bs-toggle="modal" class="like-product"
+                                               data-bs-target="#quick_view_modal" data-product="{{ product.pk }}">
+                                                {% if product.pk in liked %}
+                                                    <i class="fas fa-heart"></i>
+                                                {% else %}
+                                                    <i class="icon-heart"></i>
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="Quick View" data-toggle="modal"
+                                               data-target="#p{{ product.pk }}">
+                                                <i class="icon-shuffle"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2 class="product-title"><a
+                                        href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                </h2>
+                                <div class="product-price">
+                                    {% if product.discount %}
+                                        <span>{{ product.discount_price|num_fa_20 }}</span>
+                                        <del>{{ product.price|num_fa_15 }}</del>
+                                    {% else %}
+                                        <span>{{ product.price|num_fa_20 }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                {% endfor %}
             </div>
-            {% for color_size_value in product.active_color_size %}
-
-                <!-- Color Selection (if applicable) -->
-                {% if color_size_value.color %}
-                    <p>Choose Color:</p>
-                    <div>
-                    <button class="color-button"
-                            data-product="{{ product.id }}"
-                            data-color-id="{{ color_size_value.color.id }}"
-                            data-action="color">
-                        {{ color_size_value.color.name }}
-                    </button>
-                {% endif %}
-            {% if color_size_value.size %}
-                <!-- Size Selection (if applicable) -->
-                <p>Choose Size:</p>
-                <div>
-                    <button class="size-button"
-                            data-product="{{ product.id }}"
-                            data-size-id="{{ color_size_value.size.id }}"
-                            data-action="size">
-                        {{ color_size_value.size.size }}
-                    </button>
-                </div>
-            {% endif %}
-            </div>
-            {% endfor %}
-            </p>
-
         </div>
     </div>
-{% endfor %}
-<script>
+    <div class="tab-pane fade" id="liton_product_list">
+        <div class="ltn__product-tab-content-inner ltn__product-list-view">
+            <div class="row">
+                <!-- ltn__product-item -->
+                {% for product in products %}
+                    <div class="col-lg-12">
+                        <div class="ltn__product-item">
+                            <div class="product-img">
+                                <a href="{{ product.get_absolute_url }}"><img src="{{ product.main_image }}"
+                                                                              alt="#"></a>
+                                {% if product.discoutn %}
+                                    <div class="product-badge">
+                                        <ul>
+                                            <li class="badge-1">{% trans 'Off' %}</li>
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="product-info">
+                                <h2 class="product-title"><a
+                                        href="{{ product.get_absolute.url }}">{{ product.title }}</a></h2>
+                                <div class="product-price">
+                                    {% if product.discount %}
+                                        <span>{{ product.discount_price|num_fa_20 }}</span>
+                                        <del>{{ product.price|num_fa_20 }}</del>
+                                    {% else %}
+                                        <span>{{ product.price|num_fa_20 }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="product-ratting">
+                                    <ul>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product-brief">
+                                    <p>{{ product.short_desctiption }}</p>
+                                </div>
+                                <div class="product-hover-action product-hover-action-2">
+                                    <ul>
+                                        <li>
+                                            <a href="#" title="Quick View" data-toggle="modal" class="like-product"
+                                               data-target="#quick_view_modal" data-product="{{ product.pk }}">
+                                                {% if product.pk in liked %}
+                                                    <i class="fas fa-heart"></i>
+                                                {% else %}
+                                                    <i class="icon-heart"></i>
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="Quick View" data-toggle="modal"
+                                               data-target="#p{{ product.pk }}">
+                                                <i class="icon-shuffle"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
 
-    var updateBtns = document.getElementsByClassName('update-cart');
-    var colorButtons = document.getElementsByClassName('color-button');
-    var sizeButtons = document.getElementsByClassName('size-button');
-    var qtyInput = document.getElementById("qty");
-    var buttonQtyPlus = document.getElementsByClassName("updateQtyPlus");
-    var buttonQtyMinus = document.getElementsByClassName("updateQtyMinus");
-    var selectedColorId = null;
-    var selectedSizeId = null;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <!--  -->
+            </div>
+        </div>
+    </div>
+</div>
 
-    // Event listener for color buttons
-    for (var i = 0; i < buttonQtyPlus.length; i++) {
-        buttonQtyPlus[i].addEventListener('click', function () {
-            var value = parseInt(qtyInput.value)
-            qtyInput.value = value + 1
-            console.log('this is value :', qtyInput.value)
-        });
-    }
 
-    for (var i = 0; i < buttonQtyMinus.length; i++) {
-        buttonQtyMinus[i].addEventListener('click', function () {
-            var value = parseInt(qtyInput.value)
-            qtyInput.value = value - 1
-            console.log('this is value :', qtyInput.value)
-
-        });
-    }
-
-    // Event listener for color buttons
-    for (var i = 0; i < colorButtons.length; i++) {
-        colorButtons[i].addEventListener('click', function () {
-            // Update the data-color-id attribute of the "Add to Cart" button
-            var addToCartButton = document.querySelector('.update-cart[data-product="' + this.dataset.product + '"]');
-            if (addToCartButton) {
-                addToCartButton.dataset.colorId = this.dataset.colorId;
-                console.log('Updated Color ID on Add to Cart button:', addToCartButton.dataset.colorId);
-            }
-
-            // Store the selected color ID
-            selectedColorId = this.dataset.colorId;
-            console.log('Selected Color ID:', selectedColorId);
-        });
-    }
-
-    // Event listener for size buttons
-    for (var i = 0; i < sizeButtons.length; i++) {
-        sizeButtons[i].addEventListener('click', function () {
-            // Update the data-size-id attribute of the "Add to Cart" button
-            var addToCartButton = document.querySelector('.update-cart[data-product="' + this.dataset.product + '"]');
-            if (addToCartButton) {
-                addToCartButton.dataset.sizeId = this.dataset.sizeId;
-                console.log('Updated Size ID on Add to Cart button:', addToCartButton.dataset.sizeId);
-            }
-
-            // Store the selected size ID
-            selectedSizeId = this.dataset.sizeId;
-            console.log('Selected Size ID:', selectedSizeId);
-        });
-    }
-</script>
