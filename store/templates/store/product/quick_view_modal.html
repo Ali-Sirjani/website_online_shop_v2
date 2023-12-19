@@ -1,0 +1,146 @@
+{% load i18n %}
+{% load trans_fa %}
+
+<!-- MODAL AREA START (Quick View Modal) -->
+<div class="ltn__modal-area ltn__quick-view-modal-area">
+    {% for product in products %}
+        <div class="modal fade" id="p{{ product.pk }}" tabindex="-1">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            <!-- <i class="fas fa-times"></i> -->
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="ltn__quick-view-modal-inner">
+                            <div class="modal-product-item">
+                                <div class="row">
+                                    <div class="col-lg-6 col-12">
+                                        <div class="modal-product-img">
+                                            <img src="{{ product.main_image }}" alt="#">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+                                        <div class="modal-product-info shop-details-info pl-0">
+                                            <a href="{{ product.get_absolute_url }}"><h3>{{ product.title }}</h3></a>
+                                            <div class="product-price-ratting mb-20">
+                                                <ul>
+                                                    <li>
+                                                        <div class="product-price">
+                                                            {% if product.discount %}
+                                                                <span>{{ product.discount_price|num_fa_20 }}</span>
+                                                                <del>{{ product.price|num_fa_20 }}</del>
+                                                            {% else %}
+                                                                <span>{{ product.price|num_fa_20 }}</span>
+                                                            {% endif %}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="product-ratting">
+                                                            <ul>
+                                                                {% with avg_result=product.avg_star %}
+                                                                    <div class="star-rating star-{{ avg_result.0 }}"></div>
+                                                                    <li class="review-total">
+                                                                        ( {{ avg_result.2 }} {% trans 'Reviews' %})
+                                                                    </li>
+                                                                {% endwith %}
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="modal-product-brief">
+                                                <p>{{ product.short_desctiption }}</p>
+                                            </div>
+                                            <div class="modal-product-meta ltn__product-details-menu-1 mb-20">
+                                                <ul>
+                                                    <!-- Color Selection (if applicable) -->
+                                                    {% with items=product.color_dict.items %}
+                                                        {% if items %}
+                                                            <li>
+                                                                <div class="ltn__color-widget clearfix">
+                                                                    <strong class="d-meta-title">Color</strong>
+                                                                    <ul>
+                                                                        {% for color_pk, color in items %}
+                                                                            <li class="color-button {% if selected_color_id == color_pk %}selected{% endif %}"
+                                                                                data-product="{{ product.id }}"
+                                                                                data-color-id="{{ color_pk }}"
+                                                                                style="background-color: {{ color }};">
+                                                                            </li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endwith %}
+                                                    <!-- Size Selection (if applicable) -->
+                                                    {% with items=product.size_dict.items %}
+                                                        {% if items %}
+                                                            <li>
+                                                                <div class="ltn__size-widget clearfix mt-25">
+                                                                    <strong class="d-meta-title">Size</strong>
+                                                                    <ul>
+                                                                        {% for size_pk, size  in product.size_dict.items %}
+                                                                            <li class="size-button size-button-{{ product.id }} {% if selected_size_id == size_pk %}selected{% endif %}"
+                                                                                data-product="{{ product.id }}"
+                                                                                data-size-id="{{ size_pk }}"
+                                                                                style="cursor: pointer; font-size: 25px;">
+                                                                                {{ size|upper }}
+                                                                            </li>
+                                                                        {% endfor %}
+                                                                    </ul>
+                                                                </div>
+                                                            </li>
+                                                        {% endif %}
+                                                    {% endwith %}
+                                                </ul>
+                                            </div>
+                                            <div class="ltn__product-details-menu-2 product-cart-wishlist-btn mb-30">
+                                                <ul>
+                                                    <li>
+                                                        <div class="cart-plus-minus">
+                                                            <input type="text" id="qty-{{ product.id }}" value="01"
+                                                                   name="qtybutton"
+                                                                   class="cart-plus-minus-box">
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <button
+                                                                class="update-cart update-cart-{{ product.id }}-mini theme-btn-1 btn btn-effect-1 d-add-to-cart"
+                                                                data-product="{{ product.id }}"
+                                                                data-action="add"
+                                                                data-colorId=""
+                                                                data-sizeId=""
+                                                                title="Add to Cart">
+                                                            <span>{% trans 'ADD TO CART' %}</span>
+                                                        </button>
+                                                    </li>
+                                                    <li>
+                                                        <a href="#"
+                                                           class="btn btn-effect-1 d-add-to-wishlist like-product"
+                                                           title="Add to Cart" data-bs-toggle="modal"
+                                                           data-product="{{ product.pk }}"
+                                                           data-bs-target="#liton_wishlist_modal">
+                                                            {% if product.pk in liked %}
+                                                                <i class="fas fa-heart" style="color: #e25671;"></i>
+                                                            {% else %}
+                                                                <i class="icon-heart"></i>
+                                                            {% endif %}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<!-- MODAL AREA END -->
