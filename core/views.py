@@ -3,12 +3,13 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
+from django.core import serializers
 
 from allauth.account.forms import ChangePasswordForm
 
 from .models import Profile
 from .forms import ProfileForm, ContactUsForm
-from store.models import Product, TopProduct, Order
+from store.models import Product, TopProduct, Order, Category
 from store.utils import optimize_product_query
 
 
@@ -35,6 +36,7 @@ class HomePageView(generic.ListView):
             pk__in=self.get_queryset().values_list('pk')).order_by('?')
 
         context['random_products'] = optimize_product_query(random_queryset)[:5]
+        context['category_json'] = serializers.serialize("json", Category.objects.all())
         return context
 
 
