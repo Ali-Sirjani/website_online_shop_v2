@@ -1,0 +1,400 @@
+{% extends '_base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_filters %}
+{% load product_temp_filters %}
+{% load trans_fa %}
+
+{% block title %} {% trans 'Home' %} {% endblock title %}
+
+{% block content %}
+
+    <!-- SLIDER AREA START (slider-6) -->
+    <div class="ltn__slider-area ltn__slider-3 ltn__slider-6 plr--5 mt-50">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__slide-two-active slick-slide-arrow-1 slick-slide-dots-1 arrow-white--">
+                        <!-- ltn__slide-item  -->
+                        <div class="ltn__slide-item ltn__slide-item-8 ltn__slide-item-9 text-color-white---- bg-image bg-overlay-theme-black-80---"
+                             data-bg="{% static 'img/slider/3.jpg' %}">
+                            <div class="ltn__slide-item-inner">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-12 align-self-center">
+                                            <div class="slide-item-info">
+                                                <div class="slide-item-info-inner ltn__slide-animation">
+                                                    <div class="slide-item-info">
+                                                        <div class="slide-item-info-inner ltn__slide-animation">
+                                                            <h6 class="slide-sub-title ltn__secondary-color slide-title-line-2 animated">
+                                                                {% trans 'Laptop Deals' %}</h6>
+                                                            <h3 class="slide-title animated" style="color: gray;">
+                                                                {% trans 'Discover the Latest in Laptop Technology' %}</h3>
+                                                            <div class="slide-brief animated">
+                                                                <p style="color: #ffffff">
+                                                                    {% blocktrans %}
+                                                                        Explore cutting-edge features and powerful
+                                                                        performance with our exclusive range of laptops.
+                                                                        Whether you're a professional seeking
+                                                                        productivity
+                                                                        or a gamer looking for immersive experiences, we
+                                                                        have the perfect laptop for you.
+                                                                    {% endblocktrans %}
+                                                                </p>
+                                                            </div>
+                                                            <div class="btn-wrapper animated">
+                                                                <a href="#"
+                                                                   class="theme-btn-1 btn btn-round category-find"
+                                                                   data-name="لپتاب">{% trans 'Browse Laptops' %}</a>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="slide-item-img">
+                                                <img src="img/slider/41-1.png" alt="#">
+                                                <span class="call-to-circle-1"></span>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ltn__slide-item  -->
+                        <div class="ltn__slide-item ltn__slide-item-8 ltn__slide-item-9 text-color-white---- bg-image bg-overlay-theme-black-80---"
+                             data-bg="{% static 'img/slider/1.jpg' %}">
+                            <div class="ltn__slide-item-inner">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-12 align-self-center">
+                                            <div class="slide-item-info">
+                                                <div class="slide-item-info-inner ltn__slide-animation">
+                                                    <div class="slide-item-info">
+                                                        <div class="slide-item-info-inner ltn__slide-animation">
+                                                            <h6 class="slide-sub-title ltn__secondary-color slide-title-line-2 animated">
+                                                                {% trans 'Gaming Essentials' %}</h6>
+                                                            <h3 class="slide-title animated" style="color: gray;">
+                                                                {% trans 'Level Up Your Gaming Experience' %}</h3>
+                                                            <div class="slide-brief animated">
+                                                                <p style="color: #ffffff">
+                                                                    {% blocktrans %}
+                                                                        Immerse yourself in the world of gaming with
+                                                                        cutting-edge technology and thrilling
+                                                                        experiences. From high-performance hardware to
+                                                                        immersive graphics, elevate your gaming setup to
+                                                                        new heights and conquer virtual realms with
+                                                                        precision and style.
+                                                                    {% endblocktrans %}
+                                                                </p>
+                                                            </div>
+                                                            <div class="btn-wrapper animated">
+                                                                <a href="#" data-name="گیم"
+                                                                   class="theme-btn-1 btn btn-round category-find">{% trans 'Explore Gaming Gear' %}</a>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="slide-item-img">
+                                                <img src="img/slider/41-1.png" alt="#">
+                                                <span class="call-to-circle-1"></span>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SLIDER AREA END -->
+
+
+    <!-- TOP PRODUCT SLIDER AREA START -->
+    <div class="ltn__product-slider-area ltn__product-gutter  pt-60 pb-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area text-center">
+                        <h1 class="section-title section-title-border">{% trans 'Top Products' %}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row ltn__product-slider-item-four-active slick-arrow-1">
+                <!-- ltn__product-item -->
+                {% for top_product in top_products %}
+                    <div class="col-12">
+                        <div class="ltn__product-item ltn__product-item-4">
+                            <div class="product-img">
+                                <a href="{{ top_product.get_absolute_url }}"><img
+                                        src="{{ top_product.main_image }}"
+                                        alt="#"></a>
+                                <div class="product-badge">
+                                    <ul>
+                                        {% if top_product.discount %}
+                                            <li class="badge-2">{% trans 'Off' %}</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <div class="product-hover-action product-hover-action-3">
+                                    <ul>
+                                        <li>
+                                            <a href="#" title="Quick View" data-bs-toggle="modal"
+                                               class="like-product"
+                                               data-bs-target="#quick_view_modal"
+                                               data-product="{{ top_product.pk }}">
+                                                {% if top_product.pk in liked %}
+                                                    <i class="fas fa-heart"></i>
+                                                {% else %}
+                                                    <i class="icon-heart"></i>
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="Quick View" data-toggle="modal"
+                                               data-target="#p{{ top_product.pk }}">
+                                                <i class="icon-shuffle"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-ratting">
+                                    <ul>
+                                        {% with avg_result=top_product.avg_star %}
+                                            <div class="star-rating star-{{ avg_result.0 }}"></div>
+                                        {% endwith %}
+                                    </ul>
+                                </div>
+                                <h2 class="product-title"><a
+                                        href="{{ top_product.get_absolute_url }}">{{ top_product.title }}</a>
+                                </h2>
+                                <div class="product-price">
+                                    {% if top_product.discount %}
+                                        <span>{{ top_product.discount_price|num_fa_20 }}</span>
+                                        <del>{{ top_product.price|num_fa_15 }}</del>
+                                    {% else %}
+                                        <span>{{ top_product.price|num_fa_20 }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <!--  -->
+            </div>
+        </div>
+    </div>
+    <!-- TOP PRODUCT SLIDER AREA END -->
+
+    <!-- BANNER AREA START -->
+    <div class="ltn__banner-area  plr--5 mt-40">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3 col-sm-6">
+                    <div class="ltn__banner-item">
+                        <div class="ltn__banner-img">
+                            <a href="#" class="category-find" data-name="کفش"><img src="{% static 'img/banner/1.jpg' %}"
+                                                                                   alt="Banner Image"></a>
+                            <h4 class="text-center mt-2">{% trans 'Shoes' %}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="ltn__banner-item">
+                        <div class="ltn__banner-img">
+                            <a href="#" class="category-find" data-name="لباس"><img
+                                    src="{% static 'img/banner/2.jpg' %}" alt="Banner Image"></a>
+                            <h4 class="text-center mt-2">{% trans 'Clothes' %}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="ltn__banner-item">
+                        <div class="ltn__banner-img">
+                            <a href="#" class="category-find" data-name="موبایل"><img
+                                    src="{% static 'img/banner/3.jpg' %}" alt="Banner Image"></a>
+                            <h4 class="text-center mt-2">{% trans 'Phones' %}</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="ltn__banner-item">
+                        <div class="ltn__banner-img">
+                            <a href="#" class="category-find" data-name="وسیله ورزش"><img
+                                    src="{% static 'img/banner/4.jpg' %}" alt="Banner Image"></a>
+                            <h4 class="text-center mt-2">{% trans 'Sport tools' %}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BANNER AREA END -->
+
+
+    <!-- RANDOM PRODUCT SLIDER AREA START -->
+    <div class="ltn__product-slider-area ltn__product-gutter  pt-60 pb-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area text-center">
+                        <h1 class="section-title section-title-border">{% trans 'Random Products' %}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row ltn__product-slider-item-four-active slick-arrow-1">
+                <!-- ltn__product-item -->
+                {% for random_product in random_products %}
+                    <div class="col-12">
+                        <div class="ltn__product-item ltn__product-item-4">
+                            <div class="product-img">
+                                <a href="{{ random_product.get_absolute_url }}"><img
+                                        src="{{ random_product.main_image }}"
+                                        alt="#"></a>
+                                <div class="product-badge">
+                                    <ul>
+                                        {% if random_product.discount %}
+                                            <li class="badge-2">{% trans 'Off' %}</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <div class="product-hover-action product-hover-action-3">
+                                    <ul>
+                                        <li>
+                                            <a href="#" title="Quick View" data-bs-toggle="modal"
+                                               class="like-product"
+                                               data-bs-target="#quick_view_modal"
+                                               data-product="{{ random_product.pk }}">
+                                                {% if random_product.pk in liked %}
+                                                    <i class="fas fa-heart"></i>
+                                                {% else %}
+                                                    <i class="icon-heart"></i>
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="Quick View" data-toggle="modal"
+                                               data-target="#p{{ random_product.pk }}">
+                                                <i class="icon-shuffle"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-ratting">
+                                    <ul>
+                                        {% with avg_result=random_product.avg_star %}
+                                            <div class="star-rating star-{{ avg_result.0 }}"></div>
+                                        {% endwith %}
+                                    </ul>
+                                </div>
+                                <h2 class="product-title"><a
+                                        href="{{ random_product.get_absolute_url }}">{{ random_product.title }}</a>
+                                </h2>
+                                <div class="product-price">
+                                    {% if random_product.discount %}
+                                        <span>{{ random_product.discount_price|num_fa_20 }}</span>
+                                        <del>{{ random_product.price|num_fa_15 }}</del>
+                                    {% else %}
+                                        <span>{{ random_product.price|num_fa_20 }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <!--  -->
+            </div>
+        </div>
+    </div>
+    <!-- RANDOM PRODUCT SLIDER AREA END -->
+
+
+    <!-- FEATURE AREA START ( Feature - 3) -->
+    <div class="ltn__feature-area mb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__feature-item-box-wrap ltn__feature-item-box-wrap-2  ltn__border section-bg-6">
+                        <div class="ltn__feature-item ltn__feature-item-8">
+                            <div class="ltn__feature-icon">
+                                <img src="{% static 'img/icons/svg/8-trolley.svg' %}" alt="#">
+                            </div>
+                            <div class="ltn__feature-info">
+                                <h4>{% trans 'Free shipping' %}</h4>
+                                <p>{% trans 'On all orders over' %} {{ 1000000|num_fa_20 }} </p>
+                            </div>
+                        </div>
+                        <div class="ltn__feature-item ltn__feature-item-8">
+                            <div class="ltn__feature-icon">
+                                <img src="{% static 'img/icons/svg/9-money.svg' %}" alt="#">
+                            </div>
+                            <div class="ltn__feature-info">
+                                <h4>{% trans '15 days returns' %}</h4>
+                                <p>{% trans 'Moneyback guarantee' %}</p>
+                            </div>
+                        </div>
+                        <div class="ltn__feature-item ltn__feature-item-8">
+                            <div class="ltn__feature-icon">
+                                <img src="{% static 'img/icons/svg/10-credit-card.svg' %}" alt="#">
+                            </div>
+                            <div class="ltn__feature-info">
+                                <h4>{% trans 'Secure checkout' %}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FEATURE AREA END -->
+
+    <!-- MODAL AREA START (Quick View Modal) -->
+    {% include 'store/product/quick_view_modal.html' with products=top_products %}
+    <!-- MODAL AREA END -->
+
+    <!-- MODAL AREA START (Quick View Modal) -->
+    {% include 'store/product/quick_view_modal.html' with products=random_products %}
+    <!-- MODAL AREA END -->
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Retrieve the categories from the context variable
+            var categories = JSON.parse('{{ category_json | safe }}');
+
+            var elements = document.querySelectorAll('.category-find');
+
+            elements.forEach(function (element) {
+                var categoryName = element.getAttribute('data-name');
+
+                // Find the category with the matching name
+                var matchingCategory = categories.find(function (category) {
+                    return category.fields.name === categoryName;
+                });
+
+                // Update the element if a matching category is found
+                if (matchingCategory) {
+                    element.href = "{% url 'store:category_page' slug='flag_x' %}".replace(/flag_x/, matchingCategory.fields.slug);
+                    // You can add more logic here to update other properties
+                } else {
+                    console.error('Category not found for element with data-name:', categoryName);
+                }
+            });
+        });
+
+    </script>
+
+{% endblock content %}
