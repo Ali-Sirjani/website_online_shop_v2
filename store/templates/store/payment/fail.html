@@ -1,11 +1,36 @@
 {% extends '_base.html' %}
 
-{% block title %} fail {% endblock title %}
+{% load i18n %}
+
+{% block title %} {% trans 'Fail' %} {% endblock title %}
 
 {% block content %}
 
-    <div class="container mt-5">
-        <h3>Fail</h3>
+    <!-- BREADCRUMB AREA START -->
+    <div class="ltn__breadcrumb-area ltn__breadcrumb-area-4 ltn__breadcrumb-color-white---">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__breadcrumb-inner text-center">
+                        <h1 class="ltn__page-title">{% trans 'Payment Failed' %}</h1>
+                        <div class="ltn__breadcrumb-list">
+                            <ul class="mt-10 mb-20">
+                                <li>
+                                    {% blocktrans %}
+                                        We apologize for the inconvenience, but it seems that there was an issue with
+                                        processing your payment. <br>Please ensure that the payment information you
+                                        provided is accurate and up to date.
+                                    {% endblocktrans %}
+                                </li>
+                            </ul>
+                            <a href="{% url 'store:checkout' %}"
+                               class="theme-btn-1 btn">{% trans 'Try Agian' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- BREADCRUMB AREA END -->
 
 {% endblock content %}

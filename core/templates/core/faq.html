@@ -1,17 +1,119 @@
 {% extends '_base.html' %}
 
 {% load crispy_forms_filters %}
+{% load i18n %}
 
-{% block title %}FAQ{% endblock title %}
+{% block title %}{% trans 'FAQ' %}{% endblock title %}
 
 {% block content %}
 
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <h2 class="text-center mb-4">FAQ Page Test</h2>
+
+    <!-- FAQ AREA START (faq-2) (ID > accordion_2) -->
+    <div class="ltn__faq-area mb-80 mt-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="ltn__faq-inner ltn__faq-inner-2">
+                        <div id="accordion_2">
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-toggle="collapse" data-target="#faq-item-2-1"
+                                    aria-expanded="false">
+                                    {% trans 'How to buy a product?' %}
+                                </h6>
+                                <div id="faq-item-2-1" class="collapse" data-parent="#accordion_2">
+                                    <div class="card-body">
+                                        <p>{% trans 'lorem ipsum' %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="ltn__card-title" data-toggle="collapse" data-target="#faq-item-2-2"
+                                    aria-expanded="false">
+                                    {% trans 'How can i make refund from your website?' %}
+                                </h6>
+                                <div id="faq-item-2-2" class="collapse" data-parent="#accordion_2">
+                                    <div class="card-body">
+                                        <p>{% trans 'lorem ipsum' %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-toggle="collapse" data-target="#faq-item-2-3"
+                                    aria-expanded="false">
+                                    {% trans 'I am a new user. How should I start?' %}
+                                </h6>
+                                <div id="faq-item-2-3" class="collapse" data-parent="#accordion_2">
+                                    <div class="card-body">
+                                        <p>{% trans 'lorem ipsum' %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-toggle="collapse" data-target="#faq-item-2-4"
+                                    aria-expanded="false">
+                                    {% trans 'Returns and refunds' %}
+                                </h6>
+                                <div id="faq-item-2-4" class="collapse" data-parent="#accordion_2">
+                                    <div class="card-body">
+                                        <p>{% trans 'lorem ipsum' %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-toggle="collapse" data-target="#faq-item-2-5"
+                                    aria-expanded="false">
+                                    {% trans 'Are my details secured?' %}
+                                </h6>
+                                <div id="faq-item-2-5" class="collapse" data-parent="#accordion_2">
+                                    <div class="card-body">
+                                        <p>{% trans 'lorem ipsum' %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-toggle="collapse" data-target="#faq-item-2-6"
+                                    aria-expanded="false">
+                                    {% trans 'Sale code is not working' %}
+                                </h6>
+                                <div id="faq-item-2-6" class="collapse" data-parent="#accordion_2">
+                                    <div class="card-body">
+                                        <p>{% trans 'lorem ipsum' %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- card -->
+                            <div class="card">
+                                <h6 class="collapsed ltn__card-title" data-toggle="collapse" data-target="#faq-item-2-7"
+                                    aria-expanded="false">
+                                    {% trans 'How do I make payment by my credit card' %}
+                                </h6>
+                                <div id="faq-item-2-7" class="collapse" data-parent="#accordion_2">
+                                    <div class="card-body">
+                                        <p>{% trans 'lorem ipsum' %}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="need-support text-center mt-100">
+                            <h4>{% trans 'Still need help? Reach out to support 24/7' %}:</h4>
+                            <div class="btn-wrapper mb-30">
+                                <a href="{% url 'core:contact_page' %}"
+                                   class="theme-btn-1 btn">{% trans 'Contact Us' %}</a>
+                            </div>
+                            <h4><i class="fas fa-phone"></i> +0123-456-789</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+    <!-- FAQ AREA START -->
+
 
 {% endblock content %}

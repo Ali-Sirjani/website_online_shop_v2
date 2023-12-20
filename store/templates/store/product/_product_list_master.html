@@ -1,0 +1,89 @@
+{% load i18n %}
+{% load product_temp_filters %}
+{% load crispy_forms_filters %}
+{% load trans_fa %}
+{% load static %}
+
+<div class="ltn__product-area mt-80 mb-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 order-lg-2 mb-100">
+                <div class="ltn__shop-options">
+                    <ul>
+                        <li>
+                            <div class="showing-product-number text-right">
+                                <span>{% trans 'Showing' %} {{ page_obj.start_index }}-{{ page_obj.end_index }} {% trans 'of' %} {{ page_obj.paginator.count }}</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="short-by text-center">
+                                <select class="nice-select" onchange="window.location.href=this.value">
+                                    <option value="?{{ request.GET|remove_obsolete_sorts }}">{% trans 'Default sorting' %}</option>
+                                    {% for name, num in sort_dict.items %}
+                                        <option value="?sort={{ num }}&{{ request.GET|remove_obsolete_sorts }}">
+                                            {{ name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="ltn__grid-list-tab-menu ">
+                                <div class="nav">
+                                    <a class="active show" data-toggle="tab" href="#liton_product_grid"><i
+                                            class="icon-grid"></i></a>
+                                    <a data-toggle="tab" href="#liton_product_list"><i class="icon-menu"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                {% include 'store/product/_show_product_list.html' with prudocts=products %}
+                {% include 'store/product/_pagination.html' with sort=sort %}
+            </div>
+
+            <div class="col-lg-3  mb-100">
+                <aside class="sidebar ltn__shop-sidebar">
+                    <!-- Search Widget -->
+                    <div class="widget ltn__search-widget">
+                        <form action="{% url 'store:product_search' %}" method="get">
+                            <input type="text" name="q" placeholder="Search">
+                            <button type="submit"><i class="icon-magnifier"></i></button>
+                        </form>
+                    </div>
+                    {% if params %}
+                        {% if not params in request.GET %}
+                            <form method="get" id="filterForm" class="mt-3">
+                                <div class="card text-end">
+                                    <div class="card-body">
+                                        <input type="hidden" name="q" value="{{ params }}">
+                                        {{ filter.form.as_p }}
+                                    </div>
+                                    <button type="submit" class="theme-btn-1 btn btn-effect-1 mt-3">
+                                        {% trans 'Apply Filters' %}
+                                    </button>
+                                </div>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <form method="get" id="filterForm" class="mt-3">
+                            <div class="card text-end">
+                                <div class="card-body">
+                                    {{ filter.form.as_p }}
+                                </div>
+                                <button type="submit" class="theme-btn-1 btn btn-effect-1 mt-3">
+                                    {% trans 'Apply Filters' %}
+                                </button>
+                            </div>
+                        </form>
+                    {% endif %}
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% include 'store/product/quick_view_modal.html' with products=products %}
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script src="{% static 'js/custom.js' %}"></script>

@@ -1,11 +1,35 @@
 {% extends '_base.html' %}
 
-{% block title %} success {% endblock title %}
+{% load i18n %}
+
+{% block title %} {% trans 'success' %} {% endblock title %}
 
 {% block content %}
 
-    <div class="container mt-5">
-        <h3>Success</h3>
+    <!-- BREADCRUMB AREA START -->
+    <div class="ltn__breadcrumb-area ltn__breadcrumb-area-4 ltn__breadcrumb-color-white---">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__breadcrumb-inner text-center">
+                        <h1 class="ltn__page-title">{% trans 'Payment Successful' %}</h1>
+                        <div class="ltn__breadcrumb-list">
+                            <ul class="mt-10 mb-20">
+                                <li>
+                                    {% blocktrans %}
+                                        Thank you for shopping with us! <br>We appreciate your purchase and look forward
+                                        to buying you again in the future.
+                                    {% endblocktrans %}
+                                </li>
+                            </ul>
+                            <a href="{% url 'store:product_list' %}"
+                               class="theme-btn-1 btn">{% trans 'Continue Shopping' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- BREADCRUMB AREA END -->
 
 {% endblock content %}

@@ -1,0 +1,88 @@
+{% load i18n %}
+
+<!-- BLOG AREA START -->
+<div class="ltn__blog-area mb-100 mt-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                {% if posts %}
+                    <div class="row">
+                        {% include 'blog/_show_post_list.html' with posts=posts %}
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            {% include 'blog/_pagination.html' %}
+                        </div>
+                    </div>
+                {% else %}
+                    {% if q %}
+                        <div class="row">
+                            <h3 class="mx-5" dir="rtl">{% trans 'There is no post with title or tag' %} {{ q }}</h3>
+                        </div>
+                    {% else %}
+                        {% if none_q %}
+                            <div class="row">
+                                <h3 class="mx-5"
+                                    dir="rtl">{% trans 'Find the interesting post! Enter a keyword in the search box.' %}</h3>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="col-lg-4">
+                <aside class="sidebar-area blog-sidebar ltn__right-sidebar">
+                    <!-- Search Widget -->
+                    <div class="widget ltn__search-widget">
+                        <form method="get" action="{% url 'blog:post_search' %}">
+                            <input type="text" name="q" placeholder="{% trans 'Search For Posts' %}">
+                            <button type="submit"><i class="fas fa-search"></i></button>
+                        </form>
+                    </div>
+                    <!-- Popular Post Widget -->
+                    <div class="widget ltn__popular-post-widget">
+                        <h4 class="ltn__widget-title">{% trans 'Recent Post' %}</h4>
+                        <ul>
+                            {% for recent_post in recent_posts %}
+                                <li>
+                                    <div class="popular-post-widget-item clearfix">
+                                        <div class="popular-post-widget-img">
+                                            <a href="{{ recent_post.get_absolute_url }}"><img
+                                                    src="{{ recent_post.image.url }}" alt="#"></a>
+                                        </div>
+                                        <div class="popular-post-widget-brief">
+                                            <div class="ltn__blog-meta">
+                                                <ul>
+                                                    <li>
+                                                        <span>{{ recent_post.datetime_updated }}</span>
+                                                    </li>
+                                                    <li class="ltn__blog-comment">
+                                                        <a href="#"><i
+                                                                class="icon-speech"></i>{{ recent_post.count_act_comments }}
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <h6 class="ltn__blog-title blog-title-line"><a
+                                                    href="{{ recent_post.get_absolute_url }}">{{ recent_post.title }}</a>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <!-- Tagcloud Widget -->
+                    <div class="widget ltn__tagcloud-widget">
+                        <h4 class="ltn__widget-title">{% trans 'Tags' %}</h4>
+                        <ul>
+                            {% for top_tag in top_tags %}
+                                <li><a href="{{ top_tag.get_absolute_url }}">{{ top_tag.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- BLOG AREA END -->

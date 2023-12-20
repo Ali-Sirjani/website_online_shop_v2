@@ -2,20 +2,31 @@
 
 {% load crispy_forms_filters %}
 {% load product_temp_filters %}
+{% load i18n %}
 
-{% block title %} products {% endblock title %}
+{% block title %} {% trans 'Search' %} {% endblock title %}
 
 {% block content %}
-    {% include 'store/product/_top_product_list.html' %}
     <div class="container">
         {% if products %}
-            {% include 'store/product/_show_product_list.html' with products=products %}
-
+            {% include 'store/product/_product_list_master.html' with products=products sort=sort params=q %}
         {% else %}
-            <h2>None</h2>
+            <div class="ltn__breadcrumb-area-4 ltn__breadcrumb-color-white--- mb-80 mt-50">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ltn__breadcrumb-inner text-center">
+                                <h2 class="ltn__page-title">{% trans 'There is no product with Title or Category' %}</h2>
+                                <br>
+                                <h2>
+                                    <div style="color: #808080">{{ q }}</div>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endif %}
     </div>
-
-    {% include 'store/product/_pagination.html' %}
 
 {% endblock content %}
