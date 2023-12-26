@@ -86,7 +86,7 @@ class Post(models.Model):
         return reverse('blog:post_detail', args=[self.slug])
 
     def count_act_comments(self):
-        return self.post_comments.filter(confirmation=True).count()
+        return self.post_comments.count()
 
 
 class PostComment(models.Model):
