@@ -1,6 +1,6 @@
 from django.db.models import F, Case, When, IntegerField, Prefetch
 
-from ..models import ProductColorAndSizeValue, ProductSpecificationValue
+from ..models import ProductColorAndSizeValue, ProductSpecificationValue, ProductComment
 
 
 def sort_product_queryset(sort_num, queryset):
@@ -41,6 +41,7 @@ def optimize_product_query(queryset):
     - 'specs_values': Prefetching 'ProductSpecificationValue' objects with their related 'specification' objects
     - 'color_size_values': Prefetching 'ProductColorAndSizeValue' objects with their related 'color' and 'size' objects
     - 'images': Prefetching related 'Image' objects
+    - 'comments': Prefetching related confirm 'Comment' objects
     """
     queryset = queryset.prefetch_related(
         Prefetch(
@@ -52,6 +53,10 @@ def optimize_product_query(queryset):
             queryset=ProductColorAndSizeValue.objects.select_related('color', 'size')
         ),
         'images',
+        Prefetch(
+            'comments',
+            queryset=ProductComment.objects.filter(confirmation=True)
+        )
     )
 
     return queryset
