@@ -8,7 +8,10 @@ register = library.Library()
 def num_fa_15(value):
     persian = '۰١٢٣۴۵٦٧٨٩'
     engilish = '0123456789'
-    value = str(f'{value:,}')
+    try:
+        value = str(f'{value:,}')
+    except ValueError:
+        pass
 
     trans_table = str.maketrans(engilish, persian)
     translated_value = value.translate(trans_table)
@@ -22,7 +25,10 @@ def num_fa_15(value):
 def num_fa_20(value):
     persian = '۰١٢٣۴۵٦٧٨٩'
     engilish = '0123456789'
-    value = str(f'{value:,}')
+    try:
+        value = str(f'{value:,}')
+    except ValueError:
+        pass
 
     trans_table = str.maketrans(engilish, persian)
     translated_value = value.translate(trans_table)
@@ -36,7 +42,10 @@ def num_fa_20(value):
 def num_fa_25(value):
     persian = '۰١٢٣۴۵٦٧٨٩'
     engilish = '0123456789'
-    value = str(f'{value:,}')
+    try:
+        value = str(f'{value:,}')
+    except ValueError:
+        pass
 
     trans_table = str.maketrans(engilish, persian)
     translated_value = value.translate(trans_table)
