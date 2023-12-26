@@ -409,23 +409,6 @@ class Cart:
         return total_no_discount
 
     @property
-    def get_cart_total_with_discount(self):
-        """
-        Calculate the total price of items in the shopping cart considering applied discounts.
-
-        Returns:
-            int: The total price of all items in the cart after applying any applicable discounts.
-
-        This method calculates the total price of all items in the shopping cart by
-        summing up the individual total prices of each item, taking into account any
-        discounts applied to the unit prices.
-        """
-        total_with_discount = 0
-        for item in self.__iter__(True):
-            total_with_discount += item['get_total_with_discount_item']
-        return total_with_discount
-
-    @property
     def get_cart_total_profit(self):
         """
         Calculate the total profit from items in the shopping cart, accounting for discounts.

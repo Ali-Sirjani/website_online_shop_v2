@@ -87,7 +87,7 @@ class OrderAdmin(admin.ModelAdmin):
             fieldsets.extend([
                 (_('Order Info'),
                  {'fields': ('completed', 'tracking_code', 'get_cart_items', 'get_cart_total_no_discount',
-                             'get_cart_total_with_discount', 'get_cart_total_profit', 'get_cart_total',
+                             'get_cart_total_profit', 'get_cart_total',
                              'coupon_price', 'get_cart_total_with_coupon', 'avg_track_items',),
                   'classes': ('collapse',),
                   }),
@@ -107,7 +107,7 @@ class OrderAdmin(admin.ModelAdmin):
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = ['tracking_code', 'get_cart_items', 'get_cart_total_no_discount',
-                           'get_cart_total_with_discount', 'get_cart_total_profit', 'get_cart_total',
+                           'get_cart_total_profit', 'get_cart_total',
                            'coupon_price', 'get_cart_total_with_coupon', 'avg_track_items', 'datetime_created',
                            'datetime_updated', ]
 

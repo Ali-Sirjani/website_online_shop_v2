@@ -117,12 +117,6 @@ class Order(models.Model):
     get_cart_total_no_discount.fget.short_description = _('Cart Total (No Discount)')
 
     @property
-    def get_cart_total_with_discount(self):
-        return sum([item.get_total_with_discount_item for item in self.items.all()])
-
-    get_cart_total_with_discount.fget.short_description = _('Cart Total (With Discount)')
-
-    @property
     def get_cart_total_profit(self):
         return sum([item.get_total_profit_item for item in self.items.all()])
 
