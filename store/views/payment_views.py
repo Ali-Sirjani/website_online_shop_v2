@@ -37,6 +37,7 @@ def checkout_view(request):
         if request.user.is_authenticated:
             if order.calculate_coupon_price(request, success_message=False):
                 form_order.initial['total'] = order.get_cart_total_with_coupon
+
             else:
                 form_order.initial['total'] = order.get_cart_total
 
@@ -75,7 +76,13 @@ def sandbox_process_payment(request):
             messages.info(request, _('please try again'))
             return redirect('store:products_list')
 
-    toman_total = order.get_cart_total
+    # set order total for zarin pall
+    if order.calculate_coupon_price(request, success_message=False):
+        toman_total = order.get_cart_total_with_coupon
+
+    else:
+        toman_total = order.get_cart_total
+
     rial_total = toman_total * 10
 
     zarinpal_url = 'https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentRequest.json'
@@ -113,11 +120,18 @@ def sandbox_callback_payment(request):
 
     if user.is_authenticated:
         order, created = Order.objects.get_or_create(customer=user, completed=False)
+
     else:
         order_pk = request.session.get('order_pk')
         order, created = Order.objects.get_or_create(pk=order_pk)
 
-    toman_total = order.get_cart_total
+    # set order total for zarin pall
+    if order.calculate_coupon_price(request, success_message=False):
+        toman_total = order.get_cart_total_with_coupon
+
+    else:
+        toman_total = order.get_cart_total
+
     rial_total = toman_total * 10
 
     if payment_status == 'OK':

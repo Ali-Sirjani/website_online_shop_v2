@@ -3,14 +3,24 @@ import datetime
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
+from django.db.models import Prefetch
 
 from ..forms import OrderForm, ShippingAddressForm
-from ..models import Order, OrderItem, ShippingAddress
+from ..models import Order, OrderItem, ShippingAddress, Product
 
 
 def check_out_user_login(request):
     customer = request.user
-    order, created = Order.objects.get_or_create(customer=customer, completed=False)
+    order, created = Order.objects.select_related('coupon').prefetch_related(
+        Prefetch(
+            'items',
+            queryset=OrderItem.objects.select_related('color_size__color', 'color_size__size').all()
+        ),
+        Prefetch(
+            'items__product',
+            queryset=Product.objects.prefetch_related('images')
+        )
+    ).get_or_create(customer=customer, completed=False)
 
     if order.get_cart_items == 0:
         messages.info(request, _('The Your cart is empty! Please first add some product in your cart.'))
