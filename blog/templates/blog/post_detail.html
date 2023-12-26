@@ -1,5 +1,6 @@
 {% extends 'blog/_base_blog.html' %}
 
+{% load jalali_tags %}
 {% load i18n %}
 {% load crispy_forms_filters %}
 
@@ -16,7 +17,7 @@
                             <div class="ltn__blog-meta">
                                 <ul>
                                     <li>
-                                        <span>{{ post.datetime_updated }}</span>
+                                        <span>{{ post.datetime_updated|to_jalali:'%d/%m/%Y' }}</span>
                                     </li>
                                     <li class="ltn__blog-comment">
                                         <span><i class="icon-speech ml-1"></i>{{ post.count_act_comments }}</span>
@@ -46,18 +47,22 @@
                         {% if next_previous_posts %}
                             {% with next_post=next_previous_posts.0 previous_post=next_previous_posts.1 %}
                                 <div class="ltn__prev-next-btn row mb-50">
-                                    <div class="blog-prev col-lg-6">
-                                        <div class="blog-prev-next-img">
-                                            <a href="{{ previous_post.get_absolute_url }}"><img
-                                                    src="{{ previous_post.image.url }}" alt="Image"></a>
+                                    {% if previous_post %}
+                                        <div class="blog-prev col-lg-6">
+                                            <div class="blog-prev-next-img">
+                                                <a href="{{ previous_post.get_absolute_url }}"><img
+                                                        src="{{ previous_post.image.url }}" alt="Image"></a>
+                                            </div>
+                                            <div class="blog-prev-next-info">
+                                                <p>{% trans 'Previous Post' %}</p>
+                                                <h3 class="ltn__blog-title"><a
+                                                        href="{{ previous_post.get_absolute_url }}">{{ previous_post.title }}</a>
+                                                </h3>
+                                            </div>
                                         </div>
-                                        <div class="blog-prev-next-info">
-                                            <p>{% trans 'Previous Post' %}</p>
-                                            <h3 class="ltn__blog-title"><a
-                                                    href="{{ previous_post.get_absolute_url }}">{{ previous_post.title }}</a>
-                                            </h3>
-                                        </div>
-                                    </div>
+                                    {% endif %}
+
+                                    {% if next_post %}
                                     <div class="blog-prev blog-next text-right col-lg-6">
                                         <div class="blog-prev-next-info">
                                             <p>{% trans 'Next Post' %}</p>
@@ -70,6 +75,7 @@
                                                     src="{{ next_post.image.url }}" alt="Image"></a>
                                         </div>
                                     </div>
+                                    {% endif %}
                                 </div>
                             {% endwith %}
                         {% endif %}
@@ -92,7 +98,7 @@
                                                     {% else %}
                                                         <h6>{{ comment.author.username }}</h6>
                                                     {% endif %}
-                                                    <span class="comment-date">{{ comment.datetime_updated }}</span>
+                                                    <span class="comment-date">{{ comment.datetime_updated|to_jalali:'%d/%m/%Y' }}</span>
                                                     <p>{{ comment.text }}</p>
                                                 </div>
                                             </div>
@@ -121,8 +127,11 @@
                                     </div>
                                 </form>
                             {% else %}
-                                <h4>{% trans 'for leave a commit first' %} <a
-                                        href="{% url 'account_login' %}">{% trans 'Login' %}</a></h4>
+                                {% url 'account_login' as account_login_url %}
+                                <h4>{% blocktrans %}
+                                    for leave a commit first <a href="{{ account_login_url }}">Login</a>
+                                {% endblocktrans %}
+                                </h4>
                             {% endif %}
                         </div>
                     </div>
@@ -151,7 +160,7 @@
                                                 <div class="ltn__blog-meta">
                                                     <ul>
                                                         <li>
-                                                            <span>{{ recent_post.datetime_updated }}</span>
+                                                            <span>{{ recent_post.datetime_updated|to_jalali:'%d/%m/%Y' }}</span>
                                                         </li>
                                                         <li class="ltn__blog-comment">
                                                             <a href="#"><i

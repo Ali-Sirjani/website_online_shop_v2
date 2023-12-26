@@ -14,6 +14,8 @@ from pathlib import Path
 from environ import Env
 
 from django.contrib.messages import constants as messages
+from django.utils.translation import gettext_lazy as _
+
 # Initialize environ
 env = Env()
 
@@ -58,6 +60,7 @@ INSTALLED_APPS = [
     'colorfield',
     'mptt',
     'jalali_date',
+    'rosetta',
     'pytz',
     'widget_tweaks',
 
@@ -153,8 +156,8 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'fa'
 
 LANGUAGES = (
-    ('fa', 'Persian'),
-    ('en', 'English'),
+    ('fa', _('Persian')),
+    ('en', _('English')),
 )
 
 TIME_ZONE = 'UTC'
@@ -169,7 +172,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')), )
+STATICFILES_DIRS = (str(BASE_DIR.joinpath('static')),)
 STATIC_ROOT = str(BASE_DIR.joinpath('staticfiles'))
 
 MEDIA_URL = '/media/'
@@ -210,7 +213,6 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_ADAPTER = 'core.adapter.CustomAccountAdapter'
 
-
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -250,3 +252,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+# config locale
+LOCALE_PATHS = (str(BASE_DIR.joinpath('templates/locale')),)

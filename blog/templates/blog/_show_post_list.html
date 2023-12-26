@@ -1,3 +1,4 @@
+{% load jalali_tags %}
 
 {% for post in posts %}
     <!-- Blog Item -->
@@ -10,7 +11,7 @@
                 <div class="ltn__blog-meta">
                     <ul>
                         <li>
-                            <span>{{ post.datetime_updated }}</span>
+                            <span>{{ post.datetime_updated|to_jalali:'%d/%m/%Y' }}</span>
                         </li>
                         <li class="ltn__blog-comment">
                             <a href="#"><i class="icon-speech"></i> {{ post.count_act_comments }}

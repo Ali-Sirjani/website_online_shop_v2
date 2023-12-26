@@ -5,6 +5,7 @@
 {% load crispy_forms_filters %}
 {% load widget_tweaks %}
 {% load trans_fa %}
+{% load jalali_tags %}
 
 {% block title %}{% trans 'Profile' %}{% endblock title %}
 
@@ -22,11 +23,11 @@
                                 <div class="col-lg-4">
                                     <div class="ltn__tab-menu-list mb-50">
                                         <div class="nav">
-                                            <a class="active show" data-toggle="tab" href="#liton_tab_1_1">
-                                                {% trans 'Profile' %} <i class="fas fa-user-alt"></i>
-                                            </a>
-                                            <a data-toggle="tab" href="#liton_tab_1_2">
+                                            <a class="active show" data-toggle="tab" href="#liton_tab_1_2">
                                                 {% trans 'Dashboard' %} <i class="fas fa-home"></i>
+                                            </a>
+                                            <a data-toggle="tab" href="#liton_tab_1_1">
+                                                {% trans 'Profile' %} <i class="fas fa-user-alt"></i>
                                             </a>
                                             <a data-toggle="tab" href="#liton_tab_1_3">
                                                 {% trans 'Orders' %} <i class="fas fa-file-alt"></i>
@@ -49,48 +50,84 @@
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="tab-content">
-                                        <div class="tab-pane fade active show" id="liton_tab_1_1">
+                                        <div class="tab-pane fade" id="liton_tab_1_1">
                                             <div class="ltn__myaccount-tab-content-inner">
                                                 <div class="container mt-5">
                                                     <dl class="row">
-                                                        <dt class="col-sm-3 mb-30">First Name:</dt>
-                                                        <dd class="col-sm-9 mb-30">{{ profile.first_name }}</dd>
+                                                        <dt class="col-sm-3 mb-30">{% trans 'First Name' %}:</dt>
+                                                        {% if profile.first_name %}
+                                                            <dd class="col-sm-9 mb-30">{{ profile.first_name }}</dd>
+                                                        {% else %}
+                                                            <dd class="col-sm-9 mb-30">-</dd>
+                                                        {% endif %}
 
-                                                        <dt class="col-sm-3 mb-30">Last Name:</dt>
-                                                        <dd class="col-sm-9 mb-30">{{ profile.last_name }}</dd>
+                                                        <dt class="col-sm-3 mb-30">{% trans 'Last Name' %}:</dt>
+                                                        {% if profile.last_name %}
+                                                            <dd class="col-sm-9 mb-30">{{ profile.last_name }}</dd>
+                                                        {% else %}
+                                                            <dd class="col-sm-9 mb-30">-</dd>
+                                                        {% endif %}
 
-                                                        <dt class="col-sm-3 mb-30">Phone:</dt>
-                                                        <dd class="col-sm-9 mb-30">{{ profile.phone }}</dd>
+                                                        <dt class="col-sm-3 mb-30">{% trans 'Phone' %}:</dt>
+                                                        {% if profile.phone %}
+                                                            <dd class="col-sm-9 mb-30">{{ profile.phone.as_national|num_fa_20 }}</dd>
+                                                        {% else %}
+                                                            <dd class="col-sm-9 mb-30">-</dd>
+                                                        {% endif %}
 
-                                                        <dt class="col-sm-3 mb-30">Picture:</dt>
+                                                        <dt class="col-sm-3 mb-30">{% trans 'Picture' %}:</dt>
                                                         <dd class="col-sm-9 mb-30">
                                                             <img src="{{ profile.picture.url }}" alt="Profile Picture"
                                                                  class="img-fluid"
                                                                  style="max-width: 200px; max-height: 200px;">
                                                         </dd>
 
-                                                        <dt class="col-sm-3 mb-30">State:</dt>
-                                                        <dd class="col-sm-9 mb-30">{{ profile.state }}</dd>
+                                                        <dt class="col-sm-3 mb-30">{% trans 'State' %}:</dt>
+                                                        {% if profile.state %}
+                                                            <dd class="col-sm-9 mb-30">{{ profile.state }}</dd>
+                                                        {% else %}
+                                                            <dd class="col-sm-9 mb-30">-</dd>
+                                                        {% endif %}
 
-                                                        <dt class="col-sm-3 mb-30">City:</dt>
-                                                        <dd class="col-sm-9 mb-30">{{ profile.city }}</dd>
+                                                        <dt class="col-sm-3 mb-30">{% trans 'City' %}:</dt>
+                                                        {% if profile.city %}
+                                                            <dd class="col-sm-9 mb-30">{{ profile.city }}</dd>
+                                                        {% else %}
+                                                            <dd class="col-sm-9 mb-30">-</dd>
+                                                        {% endif %}
 
-                                                        <dt class="col-sm-3 mb-30">Address:</dt>
-                                                        <dd class="col-sm-9 mb-30">{{ profile.address }}</dd>
+                                                        <dt class="col-sm-3 mb-30">{% trans 'Address' %}:</dt>
+                                                        {% if profile.address %}
+                                                            <dd class="col-sm-9 mb-30">{{ profile.address }}</dd>
+                                                        {% else %}
+                                                            <dd class="col-sm-9 mb-30">-</dd>
+                                                        {% endif %}
 
-                                                        <dt class="col-sm-3 mb-30">Plate:</dt>
-                                                        <dd class="col-sm-9 mb-30">{{ profile.plate }}</dd>
+                                                        <dt class="col-sm-3 mb-30">{% trans 'Plate' %}:</dt>
+                                                        {% if profile.plate %}
+                                                            <dd class="col-sm-9 mb-30">{{ profile.plate }}</dd>
+                                                        {% else %}
+                                                            <dd class="col-sm-9 mb-30">-</dd>
+                                                        {% endif %}
                                                     </dl>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="liton_tab_1_2">
+                                        <div class="tab-pane fade active show" id="liton_tab_1_2">
                                             <div class="ltn__myaccount-tab-content-inner">
-                                                <p>Hello <strong>UserName</strong> (not <strong>UserName</strong>?
-                                                    <small><a href="login-register.html">Log out</a></small> )</p>
-                                                <p>From your account dashboard you can view your
-                                                    <span>recent orders</span>, manage your <span>shipping and billing addresses</span>,
-                                                    and <span>edit your password and account details</span>.</p>
+                                                {% url 'account_logout' as logout_url %}
+                                                {% with username=request.user.username %}
+                                                    {% blocktrans %}
+                                                        <p>Hello <strong>{{ username }}</strong> (not
+                                                            <strong>{{ username }}</strong>?
+                                                            <small><a href="{{ logout_url }}">Log out</a></small> )</p>
+                                                        <p>
+                                                            From your account dashboard you can view your recent orders
+                                                            and
+                                                            edit your password and account details.
+                                                        </p>
+                                                    {% endblocktrans %}
+                                                {% endwith %}
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="liton_tab_1_3">
@@ -109,8 +146,8 @@
                                                         <tbody>
                                                         {% for order in orders_completed %}
                                                             <tr>
-                                                                <td>{{ forloop.counter }}</td>
-                                                                <td>{{ order.datetime_payed }}</td>
+                                                                <td>{{ forloop.counter|num_fa_20 }}</td>
+                                                                <td>{{ order.datetime_payed|to_jalali:'%d/%m/%Y' }}</td>
                                                                 <td>{{ order.avg_track_items }}</td>
                                                                 {% if order.coupon %}
                                                                     <td>{{ order.get_cart_total_with_coupon|num_fa_20 }}</td>
@@ -146,24 +183,51 @@
                                         <div class="tab-pane fade" id="liton_tab_1_5">
                                             <div class="ltn__myaccount-tab-content-inner mb-50">
                                                 <div class="ltn__form-box">
-                                                    <form id="change_password_form" method="post"
-                                                          enctype="multipart/form-data">
-                                                        {% csrf_token %}
-                                                        {% for field in change_pass_form %}
-                                                            <h4>
-                                                                {{ field.errors }}
-                                                                {{ field.label_tag }}
-                                                                {% render_field field class="form-control" placeholder='' %}
-                                                                <div class="invalid-feedback text-block"
-                                                                     id="invalid-feedback-{{ field.name }}"
-                                                                     style="display: none; "></div>
-                                                            </h4>
-                                                        {% endfor %}
-                                                        <button id="changePasswordBtn" onclick="changePassword()"
-                                                                class="btn theme-btn-1 btn-effect-1 text-uppercase"
-                                                                type="button">{% trans 'Change Password' %}
-                                                        </button>
-                                                    </form>
+                                                    {% if change_pass_form %}
+                                                        <form id="change_password_form" method="post">
+                                                            {% csrf_token %}
+                                                            <div class="alert alert-danger"
+                                                                 id="change_pass_error_container"
+                                                                 style="display: none; font-size: 18px;"></div>
+                                                            {% for field in change_pass_form %}
+                                                                <h4>
+                                                                    {{ field.errors }}
+                                                                    {{ field.label_tag }}
+                                                                    {% render_field field class="form-control" placeholder='' %}
+                                                                    <div class="invalid-feedback text-block"
+                                                                         id="invalid-feedback-{{ field.name }}"
+                                                                         style="display: none; "></div>
+                                                                </h4>
+                                                            {% endfor %}
+                                                            <a href="/accounts/password/reset/">{% trans 'Forgot your password?' %}</a>
+                                                            <br><br>
+                                                            <button id="changePasswordBtn" onclick="changePassword()"
+                                                                    class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                                                    type="button">{% trans 'Change Password' %}
+                                                            </button>
+                                                        </form>
+                                                    {% else %}
+                                                        <form id="set_password_form" method="post">
+                                                            {% csrf_token %}
+                                                            <div class="alert alert-danger"
+                                                                 id="set_pass_error_container"
+                                                                 style="display: none; font-size: 18px;"></div>
+                                                            {% for field in set_pass_form %}
+                                                                <h4>
+                                                                    {{ field.errors }}
+                                                                    {{ field.label_tag }}
+                                                                    {% render_field field class="form-control" placeholder='' %}
+                                                                    <div class="invalid-feedback text-block"
+                                                                         id="invalid-feedback-{{ field.name }}"
+                                                                         style="display: none; "></div>
+                                                                </h4>
+                                                            {% endfor %}
+                                                            <button id="changePasswordBtn" onclick="setPassword()"
+                                                                    class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                                                    type="button">{% trans 'Set Password' %}
+                                                            </button>
+                                                        </form>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -180,85 +244,10 @@
     </div>
     <!-- PROFILE AREA START -->
 
-    <script type="text/javascript">
-        const notyf = new Notyf();
-
-        function changePassword() {
-            // Similar structure to the Login function
-            // old password
-            let oldPassword_id = document.getElementById(`id_oldpassword`);
-            let oldPasswordFeedbackArea = document.querySelector(`#invalid-feedback-oldpassword`);
-            // password1
-            let password1Id = document.getElementById(`id_password1`);
-            let password1IdFeedbackArea = document.querySelector(`#invalid-feedback-password1`);
-            // password2
-            let password2Id = document.getElementById(`id_password2`);
-            let password2IdFeedbackArea = document.querySelector(`#invalid-feedback-password2`);
-
-            // Repeat for other fields in the form
-            // old password
-            oldPassword_id.classList.remove('is-invalid');
-            oldPasswordFeedbackArea.style.display = "none";
-            // password1
-            password1Id.classList.remove('is-invalid');
-            password1IdFeedbackArea.style.display = "none";
-            // password2
-            password2Id.classList.remove('is-invalid');
-            password2IdFeedbackArea.style.display = "none";
-            // Repeat for other fields
-
-            let changePasswordBtn = document.getElementById('changePasswordBtn');
-            changePasswordBtn.innerHTML = `در حال تغییر گذرواژه....`;
-            let myForm = document.getElementById('change_password_form');
-
-            var data = new FormData(myForm);
-            $.ajax({
-                type: 'POST',
-                url: "{% url 'account_change_password' %}",
-                data: data,
-                cache: false,
-                processData: false,
-                contentType: false,
-
-                success: function (response) {
-                    changePasswordBtn.innerHTML = `تغییر گذرواژه`;
-                    console.log('success');
-                    location.reload();
-                    window.scrollTo(0, 0);
-                },
-                error: function (response) {
-                    let form_errors = response.responseJSON.form.errors;
-                    if (form_errors) {
-                        for (var key in form_errors) {
-                            notyf.error({
-                                message: form_errors[key],
-                                duration: 0,
-                                dismissible: true
-                            })
-                        }
-                    }
-
-                    let fields_name = response.responseJSON.form.fields;
-                    for (var key in fields_name) {
-                        let field_id = document.getElementById(`id_${key}`)
-                        let feedbackAreaa = document.querySelector(`#invalid-feedback-${key}`);
-                        if (fields_name[key].errors.length > 0) {
-                            for (var fieldkey in fields_name[key].errors) {
-                                field_id.classList.add('is-invalid');
-                                feedbackAreaa.style.display = "block";
-                                feedbackAreaa.innerHTML = `${fields_name[key].errors[fieldkey]}`
-                            }
-                        } else {
-                            field_id.classList.remove('is-invalid');
-                            feedbackAreaa.style.display = "none";
-                            field_id.classList.add('is-valid');
-                        }
-                    }
-                    changePasswordBtn.innerHTML = `تغییر گذرواژه`;
-                }
-            });
-        }
+    <script>
+        var changePasswordUrl = "{% url 'account_change_password' %}";
+        var setPasswordUrl = "{% url 'account_set_password' %}";
     </script>
-
+    <script type="text/javascript" src="{% static 'js/profile.js' %}"></script>
 
 {% endblock content %}

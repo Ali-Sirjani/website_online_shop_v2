@@ -67,18 +67,18 @@
             <div class="row">
                 <!-- ltn__product-item -->
                 {% for product in products %}
-                    <div class="col-lg-12">
+                    <div class="col-lg-12 mt-3">
                         <div class="ltn__product-item">
                             <div class="product-img">
                                 <a href="{{ product.get_absolute_url }}"><img src="{{ product.main_image }}"
                                                                               alt="#"></a>
-                                {% if product.discoutn %}
-                                    <div class="product-badge">
+                                <div class="product-badge">
+                                    {% if product.discount %}
                                         <ul>
                                             <li class="badge-1">{% trans 'Off' %}</li>
                                         </ul>
-                                    </div>
-                                {% endif %}
+                                    {% endif %}
+                                </div>
                             </div>
                             <div class="product-info">
                                 <h2 class="product-title"><a
@@ -93,11 +93,12 @@
                                 </div>
                                 <div class="product-ratting">
                                     <ul>
-                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                        <li><a href="#"><i class="icon-star"></i></a></li>
-                                        <li><a href="#"><i class="icon-star"></i></a></li>
+                                        {% with avg_result=product.avg_star %}
+                                            <div class="star-rating star-{{ avg_result.0 }}"></div>
+                                            <li class="review-total">
+                                                ( {{ avg_result.1 }} {% trans 'Reviews' %})
+                                            </li>
+                                        {% endwith %}
                                     </ul>
                                 </div>
                                 <div class="product-brief">

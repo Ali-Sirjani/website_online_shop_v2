@@ -27,6 +27,7 @@ django-jalali-date==1.0.2
 django-js-asset==2.1.0
 django-mptt==0.15.0
 django-phonenumber-field==7.2.0
+django-rosetta==0.10.0
 django-tinymce==3.6.1
 django-widget-tweaks==1.5.0
 djangorestframework==3.14.0
@@ -38,6 +39,7 @@ oauthlib==3.2.2
 persiantools==3.0.1
 phonenumbers==8.13.25
 Pillow==10.1.0
+polib==1.2.0
 prompt-toolkit==3.0.41
 psycopg2==2.9.9
 pycparser==2.21

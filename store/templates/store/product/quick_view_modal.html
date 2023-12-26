@@ -61,13 +61,13 @@
                                                         {% if items %}
                                                             <li>
                                                                 <div class="ltn__color-widget clearfix">
-                                                                    <strong class="d-meta-title">Color</strong>
+                                                                    <strong class="d-meta-title">{% trans 'Color' %}</strong>
                                                                     <ul>
                                                                         {% for color_pk, color in items %}
                                                                             <li class="color-button {% if selected_color_id == color_pk %}selected{% endif %}"
                                                                                 data-product="{{ product.id }}"
                                                                                 data-color-id="{{ color_pk }}"
-                                                                                style="background-color: {{ color }};">
+                                                                                style="background-color: {{ color.color }};">
                                                                             </li>
                                                                         {% endfor %}
                                                                     </ul>
@@ -80,7 +80,7 @@
                                                         {% if items %}
                                                             <li>
                                                                 <div class="ltn__size-widget clearfix mt-25">
-                                                                    <strong class="d-meta-title">Size</strong>
+                                                                    <strong class="d-meta-title">{% trans 'Size' %}</strong>
                                                                     <ul>
                                                                         {% for size_pk, size  in product.size_dict.items %}
                                                                             <li class="size-button size-button-{{ product.id }} {% if selected_size_id == size_pk %}selected{% endif %}"
