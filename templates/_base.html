@@ -112,7 +112,7 @@
                                         </li>
                                         <li><a href="{% url 'blog:post_list' %}">{% trans 'blog'|title %}</a></li>
                                         <li><a href="{% url 'core:contact_page' %}">{% trans 'contact'|title %}</a></li>
-                                        <li><a href="#">{% trans 'about dev'|title %}</a></li>
+                                        <li><a href="{% url 'core:about_project' %}">{% trans 'about project'|title %}</a></li>
                                     </ul>
                                 </div>
                             </nav>
@@ -132,7 +132,8 @@
                                         </div>
                                         <div class="header-search-1-form">
                                             <form action="{% url 'store:product_search' %}" method="get">
-                                                <input type="text" name="q" value="" placeholder="Search here..."/>
+                                                <input type="text" name="q" value=""
+                                                       placeholder="{% trans 'Search here...' %}"/>
                                                 <button type="submit">
                                                     <span><i class="icon-magnifier"></i></span>
                                                 </button>
@@ -157,10 +158,10 @@
 
                                                     {% else %}
                                                         <li>
-                                                            <a href="{% url 'account_login' %}">{% trans 'Register' %}</a>
+                                                            <a href="{% url 'account_signup' %}">{% trans 'Register' %}</a>
                                                         </li>
                                                         <li>
-                                                            <a href="{% url 'account_signup' %}">{% trans 'Sign in' %}</a>
+                                                            <a href="{% url 'account_login' %}">{% trans 'Sign in' %}</a>
                                                         </li>
                                                     {% endif %}
                                                 </ul>
@@ -298,7 +299,7 @@
             </div>
             <div class="ltn__utilize-menu-search-form">
                 <form action="{% url 'store:product_search' %}" method="get">
-                    <input name="q" type="text" placeholder="Search...">
+                    <input name="q" type="text" placeholder="{% trans 'Search...' %}">
                     <button><i class="icon-magnifier"></i></button>
                 </form>
             </div>
@@ -460,14 +461,13 @@
                     </div>
                     <div class="col-xl-4 col-md-6 col-sm-6 col-12">
                         <div class="footer-widget footer-about-widget">
-                            <h4 class="footer-title">About Our Shop</h4>
+                            <h4 class="footer-title">{% trans 'About Our Shop' %}</h4>
                             <div class="footer-logo d-none">
                                 <div class="site-logo">
-                                    <img src="img/logo.png" alt="Logo">
+                                    <img src="{% static 'img/logo.png' %}" alt="Logo">
                                 </div>
                             </div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo incididunt ut
-                                labore et dolore</p>
+                            <p>{% trans 'lorem ipsum' %}</p>
                             <div class="footer-address">
                                 <ul>
                                     <li>
@@ -475,7 +475,7 @@
                                             <i class="icon-location-pin"></i>
                                         </div>
                                         <div class="footer-address-info">
-                                            <p>Brooklyn, New York, United States</p>
+                                            <p>{% trans 'A place in Tehran' %}</p>
                                         </div>
                                     </li>
                                     <li>
@@ -516,7 +516,7 @@
                         <div class="footer-copyright-left">
                             <div class="ltn__copyright-design clearfix">
                                 <p style="font-size: 18px;">&copy; <span class="current-year"></span>
-                                    - {% trans 'Ali Sirjani' %}</p>
+                                    - <a href="https://www.linkedin.com/in/ali-sirjani/">{% trans 'Ali Sirjani' %}</a></p>{% trans 'all rights reserved' %}
                             </div>
                         </div>
                     </div>
@@ -524,13 +524,13 @@
                         <div class="footer-copyright-right text-right">
                             <div class="ltn__social-media ">
                                 <ul>
-                                    <li><a href="#" title="Facebook"><i class="icon-social-facebook"
+                                    <li><a href="https://t.me/ali_sirjani81" title="Telegram"><i class="icon-social-telegram"
                                                                         style="font-size:25px;"></i></a></li>
-                                    <li><a href="#" title="Twitter"><i class="icon-social-twitter"
+                                    <li><a href="https://github.com/Ali-Sirjani" title="Github"><i class="icon-social-github"
                                                                        style="font-size:25px;"></i></a></li>
-                                    <li><a href="#" title="Pinterest"><i class="icon-social-pinterest"
+                                    <li><a href="https://www.instagram.com/ali.django.dev/" title="Instagram"><i class="icon-social-instagram"
                                                                          style="font-size:25px;"></i></a></li>
-                                    <li><a href="#" title="Instagram"><i class="icon-social-instagram"
+                                    <li><a href="https://www.linkedin.com/in/ali-sirjani/" title="Linkedin"><i class="icon-social-linkedin"
                                                                          style="font-size:25px;"></i></a></li>
                                 </ul>
                             </div>
