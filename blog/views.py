@@ -1,6 +1,6 @@
 from django.views import generic
 from django.shortcuts import render, redirect
-from django.db.models import Q
+from django.db.models import Q, Prefetch
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -14,7 +14,7 @@ class PostListView(generic.ListView):
     model = Post
     context_object_name = 'posts'
     template_name = 'blog/post_list.html'
-    paginate_by = 2
+    paginate_by = 6
 
     def get_queryset(self):
         tag_slug = self.kwargs.get('slug')
@@ -24,7 +24,10 @@ class PostListView(generic.ListView):
         else:
             queryset = Post.active_objs.all()
 
-        optimize_queryset = queryset.prefetch_related('tags')
+        optimize_queryset = queryset.prefetch_related(Prefetch(
+            'post_comments',
+            queryset=PostComment.objects.filter(confirmation=True)
+        )).order_by('-datetime_updated')
 
         return optimize_queryset
 
@@ -33,7 +36,7 @@ class PostSearchView(generic.ListView):
     model = Post
     context_object_name = 'posts'
     template_name = 'blog/search_page.html'
-    paginate_by = 3
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = []
@@ -46,7 +49,11 @@ class PostSearchView(generic.ListView):
                 queryset = Post.active_objs.filter(
                     Q(title__icontains=q) | Q(tags__name__icontains=q)).distinct()
 
-                queryset = queryset.prefetch_related('tags')
+                queryset = queryset.prefetch_related(Prefetch(
+                    'post_comments',
+                    queryset=PostComment.objects.filter(confirmation=True)
+                ))
+
                 self.q = q
 
         return queryset
@@ -72,7 +79,10 @@ class PostDetailView(generic.edit.FormMixin, generic.DetailView):
     form_class = PostCommentForm
     template_name = 'blog/post_detail.html'
     context_object_name = 'post'
-    queryset = Post.active_objs
+    queryset = Post.active_objs.prefetch_related('tags', Prefetch(
+        'post_comments',
+        queryset=PostComment.objects.filter(confirmation=True)
+    ))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -80,10 +90,11 @@ class PostDetailView(generic.edit.FormMixin, generic.DetailView):
 
         if obj.tags.exists():
             context['next_previous_posts'] = Post.active_objs.filter(tags__in=obj.tags.all()).exclude(
-                pk=obj.pk).order_by('datetime_updated')[0:2]
+                pk=obj.pk).order_by('datetime_updated').distinct()[0:2]
 
         else:
-            context['next_previous_posts'] = Post.active_objs.all().exclude(pk=obj.pk).order_by('datetime_updated')[0:2]
+            context['next_previous_posts'] = Post.active_objs.exclude(pk=obj.pk).order_by(
+                '-datetime_updated').distinct()[0:2]
 
         context['comments'] = PostComment.objects.filter(confirmation=True, post_id=obj.pk).select_related(
             'author__profile')

@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.core import serializers
 
-from allauth.account.forms import ChangePasswordForm
+from allauth.account.forms import ChangePasswordForm, SetPasswordForm
 
 from .models import Profile
 from .forms import ProfileForm, ContactUsForm
@@ -53,9 +53,13 @@ class ProfileView(LoginRequiredMixin, generic.UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['change_pass_form'] = ChangePasswordForm()
+        if self.request.user.has_usable_password():
+            context['change_pass_form'] = ChangePasswordForm()
+        else:
+            context['set_pass_form'] = SetPasswordForm()
+
         context['orders_completed'] = Order.objects.filter(customer=self.request.user, completed=True).order_by(
-            '-datetime_payed')
+            '-datetime_payed').prefetch_related('items')
 
         return context
 
@@ -76,3 +80,7 @@ class AboutUsView(generic.TemplateView):
 
 class FAQView(generic.TemplateView):
     template_name = 'core/faq.html'
+
+
+class AboutProjectView(generic.TemplateView):
+    template_name = 'core/about_project.html'

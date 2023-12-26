@@ -266,7 +266,6 @@ class Cart:
 
         elif action == 'replace':
             cart_product[product_color_size_pk]['quantity'] = quantity
-            messages.success(self.request, _('Cart update'))
 
         elif action == 'remove':
             if quantity < 0:
@@ -290,6 +289,7 @@ class Cart:
         to reflect the changes in the user's session.
         """
         del self.session['cart']
+        del self.session['coupon']
         self.save()
 
     def get_total_no_discount_item(self, product_pk, item_key):
@@ -409,23 +409,6 @@ class Cart:
         return total_no_discount
 
     @property
-    def get_cart_total_with_discount(self):
-        """
-        Calculate the total price of items in the shopping cart considering applied discounts.
-
-        Returns:
-            int: The total price of all items in the cart after applying any applicable discounts.
-
-        This method calculates the total price of all items in the shopping cart by
-        summing up the individual total prices of each item, taking into account any
-        discounts applied to the unit prices.
-        """
-        total_with_discount = 0
-        for item in self.__iter__(True):
-            total_with_discount += item['get_total_with_discount_item']
-        return total_with_discount
-
-    @property
     def get_cart_total_profit(self):
         """
         Calculate the total profit from items in the shopping cart, accounting for discounts.
@@ -475,10 +458,11 @@ class Cart:
                                              )
                         return True
 
-                messages.info(self.request, _(f'The minimum price for coupon is {coupon_rules.last().start_price}'))
+                text = _('The minimum price for coupon is %(start_price)s') % {"start_price": coupon_rules.last().start_price}
+                messages.info(self.request, text)
 
             else:
-                messages.error(self.request, _(f'The {coupon_obj} is not valid'))
+                messages.error(self.request, _('Coupon is expired'))
 
             self.coupon['coupon_pk'] = None
             self.coupon['coupon_price'] = 0

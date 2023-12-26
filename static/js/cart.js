@@ -1,12 +1,13 @@
-var updateBtns = document.getElementsByClassName('update-cart')
+var updateBtns = document.getElementsByClassName('update-cart');
+var updateBtnsLength = updateBtns.length;
 
-for (var i = 0; i < updateBtns.length; i++) {
+for (var i = 0; i < updateBtnsLength; i++) {
     updateBtns[i].addEventListener('click', function () {
-        var productId = this.dataset.product
-        var colorId = this.dataset.colorId
-        var sizeId = this.dataset.sizeId
-        var colorSizeId = this.dataset.color_size_id
-        var action = this.dataset.action
+        var productId = this.dataset.product;
+        var colorId = this.dataset.colorId;
+        var sizeId = this.dataset.sizeId;
+        var colorSizeId = this.dataset.color_size_id;
+        var action = this.dataset.action;
         var quantityInput = document.getElementById('qty-' + productId);
         var quantity = quantityInput ? quantityInput.value : 1;
 
@@ -27,33 +28,65 @@ for (var i = 0; i < updateBtns.length; i++) {
             }
         }
 
-        updateUserOrder(productId, colorId, sizeId, colorSizeId, action, quantity)
+        updateUserOrder(productId, colorId, sizeId, colorSizeId, action, quantity, true);
     })
 }
 
-function updateCart() {
-    var updateBtnsLazy = document.getElementsByClassName('update-cart-lazy')
+function updateCartAuthenticatedUser() {
+    var updateBtnsLazy = document.getElementsByClassName('update-cart-lazy');
+    var updateBtnsLazyLength = updateBtnsLazy.length;
 
-    for (var i = 0; i < updateBtnsLazy.length; i++) {
-        var button = updateBtnsLazy[i]
-        var productId = button.dataset.product
-        var colorSizeId = button.dataset.color_size_id
-        var action = button.dataset.action
+    for (var i = 0; i < updateBtnsLazyLength; i++) {
+        var button = updateBtnsLazy[i];
+        var productId = button.dataset.product;
+        var colorSizeId = button.dataset.color_size_id;
+        var action = button.dataset.action;
         var quantity = button.value;
 
         if (parseInt(quantity) < 0) {
-            action = 'delete_item';
+            action = "delete_item";
         }
 
-        console.log('this is data: ', productId, colorSizeId, action, quantity,)
-        updateUserOrder(productId, null, null, colorSizeId, action, quantity)
-
+        updateUserOrder(productId, null, null, colorSizeId, action, quantity, true);
 
     }
 }
 
-function updateUserOrder(productId, colorId, sizeId, colorSizeId, action, quantity) {
-    fetch(updateOrderUrl, {
+function updateCartAnonymousUser() {
+    var updateBtnsLazy = document.getElementsByClassName('update-cart-lazy');
+    var updateBtnsLazyLength = updateBtnsLazy.length;
+
+    // Start the chain with a resolved promise
+    var promiseChain = Promise.resolve();
+
+    for (var i = 0; i < updateBtnsLazyLength; i++) {
+        // Create a closure for each iteration
+        (function (button) {
+            var productId = button.dataset.product;
+            var colorSizeId = button.dataset.color_size_id;
+            var action = button.dataset.action;
+            var quantity = button.value;
+
+            if (parseInt(quantity) < 0) {
+                action = "delete_item";
+            }
+
+            // Chain the promise for the current iteration
+            promiseChain = promiseChain.then(() => {
+                return updateUserOrder(productId, null, null, colorSizeId, action, quantity);
+            });
+        })(updateBtnsLazy[i]);
+    }
+
+    // Reload the location after all requests are completed
+    promiseChain.then(() => {
+        alert("سبد خرید بروز شد")
+        location.reload();
+    });
+}
+
+function updateUserOrder(productId, colorId, sizeId, colorSizeId, action, quantity, can_reload = false) {
+    return fetch(updateOrderUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -75,7 +108,9 @@ function updateUserOrder(productId, colorId, sizeId, colorSizeId, action, quanti
         })
 
         .then((data) => {
-            location.reload()
+            if (can_reload) {
+                location.reload();
+            }
         })
 
 }

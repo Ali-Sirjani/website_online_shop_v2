@@ -1,4 +1,6 @@
-from .models import Tag, TopTag, Post
+from django.db.models import Prefetch
+
+from .models import Tag, TopTag, Post, PostComment
 
 
 def top_tag_list(request):
@@ -13,7 +15,10 @@ def top_tag_list(request):
 
 
 def recent_posts(request):
-    post_query = Post.active_objs.all().order_by('datetime_created')[0:4]
+    post_query = Post.active_objs.all().prefetch_related(Prefetch(
+        'post_comments',
+        queryset=PostComment.objects.filter(confirmation=True)
+    )).order_by('-datetime_created')[0:4]
 
     context = {'recent_posts': post_query}
 

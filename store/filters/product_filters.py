@@ -35,10 +35,17 @@ def validate_datetime_updated(value):
     return slice(value_start, value_stop, None)
 
 
+class CustomBooleanWidget(django_filters.widgets.BooleanWidget):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.choices = (('', _('Unknown')), ('True', _('Yes')), ('False', _('No')))
+
+
 class ProductFilter(django_filters.FilterSet):
     price = django_filters.NumericRangeFilter(method='custom_filter_price')
     datetime_updated = django_filters.DateFromToRangeFilter(label=_('date'), widget=widgets.DateRangeWidget(
         attrs={'class': 'jalali_date-date'}), method='custom_filter_datetime')
+    discount = django_filters.BooleanFilter(widget=CustomBooleanWidget)
 
     color = django_filters.ModelChoiceFilter(
         queryset=ProductColor.objects.all(),
@@ -57,6 +64,7 @@ class ProductFilter(django_filters.FilterSet):
     consider_both = django_filters.BooleanFilter(
         label=_('Consider both color and size'),
         method='custom_filter_color_and_size',
+        widget=CustomBooleanWidget,
     )
 
     class Meta:

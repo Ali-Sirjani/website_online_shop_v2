@@ -1,0 +1,86 @@
+{% extends '_base.html' %}
+
+{% load i18n %}
+
+{% block style %}
+    <style>
+        .red-text {
+            color: #d0070f;
+        }
+
+        .instagram {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+            color: #fff;
+            font-size: 30px;
+            line-height: 40px;
+            background: #d6249f;
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, .25);
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock style %}
+
+{% block title %}{% trans 'About Project' %}{% endblock title %}
+
+{% block content %}
+    <div class="container ">
+        <div class="text-center">
+            <h1 class="display-5 success-heading mt-50 mb-50">
+                <span class="red-text">{% trans 'Welcome to the online shop' %}</span>
+            </h1>
+
+            <div class="mt-30 mb-70">
+                {% blocktrans %}
+                    <h2>About Project</h2>
+                    <p style="font-size: 20px;">
+                        I am Ali Sirjani, a developer in <strong>Django</strong> and <strong>Django Rest
+                        Framework</strong>, who has a passion for creating practical web applications.One of my notable
+                        projects is the "Online Store," developed using the Django framework. The
+                        Online Store is an e-commerce platform that allows users to view and purchase products on the
+                        site, even without the need to log in. Users can also save products as favorites for future
+                        reference.
+                        <br>
+                        In addition, users can log in using their Google accounts for a seamless shopping experience.
+
+                        <br> <br>
+                        Additionally, I've enriched the user interface by incorporating JavaScript, coding essential
+                        features like dynamic shopping cart management, product liking functionality, and real-time
+                        product filtering based on size using AJAX. My commitment to enhancing user interaction extends
+                        to the profile section, where I've utilized JavaScript to create a seamless and secure interface
+                        for password management. Despite my initial limited knowledge of JavaScript, I took it upon
+                        myself to learn and implement these features, contributing to the overall richness of the
+                        "Online Store" project.
+
+                    </p>
+
+                    <h2 class="mt-40">Contact Me</h2>
+                    <p style="font-size: 20px;">
+                        Thank you for visiting my portfolio. If you are looking for a web developer who is passionate
+                        about web development and ready to take on new challenges, you can reach out to me.
+                    </p>
+                {% endblocktrans %}
+
+                <p>
+                    <a href="https://t.me/ali_sirjani81" target="_blank">
+                        <i class="fa fa-telegram mr--10" style="font-size:38px; color: #00b7ff"></i>
+
+                    </a>
+                    <a href="https://github.com/Ali-Sirjani" target="_blank"><i style="font-size:43px; color: #1f2328"
+                                                                                class="fa">&#xf09b;</i></a>
+
+                    <a href="https://www.instagram.com/ali.django.dev/" target="_blank">
+                        <i class="instagram fa fa-instagram" style="font-size:42px;"></i></a>
+
+                    <a href="https://www.linkedin.com/in/ali-sirjani/" target="_blank"><i class="fa fa-linkedin-square"
+                                                                                          style="font-size:40px; color: #1a67be"></i></a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}

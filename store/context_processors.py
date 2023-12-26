@@ -16,7 +16,7 @@ def product_contexts(request):
 
 def order_contexts(request):
     if request.user.is_authenticated:
-        order, created = Order.objects.prefetch_related(
+        order, created = Order.objects.select_related('coupon').prefetch_related(
             Prefetch(
                 'items',
                 queryset=OrderItem.objects.select_related('color_size__color', 'color_size__size').all()

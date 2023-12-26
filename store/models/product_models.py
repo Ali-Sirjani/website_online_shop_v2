@@ -197,7 +197,7 @@ class ProductColorAndSizeValue(models.Model):
 
     class Meta:
         unique_together = (('color', 'size', 'product'),)
-        verbose_name = _('product color and size')
+        verbose_name = _('product color and size value')
         verbose_name_plural = _('product color and size values')
 
     def __str__(self):
@@ -229,6 +229,7 @@ class ProductImage(models.Model):
     class Meta:
         verbose_name = _('product image')
         verbose_name_plural = _('product images')
+        ordering = ('-is_main', )
 
     def __str__(self):
         return f'{self.pk}'
