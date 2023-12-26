@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load trans_fa %}
+{% load jalali_tags %}
 
 {% block title %} {% trans 'Order Detail' %} {% endblock title %}
 
@@ -16,12 +17,12 @@
                             <h2 class="card-title">{% trans 'Customer Information' %}</h2>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
-                                    <strong>{% trans 'Name' %}:</strong> {{ order_finished.first_name }} {{ order_finished.last_name }}
+                                    <strong class="mr-3">{% trans 'Name' %}:</strong> {{ order_finished.first_name }} {{ order_finished.last_name }}
                                 </li>
                                 <li class="list-group-item">
-                                    <strong>{% trans 'Email' %}:</strong> {{ order_finished.email }}</li>
+                                    <strong class="mr-3">{% trans 'Email' %}:</strong> {{ order_finished.email }}</li>
                                 <li class="list-group-item">
-                                    <strong>{% trans 'Phone' %}:</strong> {{ order_finished.phone }}</li>
+                                    <strong class="mr-3">{% trans 'Phone' %}:</strong> {{ order_finished.phone }}</li>
                             </ul>
                         </div>
                     </div>
@@ -32,9 +33,9 @@
                         <div class="card-body">
                             <h2 class="card-title">{% trans 'Order Status' %}</h2>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item"><strong>{% trans 'Tracking Code' %}:
+                                <li class="list-group-item"><strong class="mr-3">{% trans 'Tracking Code' %}:
                                 </strong> {{ order_finished.tracking_code }}</li>
-                                <li class="list-group-item"><strong>{% trans 'Delivery Status' %}:
+                                <li class="list-group-item"><strong class="mr-3">{% trans 'Delivery Status' %}:
                                 </strong> {{ order_finished.avg_track_items }}</li>
                             </ul>
                         </div>
@@ -62,7 +63,11 @@
                             <td>
                                 <a href="{{ item.product.get_absolute_url }}">{{ item.product.title|truncatewords:10 }}</a>
                             </td>
-                            <td>{{ item.color_size }}</td>
+                            {% if item.color_size %}
+                                <td>{{ item.color_size }}</td>
+                            {% else %}
+                                <td class="text-center">-</td>
+                            {% endif %}
                             <td>{{ item.quantity|num_fa_20 }}</td>
                             <td>{{ item.price|num_fa_20 }}</td>
                             {% if item.product.discount %}
@@ -89,20 +94,24 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>{% trans 'Cart Total (No Discount)' %}:</strong>
+                        <li class="list-group-item"><strong class="mr-30">{% trans 'Cart Total (No Discount)' %}:</strong>
                             {{ order_finished.get_cart_total_no_discount|num_fa_25 }}</li>
-                        <li class="list-group-item"><strong>{% trans 'Cart Total (With Discount)' %}:</strong>
-                            {{ order_finished.get_cart_total_with_discount|num_fa_25 }}</li>
-                        <li class="list-group-item"><strong>{% trans 'Cart Total Profit' %}:</strong>
+                        <li class="list-group-item"><strong class="mr-30">{% trans 'Cart Total Profit' %}:</strong>
                             {{ order_finished.get_cart_total_profit|num_fa_25 }}</li>
-                        <li class="list-group-item"><strong>{% trans 'Coupon Price' %}:</strong>
-                            {{ order_finished.coupon_price|num_fa_25 }}
-                        </li>
-                        <li class="list-group-item"><strong>{% trans 'Cart Total' %}:</strong>
-                            {{ order_finished.get_cart_total|num_fa_25 }}
-                        </li>
-                        <li class="list-group-item"><strong>{% trans 'Cart Total With Coupon' %}:</strong>
-                            {{ order_finished.get_cart_total_with_coupon|num_fa_25 }}</li>
+                        {% if order_finished.coupon %}
+                            <li class="list-group-item"><strong class="mr-30">{% trans 'Coupon Price' %}:</strong>
+                                {{ order_finished.coupon_price|num_fa_25 }}
+                            </li>
+                            <li class="list-group-item"><strong class="mr-30">{% trans 'Cart Total' %}:</strong>
+                                {{ order_finished.get_cart_total|num_fa_25 }}
+                            </li>
+                            <li class="list-group-item"><strong class="mr-30">{% trans 'Cart Total With Coupon' %}:</strong>
+                                {{ order_finished.get_cart_total_with_coupon|num_fa_25 }}</li>
+                        {% else %}
+                            <li class="list-group-item"><strong class="mr-30">{% trans 'Cart Total' %}:</strong>
+                                {{ order_finished.get_cart_total|num_fa_25 }}
+                            </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
@@ -112,12 +121,12 @@
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <strong>{% trans 'Order Note' %}:</strong> {{ order_finished.order_note }}</li>
+                            <strong class="mr-3">{% trans 'Order Note' %}:</strong> {{ order_finished.order_note }}</li>
                         <li class="list-group-item">
-                            <strong>{% trans 'Ordered on' %}:</strong> {{ order_finished.datetime_created }}
+                            <strong class="mr-3">{% trans 'Ordered on' %}:</strong> {{ order_finished.datetime_created|to_jalali:'%d/%m/%Y' }}
                         </li>
                         <li class="list-group-item">
-                            <strong>{% trans 'Last Updated' %}:</strong> {{ order_finished.datetime_updated }}
+                            <strong class="mr-3">{% trans 'Last Updated' %}:</strong> {{ order_finished.datetime_updated|to_jalali:'%d/%m/%Y' }}
                         </li>
                     </ul>
                 </div>
