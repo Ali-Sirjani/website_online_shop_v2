@@ -22,7 +22,7 @@ class ProductsListView(FilterMixin, generic.ListView):
     filterset_class = ProductFilter
     template_name = 'store/product/product_list.html'
     context_object_name = 'products'
-    paginate_by = 5
+    paginate_by = 9
 
     def get_queryset(self):
         category_slug = self.kwargs.get('slug')
@@ -33,7 +33,7 @@ class ProductsListView(FilterMixin, generic.ListView):
 
         else:
             queryset = Product.active_objs.all()
-        queryset = optimize_product_query(queryset)
+        queryset = optimize_product_query(queryset.order_by('-datetime_updated'))
 
         sort_num = self.request.GET.get('sort')
         if sort_num:
@@ -67,7 +67,7 @@ class ProductSearchView(ProductsListView):
                 queryset = Product.active_objs.filter(
                     Q(title__icontains=q) | Q(category__name__icontains=q)).distinct()
 
-                queryset = optimize_product_query(queryset)
+                queryset = optimize_product_query(queryset.order_by('-datetime_updated'))
 
                 self.q = q
 
@@ -111,14 +111,14 @@ class ProductDetailView(generic.edit.FormMixin, generic.DetailView):
 
         related_product = self.get_queryset().filter(
             category__in=category_pk_list,
-        ).exclude(pk=obj.pk).order_by('?')
+        ).exclude(pk=obj.pk).order_by('?').distinct()
         context['related_products'] = related_product[:8]
 
         if self.request.user.is_authenticated:
             context['liked'] = Product.active_objs.filter(favorite=self.request.user.pk).values_list('pk', flat=True)
 
         context['comments'] = ProductComment.objects.filter(confirmation=True, product=self.object.pk).select_related(
-            'author').order_by('-datetime_updated')
+            'author__profile').order_by('-datetime_updated')
         return context
 
     def post(self, *args, **kwargs):
@@ -153,10 +153,10 @@ def favorite_view(request):
         user = request.user
         if product_obj.favorite.filter(pk=user.pk).exists():
             product_obj.favorite.remove(user)
-            messages.error(request, _('Unlike post.'))
+            messages.error(request, _('Unlike product.'))
         else:
             product_obj.favorite.add(user)
-            messages.success(request, _('Like post.'))
+            messages.success(request, _('Like product.'))
 
         response = {'authenticated': True}
         return JsonResponse(response, safe=False)
