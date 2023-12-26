@@ -137,11 +137,12 @@ class Order(models.Model):
                                              _('Congratulations! 🎉 Your coupon has been successfully applied. Thank you for choosing us! Happy shopping!')
                                              )
                         return True
-
-                messages.info(request, _(f'The minimum price for coupon is {coupon_rules.last().start_price}'))
+                price = coupon_rules.last().start_price
+                text = _('The minimum price for coupon is %(start_price)s') % {"start_price": price}
+                messages.info(request, text)
 
             else:
-                messages.error(request, _(f'The {coupon} is not valid'))
+                messages.error(request, _('Coupon is expired'))
 
             self.coupon = None
             self.coupon_price = 0
