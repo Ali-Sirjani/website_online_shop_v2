@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load jalali_tags %}
 
 <!-- BLOG AREA START -->
 <div class="ltn__blog-area mb-100 mt-100">
@@ -17,7 +18,11 @@
                 {% else %}
                     {% if q %}
                         <div class="row">
-                            <h3 class="mx-5" dir="rtl">{% trans 'There is no post with title or tag' %} {{ q }}</h3>
+                            <h3 class="mx-5" dir="rtl">
+                                {% blocktrans %}
+                                    There is no post with title or tag {{ q }}
+                                {% endblocktrans %}
+                            </h3>
                         </div>
                     {% else %}
                         {% if none_q %}
@@ -53,7 +58,7 @@
                                             <div class="ltn__blog-meta">
                                                 <ul>
                                                     <li>
-                                                        <span>{{ recent_post.datetime_updated }}</span>
+                                                        <span>{{ recent_post.datetime_updated|to_jalali:'%d/%m/%Y' }}</span>
                                                     </li>
                                                     <li class="ltn__blog-comment">
                                                         <a href="#"><i
