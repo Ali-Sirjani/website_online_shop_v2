@@ -5,6 +5,25 @@
     font-style: normal;
 }
 
+/* Custom Iranyekan Fonts */
+@font-face {
+    font-family: 'Iranyekan';
+    src: url('../fonts/Qs_Iranyekan.ttf') format('truetype');
+    /* Additional font-face properties can be added here */
+}
+
+@font-face {
+    font-family: 'Iranyekan-Black';
+    src: url('../fonts/Qs_Iranyekan black.ttf') format('truetype');
+    /* Additional font-face properties can be added here */
+}
+
+@font-face {
+    font-family: 'Iranyekan-Bold';
+    src: url('../fonts/Qs_Iranyekan bold.ttf') format('truetype');
+    /* Additional font-face properties can be added here */
+}
+
 .num_fa_font {
     font-family: 'num_fa_font', sans-serif;
 }
@@ -67,4 +86,10 @@
 .star-rating.star-1::before {
     content: '\2605 \2606 \2606 \2606 \2606';
     letter-spacing: 5px;
+}
+
+address p {
+    word-wrap: break-word; /* Wrap long words onto the next line */
+    overflow: hidden; /* Hide content that exceeds the box */
+    max-width: 100%; /* Ensure the content doesn't exceed the container's width */
 }

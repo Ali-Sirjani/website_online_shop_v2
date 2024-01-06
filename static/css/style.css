@@ -203,10 +203,10 @@ font-family: 'Poppins', sans-serif;
   --ltn__secondary-color-3: #E55472;
   /* Lighten */
   /* Google Fonts */
-  --ltn__heading-font: 'Montserrat', sans-serif;
-  --ltn__paragraph-font: 'Poppins', sans-serif;
-  --ltn__body-font: 'Montserrat', sans-serif;
-  --ltn__google-font-3: 'Lora', serif;
+  --ltn__heading-font: 'Iranyekan-Bold', sans-serif;
+  --ltn__paragraph-font: 'Iranyekan', sans-serif;
+  --ltn__body-font: 'Iranyekan-Bold', sans-serif;
+  --ltn__google-font-3: 'Iranyekan-Black', serif;
   /* Footer  */
   --ltn__color-1: #8cb2b2;
   --ltn__color-2: #ACD2D8;
