@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, UsernameField
 from django.utils.translation import gettext_lazy as _
 
-from .models import Profile, ContactUs
+from .models import Profile, ContactUs, ProfileAddress
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -39,8 +39,18 @@ class CustomUserChangeForm(UserChangeForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'phone', 'picture', 'state', 'city', 'address', 'plate')
+        fields = ('first_name', 'last_name', 'phone', 'picture')
         widgets = {'picture': forms.FileInput}
+
+
+class ProfileAddressFrom(forms.ModelForm):
+    class Meta:
+        model = ProfileAddress
+        fields = ('state', 'city', 'address', 'plate')
+
+
+class SetUsernameForm(forms.Form):
+    username = forms.CharField(max_length=150, label=_('username'))
 
 
 class ContactUsForm(forms.ModelForm):
