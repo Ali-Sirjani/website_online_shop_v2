@@ -111,6 +111,38 @@ def set_username_view(request):
     return json_mixin_obj.render_to_json_response(response_data, status=400)
 
 
+class CreatProfileAddressView(LoginRequiredMixin, JSONResponseMixin, generic.CreateView):
+    model = ProfileAddress
+    form_class = ProfileAddressFrom
+    http_method_names = ('post',)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        form = self.get_form()
+        addresses = request.user.profile.profile_address.all()
+        if len(addresses) >= 3:
+            form.add_error(None, _('You can not have more than %s address') % num_fa_15('3'))
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        profile_obj = form.save(commit=False)
+        profile_obj.profile = self.request.user.profile
+        profile_obj.save()
+        messages.success(self.request, _('Address successfully added'))
+        response_data = {'success': True, 'message': 'Profile address updated successfully.'}
+        return self.render_to_json_response(response_data)
+
+    def form_invalid(self, form):
+        response_data = {'form': self.ajax_response_form(form)}
+        return self.render_to_json_response(response_data, status=400)
+
+
 class ContactUsView(generic.CreateView):
     form_class = ContactUsForm
     context_object_name = 'form'
