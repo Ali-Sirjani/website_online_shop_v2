@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Profile, ContactUs
+from .models import Profile, ContactUs, ProfileAddress
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 
 
@@ -24,7 +24,6 @@ class CustomUserAdmin(UserAdmin):
 class ProfileAdmin(admin.ModelAdmin):
     fieldsets = (
         ('User information', {'fields': ('user', 'first_name', 'last_name', 'phone', 'picture',)}),
-        ('User location', {'fields': ('state', 'city', 'address', 'plate',)}),
         ('Times', {'fields': ('datetime_created', 'datetime_updated')})
     )
     list_display = ('user', 'full_name',)
@@ -45,6 +44,14 @@ class ProfileAdmin(admin.ModelAdmin):
             return name
 
         return None
+
+
+@admin.register(ProfileAddress)
+class ProfileAddressAdmin(admin.ModelAdmin):
+    fields = ('profile', 'state', 'city', 'address', 'plate', 'datetime_created', 'datetime_updated')
+    list_display = ('profile',)
+    search_fields = ('profile__user__username', 'profile__user__email')
+    readonly_fields = ('profile', 'datetime_created', 'datetime_updated')
 
 
 @admin.register(ContactUs)
