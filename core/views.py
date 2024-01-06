@@ -1,3 +1,5 @@
+import json
+
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -141,6 +143,56 @@ class CreatProfileAddressView(LoginRequiredMixin, JSONResponseMixin, generic.Cre
     def form_invalid(self, form):
         response_data = {'form': self.ajax_response_form(form)}
         return self.render_to_json_response(response_data, status=400)
+
+
+class UpdateProfileAddressView(LoginRequiredMixin, JSONResponseMixin, generic.UpdateView):
+    model = ProfileAddress
+    form_class = ProfileAddressFrom
+    http_method_names = ('post', 'put')
+
+    def get_object(self, queryset=None):
+        pk = self.request.POST.get('pk')
+        if pk:
+            return get_object_or_404(self.request.user.profile.profile_address, pk=pk)
+        else:
+            raise Http404
+
+    def form_valid(self, form):
+        self.object = form.save()
+        messages.success(self.request, _('Address successfully updated'))
+        response_data = {'success': True, 'message': 'Profile address updated successfully.'}
+        return self.render_to_json_response(response_data)
+
+    def form_invalid(self, form):
+        response_data = {'form': self.ajax_response_form(form)}
+        return self.render_to_json_response(response_data, status=400)
+
+
+class DeleteProfileAddressView(LoginRequiredMixin, JSONResponseMixin, generic.DeleteView):
+    model = ProfileAddress
+    http_method_names = ['delete']
+
+    def get_object(self, queryset=None):
+        try:
+            data = json.loads(self.request.body)
+            pk = data.get('pk')
+            if pk:
+                return get_object_or_404(self.request.user.profile.profile_address, pk=pk)
+            else:
+                raise Http404
+        except json.JSONDecodeError:
+            return self.render_to_json_response({'error': 'Invalid JSON in the request body'}, status=400)
+
+    def delete(self, request, *args, **kwargs):
+        """
+        Call the delete() method on the fetched object and then redirect to the
+        success URL.
+        """
+        self.object = self.get_object()
+        message_variables = {'state': self.object.state, 'city': self.object.city}
+        self.object.delete()
+        messages.success(self.request, _('Address %(state)s %(city)s deleted') % message_variables)
+        return self.render_to_json_response({'status': 'deleted'})
 
 
 class ContactUsView(generic.CreateView):
