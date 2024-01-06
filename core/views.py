@@ -1,14 +1,21 @@
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.core import serializers
+from django.shortcuts import get_object_or_404
+from django.http import Http404
+from django.views.decorators.http import require_POST
+from django.contrib.auth.decorators import login_required
 
 from allauth.account.forms import ChangePasswordForm, SetPasswordForm
 
-from .models import Profile
-from .forms import ProfileForm, ContactUsForm
+from .models import Profile, ProfileAddress
+from .forms import ProfileForm, ContactUsForm, ProfileAddressFrom, SetUsernameForm
+from .mixins import JSONResponseMixin
+from .templatetags.trans_fa import num_fa_15
 from store.models import Product, TopProduct, Order, Category
 from store.utils import optimize_product_query
 
@@ -40,7 +47,7 @@ class HomePageView(generic.ListView):
         return context
 
 
-class ProfileView(LoginRequiredMixin, generic.UpdateView):
+class ProfileView(LoginRequiredMixin, JSONResponseMixin, generic.UpdateView):
     model = Profile
     form_class = ProfileForm
     template_name = 'core/profile.html'
@@ -51,12 +58,26 @@ class ProfileView(LoginRequiredMixin, generic.UpdateView):
         profile_user, create = Profile.objects.get_or_create(user=self.request.user)
         return profile_user
 
+    def form_valid(self, form):
+        self.object = form.save()
+        messages.success(self.request, _('profile successfully updated'))
+        response_data = {'success': True, 'message': 'Profile updated successfully.'}
+        return self.render_to_json_response(response_data)
+
+    def form_invalid(self, form):
+        response_data = {'form': self.ajax_response_form(form)}
+        return self.render_to_json_response(response_data, status=400)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.has_usable_password():
             context['change_pass_form'] = ChangePasswordForm()
         else:
             context['set_pass_form'] = SetPasswordForm()
+
+        context['set_username_form'] = SetUsernameForm()
+
+        context['address_form'] = ProfileAddressFrom()
 
         context['orders_completed'] = Order.objects.filter(customer=self.request.user, completed=True).order_by(
             '-datetime_payed').prefetch_related('items')
