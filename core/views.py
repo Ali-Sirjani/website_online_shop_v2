@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
 from django.core import serializers
+from django.db import transaction
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.views.decorators.http import require_POST
@@ -83,6 +84,31 @@ class ProfileView(LoginRequiredMixin, JSONResponseMixin, generic.UpdateView):
             '-datetime_payed').prefetch_related('items')
 
         return context
+
+
+@login_required
+@require_POST
+def set_username_view(request):
+    json_mixin_obj = JSONResponseMixin()
+
+    form = SetUsernameForm(data=request.POST)
+    if form.is_valid():
+        user_model = get_user_model()
+        username = form.cleaned_data.get('username')
+        try:
+            user_exist = get_user_model().objects.get(username=username)
+            if request.user.username == user_exist.username:
+                form.add_error('username', _('You are already using this username. Choose a different one.'))
+
+        except user_model.DoesNotExist:
+            with transaction.atomic():
+                request.user.username = username
+                request.user.save()
+            messages.success(request, _('Username successfully changed.'))
+            return json_mixin_obj.render_to_json_response({'message': 'success'})
+
+    response_data = {'form': json_mixin_obj.ajax_response_form(form)}
+    return json_mixin_obj.render_to_json_response(response_data, status=400)
 
 
 class ContactUsView(generic.CreateView):
