@@ -16,6 +16,7 @@ urlpatterns = [
     path('apply-coupon/', views.apply_coupon_view, name='apply_coupon'),
     path('order/<int:pk>/', views.OrderDetailView.as_view(), name='order_detail'),
     path('checkout/', views.checkout_view, name='checkout'),
+    path('checkout/set-profile/', views.set_profile_info, name='set_profile_ajax'),
     path('process/checkout/', views.sandbox_process_payment, name='sandbox_process'),
     path('process/callback/', views.sandbox_callback_payment, name='sandbox_callback'),
     path('checkout/success/', TemplateView.as_view(template_name='store/payment/success.html')),
