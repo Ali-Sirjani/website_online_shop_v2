@@ -5,6 +5,8 @@ from django.utils.translation import gettext_lazy as _
 
 from phonenumber_field.modelfields import PhoneNumberField
 
+from store.abstract import AbstractShippingAddress
+
 
 class CustomUser(AbstractUser):
     email = models.EmailField(max_length=254, unique=True, verbose_name='email address')
@@ -20,10 +22,6 @@ class Profile(models.Model):
     picture = models.ImageField(upload_to='accounts_pictures/',
                                 default='../static/img/default_account/default_profile.png', blank=True,
                                 verbose_name=_('picture'))
-    state = models.CharField(max_length=200, blank=True, verbose_name=_('state'))
-    city = models.CharField(max_length=200, blank=True, verbose_name=_('city'))
-    address = models.TextField(blank=True, verbose_name=_('address'))
-    plate = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('plate'))
 
     datetime_created = models.DateTimeField(auto_now_add=True, verbose_name=_('datetime created'))
     datetime_updated = models.DateTimeField(auto_now=True, verbose_name=_('datetime updated'))
@@ -34,6 +32,11 @@ class Profile(models.Model):
 
     def __str__(self):
         return f'{self.user.username}'
+
+
+class ProfileAddress(AbstractShippingAddress):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='profile_address',
+                                verbose_name=_('profile'))
 
 
 class ContactUs(models.Model):

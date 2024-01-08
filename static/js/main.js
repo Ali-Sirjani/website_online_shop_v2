@@ -236,6 +236,8 @@
             arrows: false,
             vertical: true,
             focusOnSelect: true,
+            centerMode: true, // Enable center mode
+            centerPadding: '20px', // Adjust the padding as needed
             prevArrow: '<a class="slick-prev"><i class="icon-arrow-right" alt="Arrow Icon"></i></a>',
             nextArrow: '<a class="slick-next"><i class="icon-arrow-left" alt="Arrow Icon"></i></a>',
             responsive: [

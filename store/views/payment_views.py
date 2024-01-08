@@ -7,10 +7,14 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.contrib import messages
 from django.db import transaction
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_GET
 
 from ..models import Order
 from ..cart import Cart
 from .. import utils
+from core.mixins import JSONResponseMixin
 
 
 def checkout_view(request):
@@ -30,6 +34,10 @@ def checkout_view(request):
         checkout_anonymous = utils.check_out_user_anonymous(request, cart)
         try:
             form_order, form_shipping = checkout_anonymous
+            messages.info(
+                request,
+                _('To view order details in the future, please register with the email you enter for the order.')
+            )
         except ValueError:
             return checkout_anonymous
 
@@ -47,14 +55,32 @@ def checkout_view(request):
             else:
                 form_order.initial['total'] = order.get_cart_total
 
+    errors_ajax = {'order_errors': None, 'shipping_errors': None}
+    if form_order.errors or form_shipping.errors:
+        json_mixin_obj = JSONResponseMixin()
+        order_errors = json_mixin_obj.ajax_response_form(form_order)
+        shipping_errors = json_mixin_obj.ajax_response_form(form_shipping)
+        errors_ajax = {'order_errors': order_errors, 'shipping_errors': shipping_errors}
+
     context = {
         'order': order,
         'items': items,
         'form_order': form_order,
         'form_shipping': form_shipping,
+        'forms_errors': json.dumps(errors_ajax),
     }
 
     return render(request, 'store/payment/checkout.html', context)
+
+
+@require_GET
+@login_required
+def set_profile_info(request):
+    user_profile = request.user.profile
+    data = {'first_name': user_profile.first_name, 'last_name': user_profile.last_name, 'email': request.user.email,
+            'phone': str(user_profile.phone).replace('+98', '0'), }
+
+    return JsonResponse(data, safe=False)
 
 
 def sandbox_process_payment(request):
