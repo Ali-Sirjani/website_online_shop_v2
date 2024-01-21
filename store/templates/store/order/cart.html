@@ -15,99 +15,113 @@
                 <div class="col-lg-12">
                     <div class="shoping-cart-inner">
                         <div class="shoping-cart-table table-responsive">
-                            <table class="table">
-                                <tbody>
-                                {% for item in order.act_items %}
-                                    <tr>
-                                        <td class="cart-product-remove update-cart" data-product="{{ item.product.pk }}"
-                                            data-color_size_id="{{ item.color_size.pk }}" data-action="delete_item">x
-                                        </td>
+                            {% if order.get_cart_items %}
+                                <table class="table">
+                                    <tbody>
+                                    {% for item in order.act_items %}
+                                        <tr>
+                                            <td class="cart-product-remove update-cart"
+                                                data-product="{{ item.product.pk }}"
+                                                data-color_size_id="{{ item.color_size.pk }}" data-action="delete_item">
+                                                x
+                                            </td>
 
-                                        <td class="cart-product-image">
-                                            <a href="{{ item.product.get_absolute_url }}"><img
-                                                    src="{{ item.product.main_image }}"
-                                                    alt="#"></a>
-                                        </td>
-                                        <td class="cart-product-info">
-                                            <h4>
-                                                <a href="{{ item.product.get_absolute_url }}">{{ item.product.title|truncatechars:34 }}</a>
-                                            </h4>
-                                        </td>
-                                        <td class="cart-product-info">
-                                            <div class="color-circle"
-                                                 style="background-color: {{ item.color_size.color }};">
-                                            </div>
-                                        </td>
-                                        {% if item.color_size.size %}
+                                            <td class="cart-product-image">
+                                                <a href="{{ item.product.get_absolute_url }}"><img
+                                                        src="{{ item.product.main_image }}"
+                                                        alt="#"></a>
+                                            </td>
                                             <td class="cart-product-info">
-                                                <h4 class="mt-3"
-                                                    style="font-size: 25px; color: #434242">
-                                                    {{ item.color_size.size|upper }}
+                                                <h4>
+                                                    <a href="{{ item.product.get_absolute_url }}">{{ item.product.title|truncatechars:34 }}</a>
                                                 </h4>
                                             </td>
-                                        {% endif %}
-                                        <td class="cart-product-price">
-                                            {% if item.product.discount %}
-                                                <span class="discount-color">{{ item.product.price|num_fa_20 }}</span>
-                                            {% else %}
-                                                <span>{{ item.product.price|num_fa_20 }}</span>
+                                            <td class="cart-product-info">
+                                                <div class="color-circle"
+                                                     style="background-color: {{ item.color_size.color }};">
+                                                </div>
+                                            </td>
+                                            {% if item.color_size.size %}
+                                                <td class="cart-product-info">
+                                                    <h4 class="mt-3"
+                                                        style="font-size: 25px; color: #434242">
+                                                        {{ item.color_size.size|upper }}
+                                                    </h4>
+                                                </td>
                                             {% endif %}
-                                        </td>
-                                        <td>
-                                            {% if item.product.discount %}
-                                                <span>{{ item.product.discount_price|num_fa_20 }}</span>
-                                            {% else %}
-                                                <div style="width: 30px;"></div>
-                                            {% endif %}
-                                        </td>
-                                        <td class="cart-product-quantity">
-                                            <div class="cart-plus-minus">
-                                                <input type="text" value="{{ item.quantity }}"
-                                                       id="qty-{{ item.product.pk }}" name="qtybutton"
-                                                       class="cart-plus-minus-box update-cart-lazy"
-                                                       data-product="{{ item.product.pk }}"
-                                                       data-color_size_id="{{ item.color_size.pk }}"
-                                                       data-action="replace">
+                                            <td class="cart-product-price">
+                                                {% if item.product.discount %}
+                                                    <span class="discount-color">{{ item.product.price|num_fa_20 }}</span>
+                                                {% else %}
+                                                    <span>{{ item.product.price|num_fa_20 }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if item.product.discount %}
+                                                    <span>{{ item.product.discount_price|num_fa_20 }}</span>
+                                                {% else %}
+                                                    <div style="width: 30px;"></div>
+                                                {% endif %}
+                                            </td>
+                                            <td class="cart-product-quantity">
+                                                <div class="cart-plus-minus">
+                                                    <input type="text" value="{{ item.quantity }}"
+                                                           id="qty-{{ item.product.pk }}" name="qtybutton"
+                                                           class="cart-plus-minus-box update-cart-lazy"
+                                                           data-product="{{ item.product.pk }}"
+                                                           data-color_size_id="{{ item.color_size.pk }}"
+                                                           data-action="replace">
+                                                </div>
+                                            </td>
+                                            <td class="cart-product-subtotal">{{ item.get_total_item|num_fa_20 }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr class="cart-coupon-row">
+                                        <td colspan="6">
+                                            <div class="cart-coupon">
+                                                <form method="post" action="{% url 'store:apply_coupon' %}">
+                                                    {% csrf_token %}
+                                                    <input type="text" id="id_code" name="code"
+                                                           placeholder="{% trans 'Coupon code' %}">
+                                                    <button type="submit"
+                                                            class="btn theme-btn-2 btn-effect-2">{% trans 'Apply Coupon' %}
+                                                    </button>
+                                                </form>
                                             </div>
                                         </td>
-                                        <td class="cart-product-subtotal">{{ item.get_total_item|num_fa_20 }}</td>
-                                    </tr>
-                                {% endfor %}
-                                <tr class="cart-coupon-row">
-                                    <td colspan="6">
-                                        <div class="cart-coupon">
-                                            <form method="post" action="{% url 'store:apply_coupon' %}">
-                                                {% csrf_token %}
-                                                <input type="text" id="id_code" name="code"
-                                                       placeholder="{% trans 'Coupon code' %}">
+                                        <td>
+                                            {% if order.get_cart_items %}
+                                                {% if request.user.is_authenticated %}
+                                                    <button type="submit"
+                                                            class="btn theme-btn-2 btn-effect-2-- upd"
+                                                            onclick="updateCartAuthenticatedUser()">{% trans 'Update Cart' %}
+                                                    </button>
+                                                {% else %}
+                                                    <button type="submit"
+                                                            class="btn theme-btn-2 btn-effect-2-- upd"
+                                                            onclick="updateCartAnonymousUser()">{% trans 'Update Cart' %}
+                                                    </button>
+                                                {% endif %}
                                                 <button type="submit"
-                                                        class="btn theme-btn-2 btn-effect-2">{% trans 'Apply Coupon' %}
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {% if order.get_cart_items %}
-                                            {% if request.user.is_authenticated %}
-                                                <button type="submit"
-                                                        class="btn theme-btn-2 btn-effect-2-- upd"
-                                                        onclick="updateCartAuthenticatedUser()">{% trans 'Update Cart' %}
-                                                </button>
-                                            {% else %}
-                                                <button type="submit"
-                                                        class="btn theme-btn-2 btn-effect-2-- upd"
-                                                        onclick="updateCartAnonymousUser()">{% trans 'Update Cart' %}
+                                                        class="theme-btn-1 btn btn-effect-1 update-cart"
+                                                        data-action="delete_cart">{% trans 'Clear Cart' %}
                                                 </button>
                                             {% endif %}
-                                            <button type="submit"
-                                                    class="theme-btn-1 btn btn-effect-1 update-cart"
-                                                    data-action="delete_cart">{% trans 'Clear Cart' %}
-                                            </button>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <div class="text-center mt-50">
+                                    <h3>{% trans 'Your Cart is Empty' %}</h3>
+                                    {% url 'store:product_list' as product_list_url %}
+                                    {% blocktrans %}
+                                        <p>It looks like you haven't added any items to your cart yet. Explore our <a
+                                                href="{{ product_list_url }}"><strong>products</strong></a> and
+                                            find something you love!</p>
+                                    {% endblocktrans %}
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="shoping-cart-total mt-50">
                             {% if order.get_cart_items %}
