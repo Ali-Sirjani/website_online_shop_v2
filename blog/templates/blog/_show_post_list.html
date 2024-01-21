@@ -1,4 +1,5 @@
 {% load jalali_tags %}
+{% load trans_fa %}
 
 {% for post in posts %}
     <!-- Blog Item -->
@@ -11,11 +12,11 @@
                 <div class="ltn__blog-meta">
                     <ul>
                         <li>
-                            <span>{{ post.datetime_updated|to_jalali:'%d/%m/%Y' }}</span>
+                            <span>{{ post.datetime_updated|to_jalali:'%Y/%m/%d'|num_fa_15 }}</span>
                         </li>
                         <li class="ltn__blog-comment">
-                            <a href="#"><i class="icon-speech"></i> {{ post.count_act_comments }}
-                            </a>
+                            <span><i class="icon-speech"></i> {{ post.count_act_comments }}
+                            </span>
                         </li>
                     </ul>
                 </div>

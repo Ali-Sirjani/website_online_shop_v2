@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load jalali_tags %}
+{% load trans_fa %}
 
 <!-- BLOG AREA START -->
 <div class="ltn__blog-area mb-100 mt-100">
@@ -58,12 +59,12 @@
                                             <div class="ltn__blog-meta">
                                                 <ul>
                                                     <li>
-                                                        <span>{{ recent_post.datetime_updated|to_jalali:'%d/%m/%Y' }}</span>
+                                                        <span>{{ recent_post.datetime_updated|to_jalali:'%Y/%m/%d'|num_fa_15 }}</span>
                                                     </li>
                                                     <li class="ltn__blog-comment">
-                                                        <a href="#"><i
-                                                                class="icon-speech"></i>{{ recent_post.count_act_comments }}
-                                                        </a>
+                                                        <span><i
+                                                                class="icon-speech ml-1"></i>{{ recent_post.count_act_comments }}
+                                                        </span>
                                                     </li>
                                                 </ul>
                                             </div>
