@@ -123,7 +123,9 @@
                                             <li><a href="{% url 'blog:post_list' %}">{% trans 'blog'|title %}</a></li>
                                             <li><a href="{% url 'core:contact_page' %}">{% trans 'contact'|title %}</a>
                                             </li>
-                                            <li><a href="#">{% trans 'about dev'|title %}</a></li>
+                                            <li>
+                                                <a href="{% url 'core:about_project' %}">{% trans 'about project'|title %}</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </nav>
@@ -143,7 +145,7 @@
                                             </div>
                                             <div class="header-search-1-form">
                                                 <form action="{% url 'store:product_search' %}" method="get">
-                                                    <input type="text" name="q" value="" placeholder="Search here..."/>
+                                                    <input type="text" name="q" value="" placeholder="{% trans 'Search here...' %}"/>
                                                     <button type="submit">
                                                         <span><i class="icon-magnifier"></i></span>
                                                     </button>
@@ -310,7 +312,7 @@
                 </div>
                 <div class="ltn__utilize-menu-search-form">
                     <form action="{% url 'store:product_search' %}" method="get">
-                        <input name="q" type="text" placeholder="Search...">
+                        <input name="q" type="text" placeholder="{% trans 'Search...' %}">
                         <button><i class="icon-magnifier"></i></button>
                     </form>
                 </div>
@@ -473,22 +475,21 @@
                         </div>
                         <div class="col-xl-4 col-md-6 col-sm-6 col-12">
                             <div class="footer-widget footer-about-widget">
-                                <h4 class="footer-title">About Our Shop</h4>
+                                <h4 class="footer-title">{% trans 'About Our Shop' %}</h4>
                                 <div class="footer-logo d-none">
                                     <div class="site-logo">
-                                        <img src="img/logo.png" alt="Logo">
+                                        <img src="{% static 'img/logo.png' %}" alt="Logo">
                                     </div>
                                 </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo incididunt ut
-                                    labore et dolore</p>
+                                <p>{% trans 'Fiama: Your stylish online shopping hub. Explore your unique style effortlessly with our curated collection. Upgrade your shopping experience with us and simplify your life.' %}</p>
                                 <div class="footer-address">
                                     <ul>
                                         <li>
                                             <div class="footer-address-icon">
                                                 <i class="icon-location-pin"></i>
                                             </div>
-                                            <div class="footer-address-info">
-                                                <p>Brooklyn, New York, United States</p>
+                                            <div class="footer-address-info mb-1">
+                                                <p>{% trans 'A place in Tehran' %}</p>
                                             </div>
                                         </li>
                                         <li>
@@ -529,7 +530,9 @@
                             <div class="footer-copyright-left">
                                 <div class="ltn__copyright-design clearfix">
                                     <p style="font-size: 18px;">&copy; <span class="current-year"></span>
-                                        - <a href="https://www.linkedin.com/in/ali-sirjani/">{% trans 'Ali Sirjani' %}</a></p>{% trans 'all rights reserved' %}
+                                        -
+                                        <a href="https://www.linkedin.com/in/ali-sirjani/">{% trans 'Ali Sirjani' %}</a>
+                                    </p>{% trans 'all rights reserved' %}
                                 </div>
                             </div>
                         </div>
@@ -583,6 +586,9 @@
 <script src="{% static 'js/main.js' %}"></script>
 
 <!-- Var USER -->
+
+{% block script %}
+{% endblock script %}
 
 </body>
 </html>
