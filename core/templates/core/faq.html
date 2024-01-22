@@ -11,7 +11,7 @@
     <!-- FAQ AREA START (faq-2) (ID > accordion_2) -->
     <div class="ltn__faq-area mb-80 mt-100">
         <div class="container">
-            <div class="row">
+            <div class="row d-flex justify-content-center">
                 <div class="col-lg-8">
                     <div class="ltn__faq-inner ltn__faq-inner-2">
                         <div id="accordion_2">
@@ -23,7 +23,31 @@
                                 </h6>
                                 <div id="faq-item-2-1" class="collapse" data-parent="#accordion_2">
                                     <div class="card-body">
-                                        <p>{% trans 'lorem ipsum' %}</p>
+                                        {% blocktrans %}
+                                            <p>
+                                                1. Add to Cart: <br>
+                                                - Browse through our product catalog and click "Add to Cart" for your
+                                                desired items.<br>
+                                                - No need to log in to add products to your cart.<br>
+                                                - If the product comes in different colors or sizes, choose one before
+                                                adding to the cart.<br><br>
+
+                                                2. View Cart: <br>
+                                                - Head to the Cart page to review your selected items. <br>
+                                                - Easily edit the quantity of products or remove them as needed.<br><br>
+
+                                                3. Checkout: <br>
+                                                - Proceed to the Payment page to finalize your purchase. <br>
+                                                - Logged-in users can use saved information and addresses.<br><br>
+
+                                                4. Payment: <br>
+                                                - Choose your preferred payment method. <br>
+                                                - Securely complete the transaction. <br><br>
+
+                                                5. Order Confirmation: <br>
+                                                - Receive order confirmation with details of your purchase. <br>
+                                                - Track your order and await its prompt delivery.</p>
+                                        {% endblocktrans %}
                                     </div>
                                 </div>
                             </div>
@@ -35,7 +59,13 @@
                                 </h6>
                                 <div id="faq-item-2-2" class="collapse" data-parent="#accordion_2">
                                     <div class="card-body">
-                                        <p>{% trans 'lorem ipsum' %}</p>
+                                        {% blocktrans %}
+                                            <p>To request a refund from the website, please contact our support team or
+                                                visit the "Contact Us" or "Support" section on the website. Our support
+                                                team will provide you with more detailed guidance and the necessary
+                                                information to process the refund. We apologize for any inconvenience
+                                                and appreciate your understanding.</p>
+                                        {% endblocktrans %}
                                     </div>
                                 </div>
                             </div>
@@ -47,19 +77,12 @@
                                 </h6>
                                 <div id="faq-item-2-3" class="collapse" data-parent="#accordion_2">
                                     <div class="card-body">
-                                        <p>{% trans 'lorem ipsum' %}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- card -->
-                            <div class="card">
-                                <h6 class="collapsed ltn__card-title" data-toggle="collapse" data-target="#faq-item-2-4"
-                                    aria-expanded="false">
-                                    {% trans 'Returns and refunds' %}
-                                </h6>
-                                <div id="faq-item-2-4" class="collapse" data-parent="#accordion_2">
-                                    <div class="card-body">
-                                        <p>{% trans 'lorem ipsum' %}</p>
+                                        {% blocktrans %}
+                                            <p>Welcome! As a new user, start by exploring our product catalog. Create an
+                                                account for a personalized shopping experience, and easily browse, add
+                                                items to your cart, and proceed to checkout for a seamless shopping
+                                                journey.</p>
+                                        {% endblocktrans %}
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +94,12 @@
                                 </h6>
                                 <div id="faq-item-2-5" class="collapse" data-parent="#accordion_2">
                                     <div class="card-body">
-                                        <p>{% trans 'lorem ipsum' %}</p>
+                                        {% blocktrans %}
+                                            <p>Yes, your details are secured. We prioritize the security and
+                                                confidentiality of your information, implementing robust encryption
+                                                measures and following industry best practices to ensure the protection
+                                                of your personal data.</p>
+                                        {% endblocktrans %}
                                     </div>
                                 </div>
                             </div>
@@ -79,11 +107,16 @@
                             <div class="card">
                                 <h6 class="collapsed ltn__card-title" data-toggle="collapse" data-target="#faq-item-2-6"
                                     aria-expanded="false">
-                                    {% trans 'Sale code is not working' %}
+                                    {% trans 'Coupon code is not working' %}
                                 </h6>
                                 <div id="faq-item-2-6" class="collapse" data-parent="#accordion_2">
                                     <div class="card-body">
-                                        <p>{% trans 'lorem ipsum' %}</p>
+                                        {% blocktrans %}
+                                            <p>We apologize for the inconvenience. Please ensure the coupon code is
+                                                entered correctly, without any errors or spaces. If the issue persists,
+                                                reach out to our support team for assistance, and we'll be happy to help
+                                                resolve the matter promptly.</p>
+                                        {% endblocktrans %}
                                     </div>
                                 </div>
                             </div>
@@ -91,11 +124,17 @@
                             <div class="card">
                                 <h6 class="collapsed ltn__card-title" data-toggle="collapse" data-target="#faq-item-2-7"
                                     aria-expanded="false">
-                                    {% trans 'How do I make payment by my credit card' %}
+                                    {% trans 'How do I make payment by my credit card?' %}
                                 </h6>
                                 <div id="faq-item-2-7" class="collapse" data-parent="#accordion_2">
                                     <div class="card-body">
-                                        <p>{% trans 'lorem ipsum' %}</p>
+                                        {% blocktrans %}
+                                            <p>To make a payment with your credit card, proceed to the checkout page.
+                                                Enter your credit card details, including the card number, expiration
+                                                date, and CVV code. Ensure that the billing information matches your
+                                                card details, then confirm the payment to complete the transaction
+                                                securely.</p>
+                                        {% endblocktrans %}
                                     </div>
                                 </div>
                             </div>

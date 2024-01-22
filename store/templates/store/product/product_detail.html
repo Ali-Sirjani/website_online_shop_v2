@@ -25,6 +25,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="ltn__shop-details-img-gallery ltn__shop-details-img-gallery-2">
+                                    <div class="ltn__shop-details-small-img slick-arrow-2">
+                                        {% for image in product.images.all %}
+                                            <div class="single-small-img">
+                                                <img src="{{ image.image.url }}" alt="Image">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+
                                     <div class="ltn__shop-details-large-img">
                                         {% for image in product.images.all %}
                                             <div class="single-large-img">
@@ -57,7 +65,7 @@
                                                         {% with avg_result=product.avg_star %}
                                                             <div class="star-rating star-{{ avg_result.0 }}"></div>
                                                             <li class="review-total">
-                                                                ( {{ avg_result.2 }} {% trans 'Reviews' %})
+                                                                ({% trans 'Reviews' %} {{ avg_result.2|num_fa_15 }})
                                                             </li>
                                                         {% endwith %}
                                                     </ul>
@@ -176,8 +184,12 @@
                             <div class="nav">
                                 <a class="active show" data-toggle="tab"
                                    href="#liton_tab_details_1_1">{% trans 'Description' %}</a>
-                                <a data-toggle="tab" href="#liton_tab_details_1_2" class="">{% trans 'Attributes' %}</a>
-                                <a data-toggle="tab" href="#liton_tab_details_1_3" class="">{% trans 'Reviews' %}</a>
+                                {% if product.specs_values.all %}
+                                    <a data-toggle="tab" href="#liton_tab_details_1_2"
+                                       class="">{% trans 'Attributes' %}</a>
+                                {% endif %}
+                                <a data-toggle="tab" href="#liton_tab_details_1_3"
+                                   class="">{% trans 'Reviews' %}</a>
                             </div>
                         </div>
                         <div class="tab-content">
@@ -186,29 +198,30 @@
                                     <p>{{ product.description|safe }}</p>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="liton_tab_details_1_2">
-                                <div class="ltn__shop-details-tab-content-inner">
-                                    <div class="container mt-4">
-                                        <table class="table table-bordered">
-                                            <thead class="thead-light">
-                                            <tr>
-                                                <th scope="col">{% trans 'Specification' %}</th>
-                                                <th scope="col">{% trans 'Value' %}</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {% for specification_value in product.specs_values.all %}
+                            {% if product.specs_values.all %}
+                                <div class="tab-pane fade" id="liton_tab_details_1_2">
+                                    <div class="ltn__shop-details-tab-content-inner">
+                                        <div class="container mt-4">
+                                            <table class="table table-bordered">
+                                                <thead class="thead-light">
                                                 <tr>
-                                                    <th scope="row">{{ specification_value.specification.name }}</th>
-                                                    <td>{{ specification_value.value }}</td>
+                                                    <th scope="col">{% trans 'Specification' %}</th>
+                                                    <th scope="col">{% trans 'Value' %}</th>
                                                 </tr>
-                                            {% endfor %}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                {% for specification_value in product.specs_values.all %}
+                                                    <tr>
+                                                        <th scope="row">{{ specification_value.specification.name }}</th>
+                                                        <td>{{ specification_value.value }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-
                                 </div>
-                            </div>
+                            {% endif %}
                             <div class="tab-pane fade" id="liton_tab_details_1_3">
                                 <div class="ltn__shop-details-tab-content-inner">
                                     <div class="customer-reviews-head text-center">
@@ -218,7 +231,7 @@
                                                 {% with avg_result=product.avg_star %}
                                                     <div class="star-rating star-{{ avg_result.0 }}"></div>
                                                     <li class="review-total">
-                                                        ( {{ avg_result.2 }} {% trans 'Reviews' %})
+                                                        ({% trans 'Reviews' %} {{ avg_result.2|num_fa_15 }} )
                                                     </li>
                                                 {% endwith %}
                                             </ul>
@@ -250,7 +263,7 @@
                                                                             </ul>
                                                                         </div>
                                                                         <p>{{ comment.text }}</p>
-                                                                        <span class="ltn__comment-reply-btn">{{ comment.datetime_updated|to_jalali:'%d/%m/%Y' }}</span>
+                                                                        <span class="ltn__comment-reply-btn">{{ comment.datetime_updated|to_jalali:'%Y/%m/%d'|num_fa_15 }}</span>
                                                                     </div>
                                                                 </div>
                                                             </li>

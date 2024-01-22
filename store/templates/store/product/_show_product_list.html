@@ -96,7 +96,7 @@
                                         {% with avg_result=product.avg_star %}
                                             <div class="star-rating star-{{ avg_result.0 }}"></div>
                                             <li class="review-total">
-                                                ( {{ avg_result.1 }} {% trans 'Reviews' %})
+                                                ({% trans 'Reviews' %} {{ avg_result.2|num_fa_15 }})
                                             </li>
                                         {% endwith %}
                                     </ul>

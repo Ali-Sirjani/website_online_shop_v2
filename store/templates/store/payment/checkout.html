@@ -24,7 +24,7 @@
                                     <p>{% trans 'If you have a coupon code, please apply it below.' %}</p>
                                     <form action="{% url 'store:apply_coupon' %}" method="post">
                                         {% csrf_token %}
-                                        <input type="text" name="code" placeholder="Coupon code">
+                                        <input type="text" name="code" placeholder="{% trans 'Coupon code' %}">
                                         <button class="btn theme-btn-2 btn-effect-2 text-uppercase">{% trans 'Apply Coupon' %}
                                         </button>
                                     </form>
@@ -40,8 +40,8 @@
                                         <div class="col-md-6 col-12">
                                             <div class="ltn__checkout-single-content ltn__coupon-code-wrap">
                                                 <h5>
-                                                    <a href="#address-{{ forloop.counter }}"
-                                                       data-toggle="collapse">{{ address.state }}</a>
+                                                    {{ address.state }} <a class="ltn__secondary-color" href="#address-{{ forloop.counter }}"
+                                                       data-toggle="collapse">{% trans 'see details' %}</a>
                                                 </h5>
                                                 <div id="address-{{ forloop.counter }}"
                                                      class="collapse ltn__checkout-single-content-info">
@@ -54,8 +54,8 @@
                                                         </address>
                                                     </div>
                                                     <button type="submit"
-                                                            class="btn theme-btn-2 btn-effect-2-- set-address"
-                                                            style="padding: 8px 8px; background-color: #0d6efd"
+                                                            class="theme-btn-1 btn btn-effect-1 set-address"
+                                                            style="padding: 8px 8px; background-color: #007bff"
                                                             data-state="{{ address.state }}"
                                                             data-city="{{ address.city }}"
                                                             data-address="{{ address.address }}"

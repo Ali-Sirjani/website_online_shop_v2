@@ -22,7 +22,7 @@
                                 <li class="list-group-item">
                                     <strong class="mr-3">{% trans 'Email' %}:</strong> {{ order_finished.email }}</li>
                                 <li class="list-group-item">
-                                    <strong class="mr-3">{% trans 'Phone' %}:</strong> {{ order_finished.phone }}</li>
+                                    <strong class="mr-3">{% trans 'Phone' %}:</strong> {{ order_finished.phone.as_national|num_fa_20 }}</li>
                             </ul>
                         </div>
                     </div>
@@ -73,7 +73,7 @@
                             {% if item.product.discount %}
                                 <td>{{ item.discount_price|num_fa_20 }}</td>
                             {% else %}
-                                <td>-</td>
+                                <td class="text-center">-</td>
                             {% endif %}
                             <td>{{ item.get_total_item|num_fa_20 }}</td>
                             <td>
@@ -123,14 +123,18 @@
                         <li class="list-group-item">
                             <strong class="mr-3">{% trans 'Order Note' %}:</strong> {{ order_finished.order_note }}</li>
                         <li class="list-group-item">
-                            <strong class="mr-3">{% trans 'Ordered on' %}:</strong> {{ order_finished.datetime_created|to_jalali:'%d/%m/%Y' }}
+                            <strong class="mr-3">{% trans 'Ordered on' %}:</strong> {{ order_finished.datetime_created|to_jalali:'%Y/%m/%d'|num_fa_15 }}
                         </li>
                         <li class="list-group-item">
-                            <strong class="mr-3">{% trans 'Last Updated' %}:</strong> {{ order_finished.datetime_updated|to_jalali:'%d/%m/%Y' }}
+                            <strong class="mr-3">{% trans 'Pay Time' %}:</strong> {{ order_finished.datetime_payed|to_jalali:'%Y/%m/%d'|num_fa_15 }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="mr-3">{% trans 'Last Updated' %}:</strong> {{ order_finished.datetime_updated|to_jalali:'%Y/%m/%d'|num_fa_15 }}
                         </li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
+
 {% endblock content %}

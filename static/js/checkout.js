@@ -47,6 +47,16 @@ for (var i = 0; i < setAddressBtnLength; i++) {
         document.querySelector('input[name="city"]').value = this.dataset.city;
         document.querySelector('textarea[name="address"]').value = this.dataset.address;
         document.querySelector('input[name="plate"]').value = this.dataset.plate;
+        // Get the collapse element associated with the button
+        var collapseId = $(this).closest('.ltn__checkout-single-content').find('.collapse').attr('id');
+
+        // Close the collapse
+        $('#' + collapseId).collapse('hide');
+
+        var offset = $('#payment_form').offset().top - 245;
+        $('html, body').animate({
+            scrollTop: offset
+        }, 100);
     });
 }
 

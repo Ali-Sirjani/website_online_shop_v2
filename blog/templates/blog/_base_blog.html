@@ -468,14 +468,14 @@
                                     <img src="{% static 'img/logo.png' %}" alt="Logo">
                                 </div>
                             </div>
-                            <p>{% trans 'lorem ipsum' %}</p>
+                            <p>{% trans 'Fiama: Your stylish online shopping hub. Explore your unique style effortlessly with our curated collection. Upgrade your shopping experience with us and simplify your life.' %}</p>
                             <div class="footer-address">
                                 <ul>
                                     <li>
                                         <div class="footer-address-icon">
                                             <i class="icon-location-pin"></i>
                                         </div>
-                                        <div class="footer-address-info">
+                                        <div class="footer-address-info mb-1">
                                             <p>{% trans 'A place in Tehran' %}</p>
                                         </div>
                                     </li>
@@ -598,6 +598,9 @@
 
 <script src="{% static 'js/like_product.js' %}"></script>
 <script src="{% static 'js/cart.js' %}"></script>
+
+{% block script %}
+{% endblock script %}
 
 </body>
 </html>

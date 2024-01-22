@@ -45,11 +45,18 @@ class ProductsListView(FilterMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = self.get_filterset(self.filterset_class)
+
         if self.request.user.is_authenticated:
             context['liked'] = Product.active_objs.filter(favorite=self.request.user.pk).values_list('pk', flat=True)
         sort_num = self.request.GET.get('sort')
+
         if sort_num:
             context['sort'] = f'&sort={sort_num}'
+
+        category_slug = self.kwargs.get('slug')
+        if category_slug:
+            context['category'] = get_object_or_404(Category, slug=category_slug)
+
         return context
 
 
@@ -69,6 +76,11 @@ class ProductSearchView(ProductsListView):
 
                 queryset = optimize_product_query(queryset.order_by('-datetime_updated'))
 
+                if queryset.exists():
+                    self.empty_query = False
+                else:
+                    self.empty_query = True
+
                 self.q = q
 
                 sort_num = self.request.GET.get('sort')
@@ -85,6 +97,12 @@ class ProductSearchView(ProductsListView):
             context['q'] = self.q
         except AttributeError:
             context['q'] = None
+
+        try:
+            context['empty_query'] = self.empty_query
+        except AttributeError:
+            context['empty_query'] = False
+
         return context
 
     def dispatch(self, request, *args, **kwargs):

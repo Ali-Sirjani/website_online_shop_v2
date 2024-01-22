@@ -112,7 +112,9 @@
                                         </li>
                                         <li><a href="{% url 'blog:post_list' %}">{% trans 'blog'|title %}</a></li>
                                         <li><a href="{% url 'core:contact_page' %}">{% trans 'contact'|title %}</a></li>
-                                        <li><a href="{% url 'core:about_project' %}">{% trans 'about project'|title %}</a></li>
+                                        <li>
+                                            <a href="{% url 'core:about_project' %}">{% trans 'about project'|title %}</a>
+                                        </li>
                                     </ul>
                                 </div>
                             </nav>
@@ -467,14 +469,14 @@
                                     <img src="{% static 'img/logo.png' %}" alt="Logo">
                                 </div>
                             </div>
-                            <p>{% trans 'lorem ipsum' %}</p>
+                            <p>{% trans 'Fiama: Your stylish online shopping hub. Explore your unique style effortlessly with our curated collection. Upgrade your shopping experience with us and simplify your life.' %}</p>
                             <div class="footer-address">
                                 <ul>
                                     <li>
                                         <div class="footer-address-icon">
                                             <i class="icon-location-pin"></i>
                                         </div>
-                                        <div class="footer-address-info">
+                                        <div class="footer-address-info mb-1">
                                             <p>{% trans 'A place in Tehran' %}</p>
                                         </div>
                                     </li>
@@ -516,7 +518,8 @@
                         <div class="footer-copyright-left">
                             <div class="ltn__copyright-design clearfix">
                                 <p style="font-size: 18px;">&copy; <span class="current-year"></span>
-                                    - <a href="https://www.linkedin.com/in/ali-sirjani/">{% trans 'Ali Sirjani' %}</a></p>{% trans 'all rights reserved' %}
+                                    - <a href="https://www.linkedin.com/in/ali-sirjani/">{% trans 'Ali Sirjani' %}</a>
+                                </p>{% trans 'all rights reserved' %}
                             </div>
                         </div>
                     </div>
@@ -524,14 +527,18 @@
                         <div class="footer-copyright-right text-right">
                             <div class="ltn__social-media ">
                                 <ul>
-                                    <li><a href="https://t.me/ali_sirjani81" title="Telegram"><i class="icon-social-telegram"
-                                                                        style="font-size:25px;"></i></a></li>
-                                    <li><a href="https://github.com/Ali-Sirjani" title="Github"><i class="icon-social-github"
-                                                                       style="font-size:25px;"></i></a></li>
-                                    <li><a href="https://www.instagram.com/ali.django.dev/" title="Instagram"><i class="icon-social-instagram"
-                                                                         style="font-size:25px;"></i></a></li>
-                                    <li><a href="https://www.linkedin.com/in/ali-sirjani/" title="Linkedin"><i class="icon-social-linkedin"
-                                                                         style="font-size:25px;"></i></a></li>
+                                    <li><a href="https://t.me/ali_sirjani81" title="Telegram"><i
+                                            class="icon-social-telegram"
+                                            style="font-size:25px;"></i></a></li>
+                                    <li><a href="https://github.com/Ali-Sirjani" title="Github"><i
+                                            class="icon-social-github"
+                                            style="font-size:25px;"></i></a></li>
+                                    <li><a href="https://www.instagram.com/ali.django.dev/" title="Instagram"><i
+                                            class="icon-social-instagram"
+                                            style="font-size:25px;"></i></a></li>
+                                    <li><a href="https://www.linkedin.com/in/ali-sirjani/" title="Linkedin"><i
+                                            class="icon-social-linkedin"
+                                            style="font-size:25px;"></i></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -556,7 +563,8 @@
 <!-- preloader area end -->
 
 <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 <!-- All JS Plugins -->
 <script src="{% static 'js/plugins.js' %}"></script>
@@ -593,6 +601,9 @@
 
 <script src="{% static 'js/like_product.js' %}"></script>
 <script src="{% static 'js/cart.js' %}"></script>
+
+{% block script %}
+{% endblock script %}
 
 </body>
 </html>
