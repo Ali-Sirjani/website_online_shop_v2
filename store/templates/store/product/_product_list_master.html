@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load product_temp_filters %}
 {% load crispy_forms_filters %}
+{% load widget_tweaks %}
 {% load trans_fa %}
 {% load static %}
 
@@ -12,18 +13,24 @@
                     <ul>
                         <li>
                             <div class="showing-product-number text-right">
+                                {% if category %}
+                                    <p class="d-inline font-weight-bold">{{ category.name }}</p> |
+                                {% endif %}
                                 <span>{% trans 'Showing' %} {{ page_obj.start_index|num_fa_20 }}-{{ page_obj.end_index|num_fa_20 }} {% trans 'of' %} {{ page_obj.paginator.count|num_fa_20 }}</span>
                             </div>
                         </li>
                         <li>
                             <div class="short-by text-center">
                                 <select class="nice-select" onchange="window.location.href=this.value">
-                                    <option value="?{{ request.GET|remove_obsolete_sorts }}">{% trans 'Default sorting' %}</option>
-                                    {% for name, num in sort_dict.items %}
-                                        <option value="?sort={{ num }}&{{ request.GET|remove_obsolete_sorts }}">
-                                            {{ name }}
-                                        </option>
-                                    {% endfor %}
+                                    {% with sort_get=request.GET.sort %}
+                                        <option value="?{{ request.GET|remove_obsolete_sorts }}">{% trans 'Default sorting' %}</option>
+                                        {% for name, num in sort_dict.items %}
+                                            <option value="?sort={{ num }}&{{ request.GET|remove_obsolete_sorts }}"
+                                                    {% if num|stringformat:'s' == sort_get %}selected{% endif %}>
+                                                {{ name }}
+                                            </option>
+                                        {% endfor %}
+                                    {% endwith %}
                                 </select>
                             </div>
                             <div class="ltn__grid-list-tab-menu ">
@@ -36,8 +43,10 @@
                         </li>
                     </ul>
                 </div>
-                {% include 'store/product/_show_product_list.html' with prudocts=products %}
-                {% include 'store/product/_pagination.html' with sort=sort %}
+                {% if products %}
+                    {% include 'store/product/_show_product_list.html' with prudocts=products %}
+                    {% include 'store/product/_pagination.html' with sort=sort %}
+                {% endif %}
             </div>
 
             <div class="col-lg-3  mb-100">
@@ -56,11 +65,23 @@
                                     <div class="card-body">
                                         <input type="hidden" name="q" value="{{ params }}">
                                         {% for field in filter.form %}
-                                        {% if field.name in 'size color consider_both' %}
-                                            <br><br>
-                                        {% endif %}
-                                        {{ field|as_crispy_field }}
-                                    {% endfor %}
+                                            {{ field.errors }}
+                                            {{ field.label_tag }}
+                                            {% if field.name in 'discount size color consider_both' %}
+                                                <br>
+                                            {% endif %}
+                                            {% if 'datetime_updated' in field.name %}
+                                                {% render_field field data-jdp=None %}
+                                            {% else %}
+                                                {% render_field field class="form-control" placeholder='' %}
+                                            {% endif %}
+                                            {% if field.name in 'discount size color consider_both' %}
+                                                {% if field.name == 'discount' %}
+                                                    <br>
+                                                {% endif %}
+                                                <br>
+                                            {% endif %}
+                                        {% endfor %}
                                     </div>
                                     <button type="submit" class="theme-btn-1 btn btn-effect-1 mt-3">
                                         {% trans 'Apply Filters' %}
@@ -73,10 +94,22 @@
                             <div class="card text-end">
                                 <div class="card-body">
                                     {% for field in filter.form %}
-                                        {% if field.name in 'size color consider_both' %}
-                                            <br><br>
+                                        {{ field.errors }}
+                                        {{ field.label_tag }}
+                                        {% if field.name in 'discount size color consider_both' %}
+                                            <br>
                                         {% endif %}
-                                        {{ field|as_crispy_field }}
+                                        {% if 'datetime_updated' in field.name %}
+                                            {% render_field field data-jdp=None %}
+                                        {% else %}
+                                            {% render_field field class="form-control" placeholder='' %}
+                                        {% endif %}
+                                        {% if field.name in 'discount size color consider_both' %}
+                                            {% if field.name == 'discount' %}
+                                                <br>
+                                            {% endif %}
+                                            <br>
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                                 <button type="submit" class="theme-btn-1 btn btn-effect-1 mt-3">
