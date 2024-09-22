@@ -7,14 +7,6 @@ Website Online Shop is an e-commerce platform built using the Django framework. 
 
 Additionally, users have the convenience of logging in using their Google accounts for a seamless shopping experience.
 
-
-## Accessing the Online Shop
-
-**Note:** The server is not running continuously. If you wish to access the online shop for testing or exploration, please contact the developer in advance and request server activation. Once the server is up and running, you will be provided with access to the Website Online Shop, and you can visit it by clicking the following link: 
-
-🔗 https://django-online-shop.liara.run/
-
-
 ## Installation
 
 To set up and run the Website Online Shop project, follow these steps:
