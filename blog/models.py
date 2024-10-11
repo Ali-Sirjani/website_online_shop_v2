@@ -1,8 +1,9 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
-from ckeditor.fields import RichTextField
 from django.shortcuts import reverse
+
+from ckeditor.fields import RichTextField
 
 
 class Tag(models.Model):
@@ -85,7 +86,7 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('blog:post_detail', args=[self.slug])
 
-    def count_act_comments(self):
+    def count_comments(self):
         return self.post_comments.count()
 
 

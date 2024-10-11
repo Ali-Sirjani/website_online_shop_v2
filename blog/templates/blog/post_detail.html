@@ -20,7 +20,7 @@
                                         <span>{{ post.datetime_updated|to_jalali:'%d/%m/%Y' }}</span>
                                     </li>
                                     <li class="ltn__blog-comment">
-                                        <span><i class="icon-speech ml-1"></i>{{ post.count_act_comments }}</span>
+                                        <span><i class="icon-speech ml-1"></i>{{ post.count_comments }}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -82,7 +82,7 @@
                         <hr>
                         <!-- comment-area -->
                         <div class="ltn__comment-area mb-50">
-                            <h4 class="title-2">{{ post.count_act_comments }} {% trans 'Comments' %}</h4>
+                            <h4 class="title-2">{{ post.count_comments }} {% trans 'Comments' %}</h4>
                             <div class="ltn__comment-inner">
                                 <ul>
                                     {% for comment in comments %}
@@ -163,9 +163,9 @@
                                                             <span>{{ recent_post.datetime_updated|to_jalali:'%d/%m/%Y' }}</span>
                                                         </li>
                                                         <li class="ltn__blog-comment">
-                                                            <a href="#"><i
-                                                                    class="icon-speech"></i>{{ recent_post.count_act_comments }}
-                                                            </a>
+                                                            <span><i
+                                                                    class="icon-speech ml-1"></i>{{ recent_post.count_comments }}
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </div>
