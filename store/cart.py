@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 from .models import Product, ProductColorAndSizeValue, Coupon
 
@@ -67,7 +68,7 @@ class Cart:
         color_size_pks = {}
         products_pk = []
         for product_key in self.cart.keys():
-            products_pk.append(product_key[0])
+            products_pk.append(product_key)
             color_size_pks[product_key] = []
             for item in self.cart[product_key].keys():
                 color_size_pks[product_key].append(item)
@@ -244,8 +245,10 @@ class Cart:
             product_color_size_pk = str(product_color_size)
 
         if product_pk_str not in self.cart:
-            if quantity < 0:
-                return
+            if quantity < 0 or action in ['remove', 'delete_item', ]:
+                messages.error(self.request, _('Please for adding product to cart enter a positive quantity!'))
+                return JsonResponse('enter valid quantity or invalid action', safe=False, status=400)
+
             self.cart[product_pk_str] = {}
 
         cart_product = self.cart[product_pk_str]

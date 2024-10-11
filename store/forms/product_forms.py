@@ -90,3 +90,4 @@ class ProductCommentForm(forms.ModelForm):
         text_field = self.fields.get('text')
         if text_field:
             text_field.widget.attrs['class'] = ''
+            text_field.widget.attrs['placeholder'] = _('Type your comments....')
