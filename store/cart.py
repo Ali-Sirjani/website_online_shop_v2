@@ -200,8 +200,8 @@ class Cart:
         additional_cost = 0
         if product_color_size_pk != 'None':
             color_size_obj = get_object_or_404(ProductColorAndSizeValue, pk=product_color_size_pk)
-            if color_size_obj.size_price:
-                additional_cost = color_size_obj.size_price
+            if color_size_obj.additional_cost:
+                additional_cost = color_size_obj.additional_cost
 
         item['price'] = product_obj.price + additional_cost
         item['discount'] = product_obj.discount

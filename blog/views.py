@@ -97,7 +97,7 @@ class PostDetailView(generic.edit.FormMixin, generic.DetailView):
                 '-datetime_updated').distinct()[0:2]
 
         context['comments'] = PostComment.objects.filter(confirmation=True, post_id=obj.pk).select_related(
-            'author__profile')
+            'author__profile').order_by('-tree_id', 'level', 'datetime_created')
 
         return context
 

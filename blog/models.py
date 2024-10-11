@@ -1,8 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
-from ckeditor.fields import RichTextField
 from django.shortcuts import reverse
+
+from mptt.models import MPTTModel, TreeForeignKey
+from ckeditor.fields import RichTextField
 
 
 class Tag(models.Model):
@@ -85,11 +87,13 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('blog:post_detail', args=[self.slug])
 
-    def count_act_comments(self):
+    def count_comments(self):
         return self.post_comments.count()
 
 
-class PostComment(models.Model):
+class PostComment(MPTTModel):
+    parent = TreeForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
+
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comments', verbose_name=_('post'))
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='post_comments',
                                verbose_name=_('author'))
@@ -106,7 +110,7 @@ class PostComment(models.Model):
         verbose_name_plural = _('post comments')
 
     def __str__(self):
-        return f'{self.author}'
+        return f'author: {self.author}, post pk: {self.post.pk}'
 
     def get_absolute_url(self):
         return reverse('blog:post_detail', args=[self.post.slug])
