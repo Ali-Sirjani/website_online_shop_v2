@@ -38,7 +38,6 @@ function displayErrorsForm(response, errorContainerId) {
 function removeIsInvalidElements(formElements) {
     for (var i = 0; i < formElements.length; i++) {
         let element = formElements[i];
-        console.log('this is form: ', element.value)
         element.classList.remove('is-invalid');
         let feedbackAreaa = document.querySelector(`#invalid-feedback-${element.name}`);
         if (feedbackAreaa) {
@@ -85,10 +84,7 @@ function updateProfileAjax() {
     let updateProfileBtn = document.getElementById('updateProfileBtn');
     updateProfileBtn.innerHTML = `در حال تغییر....`;
 
-
     var data = new FormData(myForm);
-    console.log('t his is : ', data)
-
 
     $.ajax({
         type: 'POST',

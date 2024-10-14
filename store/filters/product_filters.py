@@ -38,7 +38,7 @@ def validate_datetime_updated(value):
 class CustomBooleanWidget(django_filters.widgets.BooleanWidget):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.choices = (('', _('Unknown')), ('True', _('Yes')), ('False', _('No')))
+        self.choices = (('', _('---------')), ('True', _('Yes')), ('False', _('No')))
 
 
 class ProductFilter(django_filters.FilterSet):
@@ -113,14 +113,16 @@ class ProductFilter(django_filters.FilterSet):
         color_value = data.get('color')
         size_value = data.get('size')
         consider_both_value = data.get('consider_both')
-        if color_value and size_value and consider_both_value == 'true':
+        if color_value and size_value and consider_both_value == 'True':
             queryset = queryset.filter(
                 color_size_values__color__name=color_value,
-                color_size_values__size__size=size_value
+                color_size_values__size__size=size_value,
+                color_size_values__is_active=True,
             ).distinct()
         else:
             queryset = queryset.filter(
-                Q(color_size_values__color__name=color_value) | Q(color_size_values__size__size=size_value)
+                Q(color_size_values__color__name=color_value) | Q(color_size_values__size__size=size_value),
+                color_size_values__is_active=True,
             ).distinct()
 
         return queryset

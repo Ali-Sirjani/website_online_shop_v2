@@ -51,21 +51,22 @@ def update_item(request):
         messages.warning(request, _('Oops! Something went wrong with your request. Please try again.'
                                     ' If the issue persists, contact our support team for assistance.'))
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
     quantity = data.get('quantity')
     try:
         quantity = int(quantity)
     except ValueError:
         quantity = 0
 
-    if quantity != 0:
-        customer = request.user
+    customer = request.user
 
-        product_id = data.get('productId')
-        color = data.get('colorId')
-        size = data.get('sizeId')
-        color_size_pk = data.get('colorSizeId')
-        action = data.get('action')
+    product_id = data.get('productId')
+    color = data.get('colorId')
+    size = data.get('sizeId')
+    color_size_pk = data.get('colorSizeId')
+    action = data.get('action')
 
+    if action in ['add', 'replace', 'remove', 'delete_cart', 'delete_item', ]:
         color_obj = size_obj = product = product_color_size = None
 
         if action != 'delete_cart':
@@ -85,7 +86,7 @@ def update_item(request):
             except ProductColorAndSizeValue.DoesNotExist:
                 if product.active_color_size().exists():
                     messages.error(request, _('Please select color or size for product!'))
-                    return JsonResponse('chose color or size!', safe=False)
+                    return JsonResponse('choose color or size!', safe=False, status=400)
 
         if customer.is_authenticated:
             order, order_created = Order.objects.get_or_create(customer=customer, completed=False)
@@ -97,9 +98,10 @@ def update_item(request):
             try:
                 item = OrderItem.objects.get(order=order, product=product, color_size=product_color_size)
             except OrderItem.DoesNotExist:
-                if quantity < 0:
+                if quantity < 0 or action in ['remove', 'delete_item', ]:
                     messages.error(request, _('Please for adding product to cart enter a positive quantity!'))
-                    return JsonResponse('enter valid quantity', safe=False)
+                    return JsonResponse('enter valid quantity or invalid action', safe=False, status=400)
+
                 item = OrderItem.objects.create(order=order, product=product, color_size=product_color_size)
 
             if item.quantity * -1 > quantity or action == 'delete_item':
@@ -119,11 +121,11 @@ def update_item(request):
                 if quantity < 0:
                     quantity *= -1
                 item.quantity -= quantity
+
                 if item.quantity <= 0:
                     item.delete()
                     messages.success(request, _('Delete product'))
                     return JsonResponse('Delete product', safe=False)
-
                 else:
                     messages.success(request, _('Remove product'))
 
@@ -135,14 +137,13 @@ def update_item(request):
                 cart.clear_cart()
                 messages.success(request, _('Cart deleted'))
             else:
-                cart.update_quantity(product_id, product_color_size, action, quantity)
+                response = cart.update_quantity(product_id, product_color_size, action, quantity)
+                if response:
+                    return response
 
         return JsonResponse('finish update view', safe=False)
 
-    else:
-        messages.warning(request, _('Please enter a correct number!'))
-
-    return JsonResponse('finish 0', safe=False)
+    return JsonResponse('Invalid action', safe=False, status=400)
 
 
 def cart_view(request):
@@ -172,7 +173,7 @@ def apply_coupon_view(request):
                 else:
                     order = Cart(request)
                     order.session['coupon'] = order.coupon = {'coupon_pk': coupon.pk}
-                    order.calculate_coupon_price(request)
+                    order.calculate_coupon_price()
                     order.save()
 
             else:

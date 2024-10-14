@@ -231,9 +231,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # config django-axes
 AXES_FAILURE_LIMIT = 5  # Maximum allowed login failures before lockout.
 AXES_LOCK_OUT_AT_FAILURE = True  # Enable lockout after exceeding failure limit.
-AXES_COOLOFF_TIME = 0.1  # Time period (in days) for cooling off during lockout.
+AXES_COOLOFF_TIME = 0.01  # Time period (in days) for cooling off during lockout.
 AXES_RESET_COOL_OFF_ON_FAILURE_DURING_LOCKOUT = False  # Don't reset cool-off time on each failure during lockout.
 AXES_USERNAME_FORM_FIELD = 'login'  # Name of the form field for the username or identifier.
+AXES_LOCKOUT_CALLABLE = 'core.utils.custom_lockout_response'
 
 # config celery
 CELERY_BROKER_URL = 'redis://redis:6379/0'

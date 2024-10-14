@@ -96,8 +96,8 @@ def validate_color_size_item_and_set_price(form, product, color_size):
         if not form.instance.price or any(item in form.changed_data for item in ['product', 'color_size']):
 
             additional_cost = 0
-            if color_size_obj and color_size_obj.size_price:
-                additional_cost += color_size_obj.size_price
+            if color_size_obj and color_size_obj.additional_cost:
+                additional_cost += color_size_obj.additional_cost
 
             form.instance.price = product.price + additional_cost
             form.instance.discount = product.discount

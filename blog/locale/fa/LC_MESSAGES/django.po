@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-23 20:55+0330\n"
-"PO-Revision-Date: 2023-12-23 17:26+0000\n"
+"POT-Creation-Date: 2024-05-26 16:47+0330\n"
+"PO-Revision-Date: 2024-01-15 17:15+0000\n"
 "Last-Translator:   <we@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -19,334 +19,373 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Translated-Using: django-rosetta 0.10.0\n"
 
-#: .\admin.py:41
+#: .\blog\admin.py:43
 msgid "Post Information"
 msgstr "اطلاعات پست"
 
-#: .\admin.py:44
+#: .\blog\admin.py:46
 msgid "Slug Settings"
 msgstr "تنظیمات اسلاگ"
 
-#: .\admin.py:48
+#: .\blog\admin.py:50
 msgid "Date and Time"
 msgstr "تاریخ و زمان"
 
-#: .\forms.py:21
+#: .\blog\forms.py:23
 msgid "Type your comments...."
 msgstr "نظرات خود را تایپ کنید...."
 
-#: .\models.py:9
+#: .\blog\models.py:12
 msgid "name"
 msgstr "نام"
 
-#: .\models.py:10 .\models.py:68
+#: .\blog\models.py:13 .\blog\models.py:71
 msgid "slug change"
 msgstr "تغییر اسلاگ"
 
-#: .\models.py:10 .\models.py:68
+#: .\blog\models.py:13 .\blog\models.py:71
 msgid "If you want change the slug by name"
 msgstr "اگر می خواهید اسلگ را به وسیله ی نام تغییر دهید"
 
-#: .\models.py:11 .\models.py:69
+#: .\blog\models.py:14 .\blog\models.py:72
 msgid "slug"
 msgstr "اسلاگ"
 
-#: .\models.py:12 .\models.py:70
+#: .\blog\models.py:15 .\blog\models.py:73
 msgid "If field be empty it's automatic change by name "
 msgstr "اگر فیلد خالی باشد، نام آن به صورت خودکار تغییر می کند"
 
-#: .\models.py:14 .\models.py:44 .\models.py:72 .\models.py:101
+#: .\blog\models.py:17 .\blog\models.py:47 .\blog\models.py:75
+#: .\blog\models.py:106
 msgid "datetime created"
 msgstr "تاریخ ایجاد شد"
 
-#: .\models.py:15 .\models.py:45 .\models.py:73 .\models.py:102
+#: .\blog\models.py:18 .\blog\models.py:48 .\blog\models.py:76
+#: .\blog\models.py:107
 msgid "datetime updated"
 msgstr "تاریخ به روز شد"
 
-#: .\models.py:18 .\models.py:35
+#: .\blog\models.py:21 .\blog\models.py:38
 msgid "tag"
 msgstr "تگ"
 
-#: .\models.py:19 .\models.py:61
+#: .\blog\models.py:22 .\blog\models.py:64
 msgid "tags"
 msgstr "تگ ها"
 
-#: .\models.py:38
+#: .\blog\models.py:41
 msgid "Levels are ordered from top to bottom, with 1 being the highest."
 msgstr "سطوح از بالا به پایین مرتب شده اند که 1 بالاترین است."
 
-#: .\models.py:39
+#: .\blog\models.py:42
 msgid "level"
 msgstr "سطح"
 
-#: .\models.py:48
+#: .\blog\models.py:51
 msgid "top tag"
 msgstr "تگ برتر"
 
-#: .\models.py:49
+#: .\blog\models.py:52
 msgid "top tags"
 msgstr "تگ های برتر"
 
-#: .\models.py:62 .\models.py:95
+#: .\blog\models.py:65 .\blog\models.py:100
 msgid "author"
 msgstr "نویسنده"
 
-#: .\models.py:64
+#: .\blog\models.py:67
 msgid "title"
 msgstr "عنوان"
 
-#: .\models.py:65
+#: .\blog\models.py:68
 msgid "description"
 msgstr "توضیحات"
 
-#: .\models.py:66
+#: .\blog\models.py:69
 msgid "image"
 msgstr "تصویر"
 
-#: .\models.py:67
+#: .\blog\models.py:70
 msgid "can published"
 msgstr "می تواند منتشر شود"
 
-#: .\models.py:79 .\models.py:93
+#: .\blog\models.py:82 .\blog\models.py:98
 msgid "post"
 msgstr "پست"
 
-#: .\models.py:80
+#: .\blog\models.py:83
 msgid "posts"
 msgstr "پست ها"
 
-#: .\models.py:97
+#: .\blog\models.py:102
 msgid "text"
 msgstr "متن"
 
-#: .\models.py:99
+#: .\blog\models.py:104
 msgid "confirmation"
 msgstr "تائیدیه"
 
-#: .\models.py:105
+#: .\blog\models.py:110
 msgid "post comment"
 msgstr "نظر پست"
 
-#: .\models.py:106
+#: .\blog\models.py:111
 msgid "post comments"
 msgstr "نظرات پست"
 
-#: .\templates\blog\_base_blog.html:93 .\templates\blog\_base_blog.html:306
+#: .\blog\templates\blog\_base_blog.html:93
+#: .\blog\templates\blog\_base_blog.html:309
 msgid "home"
 msgstr "خانه"
 
-#: .\templates\blog\_base_blog.html:94 .\templates\blog\_base_blog.html:307
+#: .\blog\templates\blog\_base_blog.html:94
+#: .\blog\templates\blog\_base_blog.html:310
 msgid "products"
 msgstr "محصولات"
 
-#: .\templates\blog\_base_blog.html:96 .\templates\blog\_base_blog.html:308
+#: .\blog\templates\blog\_base_blog.html:96
+#: .\blog\templates\blog\_base_blog.html:311
 msgid "categories"
 msgstr "دسته بندی ها"
 
-#: .\templates\blog\_base_blog.html:112 .\templates\blog\_base_blog.html:322
+#: .\blog\templates\blog\_base_blog.html:112
+#: .\blog\templates\blog\_base_blog.html:325
 msgid "blog"
 msgstr "بلاگ"
 
-#: .\templates\blog\_base_blog.html:113 .\templates\blog\_base_blog.html:323
+#: .\blog\templates\blog\_base_blog.html:113
+#: .\blog\templates\blog\_base_blog.html:326
 msgid "contact"
 msgstr "تماس با ما"
 
-#: .\templates\blog\_base_blog.html:114
-#| msgid "about dev"
+#: .\blog\templates\blog\_base_blog.html:115
 msgid "about project"
 msgstr "درباره پروژه"
 
-#: .\templates\blog\_base_blog.html:134 .\templates\blog\_base_blog.html:300
+#: .\blog\templates\blog\_base_blog.html:137
+#: .\blog\templates\blog\_base_blog.html:303
 msgid "Search here for products"
 msgstr "جستجو برای محصولات"
 
-#: .\templates\blog\_base_blog.html:151 .\templates\blog\_base_blog.html:429
+#: .\blog\templates\blog\_base_blog.html:154
+#: .\blog\templates\blog\_base_blog.html:432
 msgid "Profile"
 msgstr "پروفایل"
 
-#: .\templates\blog\_base_blog.html:154
+#: .\blog\templates\blog\_base_blog.html:157
 msgid "Log out"
 msgstr "خروج"
 
-#: .\templates\blog\_base_blog.html:159
+#: .\blog\templates\blog\_base_blog.html:162
 msgid "Register"
 msgstr "ثبت نام"
 
-#: .\templates\blog\_base_blog.html:162
+#: .\blog\templates\blog\_base_blog.html:165
 msgid "Sign in"
 msgstr "ورود"
 
-#: .\templates\blog\_base_blog.html:185 .\templates\blog\_base_blog.html:189
+#: .\blog\templates\blog\_base_blog.html:188
+#: .\blog\templates\blog\_base_blog.html:192
 msgid "Your Cart"
 msgstr "سبد خرید شما"
 
-#: .\templates\blog\_base_blog.html:240
+#: .\blog\templates\blog\_base_blog.html:243
 msgid "cart"
 msgstr "سبد خرید"
 
-#: .\templates\blog\_base_blog.html:274 .\templates\blog\_base_blog.html:276
+#: .\blog\templates\blog\_base_blog.html:277
+#: .\blog\templates\blog\_base_blog.html:279
 msgid "Total"
 msgstr "مبلغ کل"
 
-#: .\templates\blog\_base_blog.html:281
+#: .\blog\templates\blog\_base_blog.html:284
 msgid "View Cart"
 msgstr "مشاهده سبد خرید"
 
-#: .\templates\blog\_base_blog.html:282
+#: .\blog\templates\blog\_base_blog.html:285
 msgid "Checkout"
 msgstr "پرداخت"
 
-#: .\templates\blog\_base_blog.html:329 .\templates\blog\_base_blog.html:333
+#: .\blog\templates\blog\_base_blog.html:332
+#: .\blog\templates\blog\_base_blog.html:336
 msgid "My Account"
 msgstr "حساب من"
 
-#: .\templates\blog\_base_blog.html:337 .\templates\blog\_base_blog.html:341
+#: .\blog\templates\blog\_base_blog.html:340
+#: .\blog\templates\blog\_base_blog.html:344
 msgid "Wishlist"
 msgstr "لیست علاقه مندی ها"
 
-#: .\templates\blog\_base_blog.html:345 .\templates\blog\_base_blog.html:350
+#: .\blog\templates\blog\_base_blog.html:348
+#: .\blog\templates\blog\_base_blog.html:353
 msgid "Shoping Cart"
 msgstr "سبد خرید"
 
-#: .\templates\blog\_base_blog.html:424
+#: .\blog\templates\blog\_base_blog.html:427
 msgid "Quick Links"
 msgstr "لینک های سریع"
 
-#: .\templates\blog\_base_blog.html:427
+#: .\blog\templates\blog\_base_blog.html:430
 msgid "Home"
 msgstr "خانه"
 
-#: .\templates\blog\_base_blog.html:428
+#: .\blog\templates\blog\_base_blog.html:431
 msgid "Contact Us"
 msgstr "تماس با ما"
 
-#: .\templates\blog\_base_blog.html:436
+#: .\blog\templates\blog\_base_blog.html:439
 msgid "Explore"
 msgstr "کاوش کنید"
 
-#: .\templates\blog\_base_blog.html:439
+#: .\blog\templates\blog\_base_blog.html:442
 msgid "Blog"
 msgstr "بلاگ"
 
-#: .\templates\blog\_base_blog.html:440
+#: .\blog\templates\blog\_base_blog.html:443
 msgid "FAQ"
 msgstr "سوالات متداول"
 
-#: .\templates\blog\_base_blog.html:441
+#: .\blog\templates\blog\_base_blog.html:444
 msgid "About Us"
 msgstr "درباره ما"
 
-#: .\templates\blog\_base_blog.html:448
+#: .\blog\templates\blog\_base_blog.html:451
 msgid "Shop"
 msgstr "خرید"
 
-#: .\templates\blog\_base_blog.html:451
+#: .\blog\templates\blog\_base_blog.html:454
 msgid "Browse Products"
 msgstr "محصولات را مرور کنید"
 
-#: .\templates\blog\_base_blog.html:452
+#: .\blog\templates\blog\_base_blog.html:455
 msgid "Shopping Cart"
 msgstr "سبد خرید"
 
-#: .\templates\blog\_base_blog.html:454
+#: .\blog\templates\blog\_base_blog.html:457
 msgid "Favorites List"
 msgstr "لیست علاقه مندی ها"
 
-#: .\templates\blog\_base_blog.html:462
+#: .\blog\templates\blog\_base_blog.html:465
 msgid "About Our Shop"
 msgstr "درباره فروشگاه ما"
 
-#: .\templates\blog\_base_blog.html:468
-msgid "lorem ipsum"
+#: .\blog\templates\blog\_base_blog.html:471
+msgid ""
+"Fiama: Your stylish online shopping hub. Explore your unique style "
+"effortlessly with our curated collection. Upgrade your shopping experience "
+"with us and simplify your life."
 msgstr ""
-"لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از "
-"طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که"
-" لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف "
-"بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و "
-"آینده، شناخت فراوان جامعه و متخصصان را می طلبد"
+"فیاما: مرکز خرید آنلاین شیک شما. با مجموعه‌ای انتخابی ویژه، به راحتی سبک خود "
+"را کشف کنید. تجربه خرید با ما را ارتقا دهید و زندگی خود را آسان‌تر کنید."
 
-#: .\templates\blog\_base_blog.html:476
+#: .\blog\templates\blog\_base_blog.html:479
 msgid "A place in Tehran"
 msgstr "مکانی در تهران"
 
-#: .\templates\blog\_base_blog.html:517
+#: .\blog\templates\blog\_base_blog.html:520
 msgid "Ali Sirjani"
 msgstr "علی سیرجانی"
 
-#: .\templates\blog\_post_list_master.html:22
+#: .\blog\templates\blog\_base_blog.html:520
+msgid "all rights reserved"
+msgstr "تمامی حقوق محفوظ است"
+
+#: .\blog\templates\blog\_post_list_master.html:23
 #, python-format
 msgid ""
 "\n"
-"                                    There is no post with title or tag %(q)s\n"
+"                                    There is no post with title or tag "
+"%(q)s\n"
 "                                "
 msgstr ""
 "\n"
 "هیچ پستی با عنوان یا برچسب %(q)s وجود ندارد"
 
-#: .\templates\blog\_post_list_master.html:31
+#: .\blog\templates\blog\_post_list_master.html:32
 msgid "Find the interesting post! Enter a keyword in the search box."
 msgstr "پست های جالب را پیدا کنید! یک کلمه کلیدی را در کادر جستجو وارد کنید."
 
-#: .\templates\blog\_post_list_master.html:42
-#: .\templates\blog\post_detail.html:139
+#: .\blog\templates\blog\_post_list_master.html:43
+#: .\blog\templates\blog\post_detail.html:177
 msgid "Search For Posts"
 msgstr "جستجو برای پست ها"
 
-#: .\templates\blog\_post_list_master.html:48
-#: .\templates\blog\post_detail.html:145
+#: .\blog\templates\blog\_post_list_master.html:49
+#: .\blog\templates\blog\post_detail.html:183
 msgid "Recent Post"
 msgstr "پست های اخیر"
 
-#: .\templates\blog\_post_list_master.html:81
-#: .\templates\blog\post_detail.html:35 .\templates\blog\post_detail.html:178
+#: .\blog\templates\blog\_post_list_master.html:82
+#: .\blog\templates\blog\post_detail.html:37
+#: .\blog\templates\blog\post_detail.html:216
 msgid "Tags"
 msgstr "تگ ها"
 
-#: .\templates\blog\post_detail.html:56
+#: .\blog\templates\blog\post_detail.html:59
 msgid "Previous Post"
 msgstr "پست قبلی"
 
-#: .\templates\blog\post_detail.html:64
+#: .\blog\templates\blog\post_detail.html:70
 msgid "Next Post"
 msgstr "پست بعدی"
 
-#: .\templates\blog\post_detail.html:80
+#: .\blog\templates\blog\post_detail.html:87
 msgid "Comments"
 msgstr "نظرات"
 
-#: .\templates\blog\post_detail.html:108
+#: .\blog\templates\blog\post_detail.html:113
+#: .\blog\templates\blog\post_detail.html:134
+msgid "Reply"
+msgstr "پاسخ"
+
+#: .\blog\templates\blog\post_detail.html:147
 msgid "Leave A Comment"
 msgstr "نظر بدهید"
 
-#: .\templates\blog\post_detail.html:118
+#: .\blog\templates\blog\post_detail.html:156
+#: .\blog\templates\blog\post_detail.html:244
 msgid "Post Comment"
 msgstr "ارسال نظر"
 
-#: .\templates\blog\post_detail.html:126
+#: .\blog\templates\blog\post_detail.html:164
 #, python-format
 msgid ""
 "\n"
-"                                    for leave a commit first <a href=\"%(account_login_url)s\">Login</a>\n"
+"                                    for leave a commit first <a href="
+"\"%(account_login_url)s\">Login</a>\n"
 "                                "
 msgstr ""
 "\n"
 "برای گذاشتن نظر ابتدا <a href=\"%(account_login_url)s\">وارد سیستم</a> شوید"
 
-#: .\templates\blog\post_list.html:6
+#: .\blog\templates\blog\post_detail.html:234
+msgid "Reply To"
+msgstr "پاسخ دادن به"
+
+#: .\blog\templates\blog\post_list.html:6
 msgid "Posts"
 msgstr "پست ها"
 
-#: .\templates\blog\search_page.html:5 .\templates\blog\search_q_none.html:5
+#: .\blog\templates\blog\search_page.html:5
+#: .\blog\templates\blog\search_q_none.html:5
 msgid "Search"
 msgstr "جستجو"
 
-#: .\views.py:102
+#: .\blog\views.py:113
 msgid "You comment after confirmation will show in comments."
 msgstr "نظر شما پس از تایید در بخش نظرات نشان داده می شود."
 
-#: .\views.py:106
+#: .\blog\views.py:117
 msgid "Your comment have problem please try again!"
 msgstr "نظر شما مشکلی دارد لطفا دوباره امتحان کنید!"
+
+#~ msgid "lorem ipsum"
+#~ msgstr ""
+#~ "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده "
+#~ "از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و "
+#~ "سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای "
+#~ "متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه "
+#~ "درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد"
 
 #~ msgid "Search for products"
 #~ msgstr "جستجو برای پست ها"
