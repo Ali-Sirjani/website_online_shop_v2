@@ -2,6 +2,7 @@ venv/
 db.sqlite3
 .idea/
 .env
+*.pyc
 core/migrations/
 store/migrations/
 celerybeat-schedule
