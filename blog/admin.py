@@ -3,8 +3,6 @@ from django.forms import Textarea
 from django.db.models import TextField
 from django.utils.translation import gettext_lazy as _
 
-from mptt.admin import MPTTModelAdmin
-
 from .models import Tag, TopTag, Post, PostComment
 
 
@@ -67,16 +65,14 @@ class PostAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
-@admin.register(PostComment)
-class PostCommentAdmin(MPTTModelAdmin):
-    fields = ('post', 'author', 'parent', 'text', 'confirmation',
+class PostCommentAdmin(admin.ModelAdmin):
+    fields = ('post', 'author', 'text', 'confirmation',
               'datetime_created', 'datetime_updated',)
 
-    list_display = ('author', 'text', 'confirmation', 'datetime_updated',)
-
+    list_display = ('post', 'confirmation', 'datetime_updated',)
+    ordering = ('datetime_updated',)
     autocomplete_fields = ('post', 'author')
     list_filter = ('confirmation',)
-    search_fields = ('pk', 'post__title')
 
     def get_readonly_fields(self, request, obj=None):
         readonly_fields = ['datetime_created', 'datetime_updated', ]

@@ -4,7 +4,6 @@ import math
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.core.validators import MinValueValidator
-from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.contrib import messages
@@ -232,22 +231,13 @@ class OrderItem(models.Model):
             )
         ]
 
-    def clean(self):
-        if self.product and self.color_size:
-            try:
-                self.product.color_size_values.get(pk=self.color_size.pk)
-            except ProductColorAndSizeValue.DoesNotExist:
-                raise ValidationError(_('Invalid color or size for product'))
-
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-        self.clean()
-
         if self.pk and self.product and not self.price:
             additional_cost = 0
-            if self.color_size and self.color_size.additional_cost:
-                additional_cost = self.color_size.additional_cost
+            if self.color_size and self.color_size.size_price:
+                additional_cost = self.color_size.size_price
 
             self.price = self.product.price + additional_cost
             self.discount = self.product.discount

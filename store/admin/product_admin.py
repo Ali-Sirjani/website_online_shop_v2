@@ -68,7 +68,7 @@ class ProductSizeAdmin(admin.ModelAdmin):
 class ProductColorAndSizeValueTabu(admin.TabularInline):
     model = ProductColorAndSizeValue
     formset = ProductColorAndSizeValueFormSetAdmin
-    fields = ('color', 'color_image', 'size', 'additional_cost', 'inventory', 'is_active')
+    fields = ('color', 'color_image', 'size', 'size_price', 'inventory', 'is_active')
     autocomplete_fields = ('color', 'size')
     extra = 0
 
@@ -76,7 +76,7 @@ class ProductColorAndSizeValueTabu(admin.TabularInline):
         readonly_fields = ['color_image']
 
         if obj and obj.inventory <= 0:
-            readonly_fields.extend(['color', 'size', 'additional_cost', 'inventory', 'is_active'])
+            readonly_fields.extend(['color', 'size', 'size_price', 'inventory', 'is_active'])
 
         return readonly_fields
 

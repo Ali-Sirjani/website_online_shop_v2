@@ -9,11 +9,9 @@ class PostSearchForm(forms.Form):
 
 
 class PostCommentForm(forms.ModelForm):
-    parent = forms.ModelChoiceField(queryset=PostComment.objects.filter(confirmation=True), widget=forms.HiddenInput, required=False)
-
     class Meta:
         model = PostComment
-        fields = ('parent', 'text',)
+        fields = ('text',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

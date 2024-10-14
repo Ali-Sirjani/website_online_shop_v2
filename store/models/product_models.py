@@ -153,7 +153,7 @@ class ProductSpecificationValue(models.Model):
 
 class ProductColor(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name=_('name'))
-    color = ColorField(unique=True, verbose_name=_('color'))
+    color = ColorField(verbose_name=_('color'))
 
     class Meta:
         verbose_name = _('product color')
@@ -188,7 +188,7 @@ class ProductColorAndSizeValue(models.Model):
     size = models.ForeignKey(ProductSize, on_delete=models.CASCADE, null=True, blank=True,
                              related_name='color_size_values', verbose_name=_('size'))
 
-    additional_cost = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('additional cost'))
+    size_price = models.PositiveIntegerField(null=True, blank=True, verbose_name=_('size price'))
     inventory = models.IntegerField(null=True, blank=True, verbose_name=_('inventory'))
     is_active = models.BooleanField(default=True, verbose_name=_('active'))
 
@@ -229,7 +229,7 @@ class ProductImage(models.Model):
     class Meta:
         verbose_name = _('product image')
         verbose_name_plural = _('product images')
-        ordering = ('-is_main',)
+        ordering = ('-is_main', )
 
     def __str__(self):
         return f'{self.pk}'
@@ -247,10 +247,9 @@ class TopProduct(models.Model):
         ('2', '2'),
         ('3', '3'),
     )
-    LIMIT_CHOICES_TO_PRODUCT = {'is_active': True, 'inventory__gt': 0}
 
     product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name='top_products',
-                                   limit_choices_to=LIMIT_CHOICES_TO_PRODUCT, verbose_name=_('product'))
+                                   limit_choices_to={'is_active': True, 'inventory__gt': 0}, verbose_name=_('product'))
 
     level = models.CharField(max_length=1, choices=LEVEL_CHOICES,
                              help_text=_('Levels are ordered from top to bottom, with 1 being the highest.'),
