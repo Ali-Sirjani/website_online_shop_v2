@@ -14,9 +14,11 @@ def create_unique_slug(instance, create_by, slug_primitive=None):
         slug = slug_primitive
 
     ins_class = instance.__class__
-    obj = ins_class.objects.filter(slug=slug)
+    objs = ins_class.objects.filter(slug=slug)
 
-    if obj.exists():
+    if objs.exists():
+        if objs.count() == 1 and instance.pk == objs.first().pk:
+            return instance.slug
         instance.slug_change = False
         slug = f'{slug}-{random.choice("12345")}'
         return create_unique_slug(instance, create_by, slug)
@@ -28,6 +30,9 @@ def create_unique_slug(instance, create_by, slug_primitive=None):
 def create_slug_product(sender, instance, *args, **kwargs):
     if not instance.slug or instance.slug_change:
         instance.slug = create_unique_slug(instance, instance.title)
+        instance.slug_change = False
+    else:
+        instance.slug = create_unique_slug(instance, instance.slug)
         instance.slug_change = False
 
 

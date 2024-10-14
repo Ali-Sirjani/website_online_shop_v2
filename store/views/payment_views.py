@@ -77,8 +77,12 @@ def checkout_view(request):
 @login_required
 def set_profile_info(request):
     user_profile = request.user.profile
+    phone_number = str(user_profile.phone).replace('+98', '0')
+    if phone_number == 'None':
+        phone_number = ''
+
     data = {'first_name': user_profile.first_name, 'last_name': user_profile.last_name, 'email': request.user.email,
-            'phone': str(user_profile.phone).replace('+98', '0'), }
+            'phone': phone_number, }
 
     return JsonResponse(data, safe=False)
 
@@ -120,7 +124,7 @@ def sandbox_process_payment(request):
 
     request_data = {
         'MerchantID': 'asdfew' * 6,
-        'Amount': rial_total,
+        'Amount': toman_total,
         'Description': f'order:{order.tracking_code}',
         'CallbackURL': request.build_absolute_uri(reverse('store:sandbox_callback')),
     }
@@ -168,7 +172,7 @@ def sandbox_callback_payment(request):
 
         request_data = {
             'MerchantID': 'asdfew' * 6,
-            'Amount': rial_total,
+            'Amount': toman_total,
             'Authority': payment_authority,
         }
 

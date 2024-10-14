@@ -78,7 +78,7 @@ def check_out_user_anonymous(request, cart):
         email_user = form_order.cleaned_data.get('email')
 
         order, create = Order.objects.get_or_create(customer=None, email=email_user, completed=False,
-                                                    coupon=cart.coupon.get('coupon_pk'))
+                                                    coupon_id=cart.coupon.get('coupon_pk'))
 
         request.session['order_pk'] = order.pk
 

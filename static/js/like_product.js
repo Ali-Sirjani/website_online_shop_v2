@@ -2,7 +2,7 @@ var likeBtns = document.getElementsByClassName('like-product')
 
 for (var i = 0; i < likeBtns.length; i++) {
     likeBtns[i].addEventListener('click', function () {
-        var productId = this.dataset.product
+        const productId = this.dataset.product
 
         likeProduct(productId, productLikeUrl)
     })
@@ -36,4 +36,3 @@ function likeProduct(productId, url) {
 
         })
 }
-

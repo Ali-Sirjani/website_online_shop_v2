@@ -124,13 +124,19 @@ class ProductDetailView(generic.edit.FormMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)
         obj = self.object
 
-        max_level_category = obj.category.all().aggregate(Max('level'))['level__max']
-        category_pk_list = obj.category.filter(level=max_level_category).values_list('pk')
+        product_categories = obj.category.all()
+        if product_categories.exists():
+            max_level_category = product_categories.aggregate(Max('level'))['level__max']
+            category_pk_list = obj.category.filter(level=max_level_category).values_list('pk')
 
-        related_product = self.get_queryset().filter(
-            category__in=category_pk_list,
-        ).exclude(pk=obj.pk).order_by('?').distinct()
-        context['related_products'] = related_product[:8]
+            related_product = self.get_queryset().filter(
+                category__in=category_pk_list,
+            ).exclude(pk=obj.pk).order_by('?').distinct()
+
+        else:
+            related_product = Product.active_objs.all().order_by('?')
+
+        context['related_products'] = related_product[:4]
 
         if self.request.user.is_authenticated:
             context['liked'] = Product.active_objs.filter(favorite=self.request.user.pk).values_list('pk', flat=True)
@@ -202,6 +208,7 @@ class ProductUserLikedView(LoginRequiredMixin, ProductsListView):
         return queryset
 
 
+@require_POST
 def filter_size_based_color(request):
     try:
         data = json.loads(request.body)
@@ -216,6 +223,8 @@ def filter_size_based_color(request):
     if not (color_pk or product_pk):
         messages.warning(request, _('Something went wrong with your request.'))
         return JsonResponse('Something went wrong', safe=False)
+
+    get_object_or_404(Product.active_objs, pk=product_pk)
 
     color_size_query = ProductColorAndSizeValue.active_objs.filter(product_id=product_pk, color_id=color_pk)
 

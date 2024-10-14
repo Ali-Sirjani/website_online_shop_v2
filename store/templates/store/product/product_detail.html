@@ -5,6 +5,7 @@
 {% load trans_fa %}
 {% load order_temp_filters %}
 {% load crispy_forms_filters %}
+{% load widget_tweaks %}
 {% load jalali_tags %}
 
 {% block style %}
@@ -282,13 +283,14 @@
                                                         {% for field in form %}
                                                             {% if field.name == 'text' %}
                                                                 <div class="input-item input-item-textarea ltn__custom-icon">
-                                                                    {{ field }}
+                                                                    {% render_field field %}
                                                                 </div>
                                                             {% else %}
-                                                                {{ field|as_crispy_field }}
+                                                                <div class="mb-2">{{ field.label }}</div>
+                                                                {% render_field field %}
                                                             {% endif %}
                                                         {% endfor %}
-                                                        <br>
+                                                        <div class="mb-80"></div>
                                                         <div class="btn-wrapper">
                                                             <button class="btn theme-btn-1 btn-effect-1 text-uppercase"
                                                                     type="submit">{% trans 'Submit' %}
