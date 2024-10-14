@@ -1,0 +1,1368 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-26 16:47+0330\n"
+"PO-Revision-Date: 2024-01-18 21:16+0000\n"
+"Last-Translator:   <we@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
+
+#: .\store\abstract\abstract_order.py:6
+#: .\store\templates\store\payment\checkout.html:50
+msgid "state"
+msgstr "استان"
+
+#: .\store\abstract\abstract_order.py:7
+#: .\store\templates\store\payment\checkout.html:51
+msgid "city"
+msgstr "شهر"
+
+#: .\store\abstract\abstract_order.py:8
+#: .\store\templates\store\payment\checkout.html:52
+msgid "address"
+msgstr "آدرس"
+
+#: .\store\abstract\abstract_order.py:9
+#: .\store\templates\store\payment\checkout.html:53
+msgid "plate"
+msgstr "پلاک"
+
+#: .\store\abstract\abstract_order.py:11 .\store\models\order_models.py:219
+#: .\store\models\product_models.py:21 .\store\models\product_models.py:60
+#: .\store\models\product_models.py:226 .\store\models\product_models.py:262
+#: .\store\models\product_models.py:297
+msgid "datetime created"
+msgstr "تاریخ ایجاد شد"
+
+#: .\store\abstract\abstract_order.py:12 .\store\models\order_models.py:38
+#: .\store\models\order_models.py:98 .\store\models\order_models.py:220
+#: .\store\models\product_models.py:22 .\store\models\product_models.py:61
+#: .\store\models\product_models.py:227 .\store\models\product_models.py:263
+#: .\store\models\product_models.py:298
+msgid "datetime updated"
+msgstr "تاریخ به روز شد"
+
+#: .\store\admin\order_admin.py:83
+msgid "Contact Info"
+msgstr "اطلاعات تماس"
+
+#: .\store\admin\order_admin.py:88 .\store\admin\order_admin.py:101
+msgid "Order Info"
+msgstr "اطلاعات سفارش"
+
+#: .\store\admin\order_admin.py:94 .\store\admin\product_admin.py:123
+msgid "Status and Timestamps"
+msgstr "وضعیت و مهر زمانی"
+
+#: .\store\admin\order_admin.py:150 .\store\admin\order_admin.py:195
+msgid "General Information"
+msgstr "اطلاعات کلی"
+
+#: .\store\admin\order_admin.py:157 .\store\admin\product_admin.py:117
+msgid "Pricing"
+msgstr "قیمت گذاری"
+
+#: .\store\admin\order_admin.py:160 .\store\admin\order_admin.py:201
+msgid "Date and Time"
+msgstr "تاریخ و زمان"
+
+#: .\store\admin\order_admin.py:163
+msgid "Calculations"
+msgstr "محاسبات"
+
+#: .\store\admin\order_admin.py:198
+msgid "Location"
+msgstr "مکان"
+
+#: .\store\admin\product_admin.py:114
+msgid "Basic Information"
+msgstr "اطلاعات اولیه"
+
+#: .\store\admin\product_admin.py:120
+msgid "Inventory and Slug"
+msgstr "موجودی و اسلاگ"
+
+#: .\store\cart.py:249 .\store\views\order_views.py:102
+msgid "Please for adding product to cart enter a positive quantity!"
+msgstr "لطفا برای افزودن محصول به سبد خرید یک مقدار مثبت وارد کنید!"
+
+#: .\store\cart.py:262 .\store\cart.py:282 .\store\views\order_views.py:109
+#: .\store\views\order_views.py:127
+msgid "Delete product"
+msgstr "محصول پاک شد"
+
+#: .\store\cart.py:268 .\store\views\order_views.py:115
+msgid "Add product"
+msgstr "محصول اضافه شد"
+
+#: .\store\cart.py:278 .\store\views\order_views.py:130
+msgid "Remove product"
+msgstr "محصول حذف شد"
+
+#: .\store\cart.py:460 .\store\models\order_models.py:139
+msgid ""
+"Congratulations! 🎉 Your coupon has been successfully applied. Thank you for "
+"choosing us! Happy shopping!"
+msgstr ""
+"تبریک می گویم! 🎉 کوپن شما با موفقیت اعمال شد. از اینکه ما را انتخاب کردید، "
+"متشکریم! خرید خوبی داشته باشید!"
+
+#: .\store\cart.py:464 .\store\models\order_models.py:143
+#, python-format
+msgid "The minimum price for coupon is %(start_price)s"
+msgstr "حداقل قیمت کوپن %(start_price)s تومان است "
+
+#: .\store\cart.py:468 .\store\models\order_models.py:147
+msgid "Coupon is expired"
+msgstr "کوپن منقضی شده است"
+
+#: .\store\context_processors.py:9
+msgid "Cheapest"
+msgstr "ارزان ترین"
+
+#: .\store\context_processors.py:9
+msgid "Most Expensive"
+msgstr "گران ترین"
+
+#: .\store\context_processors.py:9
+msgid "Newest"
+msgstr "جدید ترین"
+
+#: .\store\context_processors.py:9
+msgid "Oldest"
+msgstr "قدیمی ترین"
+
+#: .\store\filters\product_filters.py:41
+msgid "---------"
+msgstr "---------"
+
+#: .\store\filters\product_filters.py:41
+msgid "Yes"
+msgstr "بله"
+
+#: .\store\filters\product_filters.py:41
+msgid "No"
+msgstr "خیر"
+
+#: .\store\filters\product_filters.py:46
+msgid "date"
+msgstr "تاریخ"
+
+#: .\store\filters\product_filters.py:54 .\store\models\product_models.py:156
+#: .\store\models\product_models.py:187
+msgid "color"
+msgstr "رنگ"
+
+#: .\store\filters\product_filters.py:61 .\store\models\product_models.py:167
+#: .\store\models\product_models.py:189
+msgid "size"
+msgstr "اندازه"
+
+#: .\store\filters\product_filters.py:65
+msgid "Consider both color and size"
+msgstr "رنگ و اندازه را باهم در نظر بگیر"
+
+#: .\store\forms\order_forms.py:23
+msgid ""
+"You must fill out both star date and end date, when you enter one of them!"
+msgstr ""
+"وقتی یکی از آنها را وارد می کنید، باید هم تاریخ شروع و هم تاریخ پایان را پر "
+"کنید!"
+
+#: .\store\forms\order_forms.py:26
+msgid ""
+"You must fill out both num available and num used, when you enter one of "
+"them!"
+msgstr ""
+"وقتی یکی از آنها را وارد می کنید، باید هم عدد موجود و هم عدد استفاده شده را "
+"پر کنید!"
+
+#: .\store\forms\order_forms.py:61
+#, python-brace-format
+msgid "There is an incomplete order with pk {order_pk} for user {user}"
+msgstr "یک سفارش ناقص با آیدی {order_pk} برای کاربر {user} وجود دارد"
+
+#: .\store\forms\order_forms.py:70
+msgid "Complete order must have a shipping address"
+msgstr "سفارش کامل باید دارای آدرس حمل و نقل باشد"
+
+#: .\store\forms\order_forms.py:82
+#, python-brace-format
+msgid "there is no product with color or size {color_size}"
+msgstr "هیچ محصولی با رنگ یا اندازه {color_size} وجود ندارد"
+
+#: .\store\forms\order_forms.py:86
+msgid "Enter valid data!"
+msgstr "داده های معتبر وارد کنید!"
+
+#: .\store\forms\order_forms.py:90
+msgid "the product have color and size so size and color is required!"
+msgstr "محصول دارای رنگ یا اندازه است بنابراین اندازه یا رنگ مورد نیاز است!"
+
+#: .\store\forms\order_forms.py:109
+msgid "Enter a valid product"
+msgstr "یک محصول معتبر وارد کنید"
+
+#: .\store\forms\order_forms.py:128
+msgid "This combination of order, product, size, and color already exists."
+msgstr "این ترکیب از سفارش، محصول، اندازه و رنگ از قبل وجود دارد."
+
+#: .\store\forms\order_forms.py:143
+msgid "This order is complete"
+msgstr "این سفارش کامل شده است"
+
+#: .\store\forms\product_forms.py:26
+msgid "You must set discount because you fill out discount price"
+msgstr "شما باید تیک تخفیف را بزنید زیرا قیمت تخفیف را پر کرده اید"
+
+#: .\store\forms\product_forms.py:29
+msgid "You must fill out discounts price because you active discount"
+msgstr "شما باید قیمت تخفیف را پر کنید زیرا تیک تخفیف را زده اید"
+
+#: .\store\forms\product_forms.py:32
+msgid "The value of discount price must be less than from price"
+msgstr "ارزش قیمت تخفیف باید کمتر از قیمت باشد"
+
+#: .\store\forms\product_forms.py:35
+msgid "Products with 0 or negative inventory cannot be activated"
+msgstr "محصولات با موجودی 0 یا منفی را نمی توان فعال کرد"
+
+#: .\store\forms\product_forms.py:93
+msgid "Type your comments...."
+msgstr "نظرات خود را تایپ کنید...."
+
+#: .\store\models\order_models.py:28
+msgid "coupon code"
+msgstr "کد کوپن"
+
+#: .\store\models\order_models.py:29
+msgid "start date"
+msgstr "تاریخ شروع"
+
+#: .\store\models\order_models.py:30
+msgid "end date"
+msgstr "تاریخ پایان"
+
+#: .\store\models\order_models.py:31
+msgid "number available"
+msgstr "تعداد موجود"
+
+#: .\store\models\order_models.py:32
+msgid "number used"
+msgstr "تعداد استفاده شده"
+
+#: .\store\models\order_models.py:33
+msgid "reason make"
+msgstr "دلیل ساختن"
+
+#: .\store\models\order_models.py:35 .\store\models\product_models.py:58
+#: .\store\models\product_models.py:193
+msgid "active"
+msgstr "فعال"
+
+#: .\store\models\order_models.py:37 .\store\models\order_models.py:97
+msgid "datetime ordered"
+msgstr "تاریخ سفارش داده شد"
+
+#: .\store\models\order_models.py:63 .\store\models\order_models.py:84
+msgid "coupon"
+msgstr "کوپن"
+
+#: .\store\models\order_models.py:64
+msgid "discount percentage"
+msgstr "درصد تخفیف"
+
+#: .\store\models\order_models.py:65
+msgid "start price"
+msgstr "قیمت شروع"
+
+#: .\store\models\order_models.py:82
+msgid "customer"
+msgstr "مشتری"
+
+#: .\store\models\order_models.py:86
+msgid "first name"
+msgstr "نام"
+
+#: .\store\models\order_models.py:87
+msgid "last name"
+msgstr "نام خانوادگی"
+
+#: .\store\models\order_models.py:88
+msgid "email"
+msgstr "ایمیل"
+
+#: .\store\models\order_models.py:89
+msgid "phone"
+msgstr "شماره موبایل"
+
+#: .\store\models\order_models.py:90
+msgid "order note"
+msgstr "یادداشت سفارش"
+
+#: .\store\models\order_models.py:91
+msgid "completed"
+msgstr "تکمیل شد"
+
+#: .\store\models\order_models.py:92
+msgid "coupon price"
+msgstr "قیمت کوپن"
+
+#: .\store\models\order_models.py:93
+msgid "tracking code"
+msgstr "کد پیگیری"
+
+#: .\store\models\order_models.py:94
+msgid "datetime payed"
+msgstr "تاریخ پرداخت شده"
+
+#: .\store\models\order_models.py:95
+msgid "datetime delivered"
+msgstr "تاریخ تحویل"
+
+#: .\store\models\order_models.py:113
+msgid "Cart Items"
+msgstr "اقلام سبد خرید"
+
+#: .\store\models\order_models.py:119
+#: .\store\templates\store\order\order_detail.html:97
+msgid "Cart Total (No Discount)"
+msgstr "مجموع سبد خرید (بدون تخفیف)"
+
+#: .\store\models\order_models.py:125
+#: .\store\templates\store\order\order_detail.html:99
+msgid "Cart Total Profit"
+msgstr "سود کل سبد"
+
+#: .\store\models\order_models.py:159
+#: .\store\templates\store\order\order_detail.html:105
+#: .\store\templates\store\order\order_detail.html:111
+msgid "Cart Total"
+msgstr "مبلغ کل"
+
+#: .\store\models\order_models.py:168
+#: .\store\templates\store\order\order_detail.html:108
+msgid "Cart Total With Coupon"
+msgstr "مبلغ کل با کوپن"
+
+#: .\store\models\order_models.py:175
+msgid "zero"
+msgstr "صفر"
+
+#: .\store\models\order_models.py:177
+msgid "Unpaid"
+msgstr "پرداخت نشده"
+
+#: .\store\models\order_models.py:179
+msgid "Paid"
+msgstr "پرداخت شده"
+
+#: .\store\models\order_models.py:181
+msgid "Processing"
+msgstr "در حال پردازش"
+
+#: .\store\models\order_models.py:183 .\store\tests\order_models_tests.py:419
+msgid "Out for delivery"
+msgstr "برای تحویل"
+
+#: .\store\models\order_models.py:185
+msgid "Delivered"
+msgstr "تحویل داده شده"
+
+#: .\store\models\order_models.py:187
+msgid "Average Track Items"
+msgstr "میانگین وضعیت اقلام ها"
+
+#: .\store\models\order_models.py:204 .\store\models\product_models.py:67
+#: .\store\models\product_models.py:139 .\store\models\product_models.py:185
+#: .\store\models\product_models.py:221 .\store\models\product_models.py:253
+#: .\store\models\product_models.py:288
+msgid "product"
+msgstr "محصول"
+
+#: .\store\models\order_models.py:206
+msgid "color and size"
+msgstr "رنگ و اندازه"
+
+#: .\store\models\order_models.py:207 .\store\models\order_models.py:297
+msgid "order"
+msgstr "سفارش"
+
+#: .\store\models\order_models.py:209
+msgid "quantity"
+msgstr "تعداد"
+
+#: .\store\models\order_models.py:211
+msgid "track order"
+msgstr "پیگیری سفارش"
+
+#: .\store\models\order_models.py:212
+msgid "datetime processing"
+msgstr "تاریخ پردازش"
+
+#: .\store\models\order_models.py:213
+msgid "datetime process finished"
+msgstr "تاریخ پایان پردازش"
+
+#: .\store\models\order_models.py:215 .\store\models\product_models.py:49
+msgid "price"
+msgstr "قیمت"
+
+#: .\store\models\order_models.py:216 .\store\models\product_models.py:50
+msgid "discount"
+msgstr "تخفیف"
+
+#: .\store\models\order_models.py:217 .\store\models\product_models.py:51
+msgid "discount price"
+msgstr "قیمت تخفیف"
+
+#: .\store\models\order_models.py:231
+msgid ""
+"A record with the same combination of order and product already exists. "
+"Please ensure that the specified values meet the uniqueness criteria."
+msgstr ""
+"سابقه ای با ترکیبی مشابه از سفارش و محصول از قبل وجود دارد. لطفاً مطمئن شوید "
+"که مقادیر مشخص شده با معیارهای منحصر به فرد مطابقت دارند."
+
+#: .\store\models\order_models.py:240
+msgid "Invalid color or size for product"
+msgstr "لطفا رنگ یا اندازه را برای محصول انتخاب کنید!"
+
+#: .\store\models\order_models.py:270
+#: .\store\templates\store\order\cart.html:136
+#: .\store\templates\store\payment\checkout.html:237
+msgid "Total (No Discount)"
+msgstr "مجموع (بدون تخفیف)"
+
+#: .\store\models\order_models.py:278
+msgid "Total (With Discount)"
+msgstr "مجموع (با تخفیف)"
+
+#: .\store\models\order_models.py:286
+#: .\store\templates\store\order\cart.html:140
+#: .\store\templates\store\payment\checkout.html:241
+msgid "Total Profit"
+msgstr "سود کل"
+
+#: .\store\models\order_models.py:292
+#: .\store\templates\store\order\order_detail.html:56
+msgid "Total"
+msgstr "مبلغ کل"
+
+#: .\store\models\product_models.py:16 .\store\models\product_models.py:127
+#: .\store\models\product_models.py:155
+msgid "name"
+msgstr "نام"
+
+#: .\store\models\product_models.py:17 .\store\models\product_models.py:54
+msgid "slug change"
+msgstr "تغییر اسلاگ"
+
+#: .\store\models\product_models.py:17 .\store\models\product_models.py:55
+msgid "If you want change the slug by name"
+msgstr "اگر می خواهید اسلاگ را به وسیله ی نام تغییر دهید"
+
+#: .\store\models\product_models.py:18 .\store\models\product_models.py:56
+msgid "slug"
+msgstr "اسلاگ"
+
+#: .\store\models\product_models.py:19 .\store\models\product_models.py:57
+msgid "If field be empty it's automatic change by name "
+msgstr "اگر فیلد خالی باشد، نام آن به صورت خودکار تغییر می کند"
+
+#: .\store\models\product_models.py:25 .\store\models\product_models.py:44
+msgid "category"
+msgstr "دسته بندی"
+
+#: .\store\models\product_models.py:26
+msgid "categories"
+msgstr "دسته بندی ها"
+
+#: .\store\models\product_models.py:42
+msgid "favorite"
+msgstr "مورد علاقه"
+
+#: .\store\models\product_models.py:46
+msgid "title"
+msgstr "عنوان"
+
+#: .\store\models\product_models.py:47
+msgid "description"
+msgstr "توضیحات"
+
+#: .\store\models\product_models.py:48
+msgid "short description"
+msgstr "توضیحات کوتاه"
+
+#: .\store\models\product_models.py:52
+msgid "discount timer"
+msgstr "تایمر تخفیف"
+
+#: .\store\models\product_models.py:53 .\store\models\product_models.py:192
+msgid "inventory"
+msgstr "موجودی"
+
+#: .\store\models\product_models.py:68
+#: .\store\templates\store\product\product_list.html:7
+msgid "products"
+msgstr "محصولات"
+
+#: .\store\models\product_models.py:130
+msgid "product specification"
+msgstr "مشخصات محصول"
+
+#: .\store\models\product_models.py:131
+msgid "product specifications"
+msgstr "مشخصات محصول"
+
+#: .\store\models\product_models.py:141
+msgid "specification"
+msgstr "مشخصات"
+
+#: .\store\models\product_models.py:143
+msgid "value"
+msgstr "مقدار"
+
+#: .\store\models\product_models.py:147
+msgid "product specification value"
+msgstr "مقدار مشخصات محصول"
+
+#: .\store\models\product_models.py:148
+msgid "product specification values"
+msgstr "مقادیر مشخصات محصول"
+
+#: .\store\models\product_models.py:159
+msgid "product color"
+msgstr "رنگ محصول"
+
+#: .\store\models\product_models.py:160
+msgid "product colors"
+msgstr "رنگ های محصول"
+
+#: .\store\models\product_models.py:170
+msgid "product size"
+msgstr "اندازه محصول"
+
+#: .\store\models\product_models.py:171
+msgid "product sizes"
+msgstr "اندازه های محصول"
+
+#: .\store\models\product_models.py:191
+msgid "size price"
+msgstr "قیمت سایز"
+
+#: .\store\models\product_models.py:200
+msgid "product color and size value"
+msgstr "مقدار رنگ و اندازه محصول"
+
+#: .\store\models\product_models.py:201
+msgid "product color and size values"
+msgstr "مقادیر رنگ و اندازه محصول"
+
+#: .\store\models\product_models.py:223
+msgid "image"
+msgstr "تصویر"
+
+#: .\store\models\product_models.py:224
+msgid "is main"
+msgstr "اصلی است"
+
+#: .\store\models\product_models.py:230
+msgid "product image"
+msgstr "تصویر محصول"
+
+#: .\store\models\product_models.py:231
+msgid "product images"
+msgstr "تصاویر محصول"
+
+#: .\store\models\product_models.py:256
+msgid "Levels are ordered from top to bottom, with 1 being the highest."
+msgstr "سطوح از بالا به پایین مرتب شده اند که 1 بالاترین است."
+
+#: .\store\models\product_models.py:257
+msgid "level"
+msgstr "سطح"
+
+#: .\store\models\product_models.py:269
+msgid "top product"
+msgstr "محصول برتر"
+
+#: .\store\models\product_models.py:270
+msgid "top products"
+msgstr "محصولات برتر"
+
+#: .\store\models\product_models.py:281
+msgid "Too Bad"
+msgstr "خیلی بد"
+
+#: .\store\models\product_models.py:282
+msgid "Bad"
+msgstr "بد"
+
+#: .\store\models\product_models.py:283
+msgid "Normal"
+msgstr "معمولی"
+
+#: .\store\models\product_models.py:284
+msgid "Good"
+msgstr "خوب"
+
+#: .\store\models\product_models.py:285
+msgid "Great"
+msgstr "عالی"
+
+#: .\store\models\product_models.py:290
+msgid "author"
+msgstr "نویسنده"
+
+#: .\store\models\product_models.py:292
+msgid "text"
+msgstr "متن"
+
+#: .\store\models\product_models.py:293
+msgid "star"
+msgstr "ستاره"
+
+#: .\store\models\product_models.py:295
+msgid "confirmation"
+msgstr "تائیدیه"
+
+#: .\store\models\product_models.py:301
+msgid "product comment"
+msgstr "نظر محصول"
+
+#: .\store\models\product_models.py:302
+msgid "product comments"
+msgstr "نظرات محصول"
+
+#: .\store\signals\order_signals.py:45
+msgid "The product add to your cart"
+msgstr "محصول به سبد خرید اضافه شد"
+
+#: .\store\templates\store\order\cart.html:7
+msgid "cart"
+msgstr "سبد خرید"
+
+#: .\store\templates\store\order\cart.html:85
+#: .\store\templates\store\payment\checkout.html:27
+msgid "Coupon code"
+msgstr "کد کوپن"
+
+#: .\store\templates\store\order\cart.html:87
+#: .\store\templates\store\payment\checkout.html:28
+msgid "Apply Coupon"
+msgstr "اعمال کوپن"
+
+#: .\store\templates\store\order\cart.html:97
+#: .\store\templates\store\order\cart.html:102
+msgid "Update Cart"
+msgstr "بروز رسانی سبد خرید"
+
+#: .\store\templates\store\order\cart.html:107
+msgid "Clear Cart"
+msgstr "پاک کردن سبد خرید"
+
+#: .\store\templates\store\order\cart.html:116
+msgid "Your Cart is Empty"
+msgstr "سبد خرید شما خالی است!"
+
+#: .\store\templates\store\order\cart.html:118
+#, python-format
+msgid ""
+"\n"
+"                                        <p>It looks like you haven't added "
+"any items to your cart yet. Explore our <a\n"
+"                                                href=\"%(product_list_url)s"
+"\"><strong>products</strong></a> and\n"
+"                                            find something you love!</p>\n"
+"                                    "
+msgstr ""
+"\n"
+"<p>به نظر می‌رسد هنوز هیچ موردی به سبد خرید خود اضافه نکرده‌اید. <a href="
+"\"%(product_list_url)s\"><strong>محصولات</strong></a> ما را کاوش کنید و چیزی "
+"را که دوست دارید پیدا کنید.</p>"
+
+#: .\store\templates\store\order\cart.html:128
+#: .\store\templates\store\payment\checkout.html:229
+msgid "Cart Totals"
+msgstr "مجموع سبد خرید"
+
+#: .\store\templates\store\order\cart.html:132
+#: .\store\templates\store\payment\checkout.html:233
+msgid "Quantity Items"
+msgstr "تعداد اقلام"
+
+#: .\store\templates\store\order\cart.html:145
+#: .\store\templates\store\payment\checkout.html:246
+msgid "Total Coupon"
+msgstr "مبلغ کوپن"
+
+#: .\store\templates\store\order\cart.html:149
+#: .\store\templates\store\order\cart.html:158
+#: .\store\templates\store\payment\checkout.html:250
+#: .\store\templates\store\payment\checkout.html:259
+msgid "Order Total"
+msgstr "مبلغ کل"
+
+#: .\store\templates\store\order\cart.html:153
+#: .\store\templates\store\payment\checkout.html:254
+msgid "Total (With Coupon)"
+msgstr "مبلغ کل (با کوپن)"
+
+#: .\store\templates\store\order\cart.html:166
+msgid "Proceed to checkout"
+msgstr "تسویه حساب"
+
+#: .\store\templates\store\order\order_detail.html:7
+msgid "Order Detail"
+msgstr "جزئیات سفارش"
+
+#: .\store\templates\store\order\order_detail.html:17
+msgid "Customer Information"
+msgstr "اطلاعات مشتری"
+
+#: .\store\templates\store\order\order_detail.html:20
+msgid "Name"
+msgstr "نام"
+
+#: .\store\templates\store\order\order_detail.html:23
+msgid "Email"
+msgstr "ایمیل"
+
+#: .\store\templates\store\order\order_detail.html:25
+msgid "Phone"
+msgstr "شماره موبایل"
+
+#: .\store\templates\store\order\order_detail.html:34
+msgid "Order Status"
+msgstr "وضعیت سفارش"
+
+#: .\store\templates\store\order\order_detail.html:36
+msgid "Tracking Code"
+msgstr "کد پیگیری"
+
+#: .\store\templates\store\order\order_detail.html:38
+msgid "Delivery Status"
+msgstr "وضعیت تحویل"
+
+#: .\store\templates\store\order\order_detail.html:46
+msgid "Order Items"
+msgstr "اقلام سفارش"
+
+#: .\store\templates\store\order\order_detail.html:51
+#: .\store\templates\store\product\product_detail.html:15
+msgid "Product"
+msgstr "محصول"
+
+#: .\store\templates\store\order\order_detail.html:52
+msgid "Color/Size"
+msgstr "رنگ/اندازه"
+
+#: .\store\templates\store\order\order_detail.html:53
+msgid "Quantity"
+msgstr "تعداد"
+
+#: .\store\templates\store\order\order_detail.html:54
+msgid "Price"
+msgstr "قیمت"
+
+#: .\store\templates\store\order\order_detail.html:55
+msgid "Discounted Price"
+msgstr "قیمت با تخفیف"
+
+#: .\store\templates\store\order\order_detail.html:57
+msgid "Image"
+msgstr "تصویر"
+
+#: .\store\templates\store\order\order_detail.html:93
+msgid "Order Summary"
+msgstr "خلاصه سفارش"
+
+#: .\store\templates\store\order\order_detail.html:102
+msgid "Coupon Price"
+msgstr "قیمت کوپن"
+
+#: .\store\templates\store\order\order_detail.html:119
+msgid "Additional Information"
+msgstr "اطلاعات تکمیلی"
+
+#: .\store\templates\store\order\order_detail.html:124
+msgid "Order Note"
+msgstr "یادداشت سفارش"
+
+#: .\store\templates\store\order\order_detail.html:126
+msgid "Ordered on"
+msgstr "سفارش داده شد"
+
+#: .\store\templates\store\order\order_detail.html:129
+msgid "Pay Time"
+msgstr "زمان پرداخت"
+
+#: .\store\templates\store\order\order_detail.html:132
+msgid "Last Updated"
+msgstr "اخرین به روز رسانی"
+
+#: .\store\templates\store\payment\again.html:5
+msgid "Done"
+msgstr "انجام شده"
+
+#: .\store\templates\store\payment\again.html:15
+msgid "Payment Confirmation: Unauthorized Usage Detected."
+msgstr "تأیید پرداخت: استفاده غیرمجاز شناسایی شد."
+
+#: .\store\templates\store\payment\again.html:19
+msgid ""
+"\n"
+"                                        Your payment was successful, but it "
+"appears that you are attempting to use the\n"
+"                                        same payment again. Please note that "
+"the payment has already been processed and\n"
+"                                        cannot be used for another "
+"transaction. If you have any questions or concerns,\n"
+"                                        please contact our customer support "
+"for assistance.\n"
+"                                    "
+msgstr ""
+"\n"
+"پرداخت شما با موفقیت انجام شد، اما به نظر می‌رسد که سعی می‌کنید دوباره از همان "
+"پرداخت استفاده کنید. لطفاً توجه داشته باشید که پرداخت قبلاً پردازش شده است و "
+"نمی توان از آن برای تراکنش دیگری استفاده کرد. اگر سوال یا ابهامی دارید، لطفاً "
+"برای راهنمایی با پشتیبانی مشتری ما تماس بگیرید."
+
+#: .\store\templates\store\payment\again.html:28
+#: .\store\templates\store\payment\success.html:26
+msgid "Continue Shopping"
+msgstr "به خرید ادامه دهید"
+
+#: .\store\templates\store\payment\checkout.html:8
+msgid "checkout"
+msgstr "پرداخت"
+
+#: .\store\templates\store\payment\checkout.html:19
+msgid "Have a coupon?"
+msgstr "کوپنی دارید؟"
+
+#: .\store\templates\store\payment\checkout.html:20
+msgid "Click here to enter your code"
+msgstr "برای وارد کردن کد اینجا را کلیک کنید"
+
+#: .\store\templates\store\payment\checkout.html:24
+msgid "If you have a coupon code, please apply it below."
+msgstr "اگر کد کوپن دارید، لطفاً آن را در زیر اعمال کنید."
+
+#: .\store\templates\store\payment\checkout.html:37
+msgid "address list"
+msgstr "لیست آدرس"
+
+#: .\store\templates\store\payment\checkout.html:44
+msgid "see details"
+msgstr "مشاهد جرئیات"
+
+#: .\store\templates\store\payment\checkout.html:62
+msgid "set"
+msgstr "تنظیم کردن"
+
+#: .\store\templates\store\payment\checkout.html:72
+msgid "Billing Details"
+msgstr "جزئیات صورتحساب"
+
+#: .\store\templates\store\payment\checkout.html:83
+msgid "Personal Information"
+msgstr "اطلاعات شخصی"
+
+#: .\store\templates\store\payment\checkout.html:86
+msgid "Use of profile information"
+msgstr "استفاده از اطلاعات پروفایل"
+
+#: .\store\templates\store\payment\checkout.html:93
+msgid "First name"
+msgstr "نام"
+
+#: .\store\templates\store\payment\checkout.html:102
+msgid "Last name"
+msgstr "نام خانوادگی"
+
+#: .\store\templates\store\payment\checkout.html:111
+msgid "email address"
+msgstr "آدرس ایمیل"
+
+#: .\store\templates\store\payment\checkout.html:120
+msgid "phone number"
+msgstr "شماره موبایل"
+
+#: .\store\templates\store\payment\checkout.html:129
+#: .\store\templates\store\payment\checkout.html:131
+msgid "State"
+msgstr "استان"
+
+#: .\store\templates\store\payment\checkout.html:139
+#: .\store\templates\store\payment\checkout.html:141
+msgid "City"
+msgstr "شهر"
+
+#: .\store\templates\store\payment\checkout.html:149
+#: .\store\templates\store\payment\checkout.html:151
+msgid "Zip"
+msgstr "پلاک"
+
+#: .\store\templates\store\payment\checkout.html:159
+msgid "Address"
+msgstr "آدرس"
+
+#: .\store\templates\store\payment\checkout.html:169
+msgid "Order Notes (optional)"
+msgstr "یادداشت های سفارش (اختیاری)"
+
+#: .\store\templates\store\payment\checkout.html:172
+msgid "Notes about your order, e.g. special notes for delivery."
+msgstr "نکاتی در مورد سفارش شما، به عنوان مثال یادداشت های ویژه برای تحویل"
+
+#: .\store\templates\store\payment\checkout.html:186
+msgid ""
+"Your personal data will be used to process your order, support your\n"
+"                                experience throughout this website, and for "
+"other purposes described in our privacy\n"
+"                                policy."
+msgstr ""
+"اطلاعات شخصی شما برای پردازش سفارش شما، پشتیبانی از تجربه شما در سراسر این "
+"وب سایت و برای اهداف دیگری که در خط مشی رازداری ما توضیح داده شده است، "
+"استفاده خواهد شد."
+
+#: .\store\templates\store\payment\checkout.html:191
+msgid "Payment"
+msgstr "پرداخت"
+
+#: .\store\templates\store\payment\checkout.html:196
+msgid "Items"
+msgstr "اقلام"
+
+#: .\store\templates\store\payment\checkout.html:291
+msgid "Entered email: "
+msgstr "ایمیل وارد شده:"
+
+#: .\store\templates\store\payment\checkout.html:291
+msgid "\\nDo you want to continue?"
+msgstr "می خواهید ادامه دهید؟"
+
+#: .\store\templates\store\payment\fail.html:5
+msgid "Fail"
+msgstr "شکست"
+
+#: .\store\templates\store\payment\fail.html:15
+msgid "Payment Failed"
+msgstr "پرداخت ناموفق"
+
+#: .\store\templates\store\payment\fail.html:19
+msgid ""
+"\n"
+"                                        We apologize for the inconvenience, "
+"but it seems that there was an issue with\n"
+"                                        processing your payment. <br>Please "
+"ensure that the payment information you\n"
+"                                        provided is accurate and up to "
+"date.\n"
+"                                    "
+msgstr ""
+"\n"
+"بابت مشکل پیش آمده پوزش می طلبیم، اما به نظر می رسد مشکلی در پردازش پرداخت "
+"شما وجود داشته است. <br>لطفاً مطمئن شوید که اطلاعات پرداختی که ارائه کرده‌اید "
+"دقیق و بروز باشد."
+
+#: .\store\templates\store\payment\fail.html:27
+msgid "Try Agian"
+msgstr "دوباره امتحان کنید"
+
+#: .\store\templates\store\payment\success.html:5
+msgid "success"
+msgstr "موفق"
+
+#: .\store\templates\store\payment\success.html:15
+msgid "Payment Successful"
+msgstr "پرداخت با موفقیت انجام شد"
+
+#: .\store\templates\store\payment\success.html:19
+msgid ""
+"\n"
+"                                        Thank you for shopping with us! "
+"<br>We appreciate your purchase and look forward\n"
+"                                        to buying you again in the future.\n"
+"                                    "
+msgstr ""
+"\n"
+"از شما بابت خرید از ما ممنونیم! <br>ما از خرید شما قدردانی می کنیم و "
+"مشتاقانه منتظر خرید مجدد شما در آینده هستیم."
+
+#: .\store\templates\store\product\_product_list_master.html:19
+msgid "Showing"
+msgstr "در حال نمایش"
+
+#: .\store\templates\store\product\_product_list_master.html:19
+msgid "of"
+msgstr "از"
+
+#: .\store\templates\store\product\_product_list_master.html:26
+msgid "Default sorting"
+msgstr "مرتب سازی پیش فرض"
+
+#: .\store\templates\store\product\_product_list_master.html:57
+#: .\store\templates\store\product\search_page.html:7
+#: .\store\templates\store\product\search_q_none.html:5
+msgid "Search"
+msgstr "جستجو"
+
+#: .\store\templates\store\product\_product_list_master.html:87
+#: .\store\templates\store\product\_product_list_master.html:116
+msgid "Apply Filters"
+msgstr "اعمال فیلتر"
+
+#: .\store\templates\store\product\_show_product_list.html:20
+#: .\store\templates\store\product\_show_product_list.html:78
+#: .\store\templates\store\product\product_detail.html:345
+msgid "Off"
+msgstr "تخفیف"
+
+#: .\store\templates\store\product\_show_product_list.html:99
+#: .\store\templates\store\product\product_detail.html:69
+#: .\store\templates\store\product\product_detail.html:193
+#: .\store\templates\store\product\product_detail.html:235
+#: .\store\templates\store\product\quick_view_modal.html:46
+msgid "Reviews"
+msgstr "نظرات"
+
+#: .\store\templates\store\product\product_detail.html:86
+#: .\store\templates\store\product\quick_view_modal.html:64
+msgid "Color"
+msgstr "رنگ"
+
+#: .\store\templates\store\product\product_detail.html:104
+#: .\store\templates\store\product\quick_view_modal.html:83
+msgid "Size"
+msgstr "سایز"
+
+#: .\store\templates\store\product\product_detail.html:138
+#: .\store\templates\store\product\quick_view_modal.html:117
+msgid "ADD TO CART"
+msgstr "افزودن به سبد خرید"
+
+#: .\store\templates\store\product\product_detail.html:159
+msgid "Categories"
+msgstr "دسته بندی ها"
+
+#: .\store\templates\store\product\product_detail.html:187
+msgid "Description"
+msgstr "توضیحات"
+
+#: .\store\templates\store\product\product_detail.html:190
+msgid "Attributes"
+msgstr "ویژگی ها"
+
+#: .\store\templates\store\product\product_detail.html:209
+msgid "Specification"
+msgstr "مشخصات"
+
+#: .\store\templates\store\product\product_detail.html:210
+msgid "Value"
+msgstr "مقدار"
+
+#: .\store\templates\store\product\product_detail.html:229
+msgid "Customer Reviews"
+msgstr "نظرات مشتریان"
+
+#: .\store\templates\store\product\product_detail.html:282
+msgid "Add a Review"
+msgstr "یک نظر اضافه کنید"
+
+#: .\store\templates\store\product\product_detail.html:296
+msgid "Submit"
+msgstr "ارسال"
+
+#: .\store\templates\store\product\product_detail.html:304
+#, python-format
+msgid ""
+"\n"
+"                                                            for leave a "
+"commit first\n"
+"                                                            <a href="
+"\"%(account_login_url)s\">Login</a>\n"
+"                                                        "
+msgstr ""
+"\n"
+"برای گذاشتن نظر ابتدا <a href=\"%(account_login_url)s\">وارد سیستم</a> شوید"
+
+#: .\store\templates\store\product\product_detail.html:329
+msgid "related products"
+msgstr "محصولات مرتبط"
+
+#: .\store\templates\store\product\product_list.html:56
+#: .\store\templates\store\product\product_list.html:65
+#: .\store\templates\store\product\search_page.html:78
+#: .\store\templates\store\product\search_page.html:87
+msgid "no results found"
+msgstr "نتیجه ای پیدا نشد"
+
+#: .\store\templates\store\product\product_list_user_like.html:6
+msgid "Wish list"
+msgstr "لیست علاقه مندی ها"
+
+#: .\store\templates\store\product\product_list_user_like.html:16
+msgid "Wishlist"
+msgstr "لیست علاقه مندی ها"
+
+#: .\store\templates\store\product\product_list_user_like.html:59
+msgid "Detail"
+msgstr "جزئیات"
+
+#: .\store\templates\store\product\search_page.html:28
+#, python-format
+msgid ""
+"\n"
+"                                    <h2 class=\"ltn__page-title\">There is "
+"no product with Title or Category</h2>\n"
+"\n"
+"                                    <br>\n"
+"                                    <h2>\n"
+"                                        <div style=\"color: #808080\">%(q)s</"
+"div>\n"
+"                                    </h2>\n"
+"                                "
+msgstr ""
+"\n"
+"<h2 class=\"ltn__page-title\">هیچ محصولی با عنوان یا دسته بندی وجود ندارد</"
+"h2>\n"
+"\n"
+"<br>\n"
+"<h2>\n"
+"<div style=\"color: #808080\">%(q)s</div>\n"
+"</h2>"
+
+#: .\store\templates\store\product\search_q_none.html:14
+msgid ""
+"Find the perfect product! Enter a keyword in the search box above to start "
+"shopping."
+msgstr ""
+"محصولات عالی را پیدا کنید! برای شروع خرید یک کلمه کلیدی را در کادر جستجوی "
+"بالا وارد کنید."
+
+#: .\store\utils\order_utils.py:26
+msgid "The Your cart is empty! Please first add some product in your cart."
+msgstr ""
+"سبد خرید شما خالی است! لطفا ابتدا تعدادی محصول را به سبد خرید خود اضافه کنید."
+
+#: .\store\utils\order_utils.py:45 .\store\utils\order_utils.py:95
+msgid "You change the data of checkout form!"
+msgstr "شما داده های فرم پرداخت را تغییر داده اید!"
+
+#: .\store\utils\order_utils.py:62 .\store\utils\order_utils.py:136
+msgid "Something went wrong! Please try again."
+msgstr "مشکلی پیش آمد! لطفا دوباره تلاش کنید."
+
+#: .\store\utils\order_utils.py:71
+msgid "The Your cart is empty! Pleas first add some product in your cart."
+msgstr ""
+"سبد خرید شما خالی است! لطفا ابتدا تعدادی محصول را به سبد خرید خود اضافه کنید."
+
+#: .\store\utils\order_utils.py:145
+msgid "Validation error"
+msgstr "خطای اعتبار سنجی"
+
+#: .\store\utils\order_utils.py:148
+msgid "Terminal is not valid, please check merchant_id or ip address."
+msgstr "ترمینال معتبر نیست، لطفا merchant_id یا آدرس IP را بررسی کنید."
+
+#: .\store\utils\order_utils.py:151
+msgid "Terminal is not active, please contact our support team."
+msgstr "ترمینال فعال نیست، لطفا با تیم پشتیبانی ما تماس بگیرید."
+
+#: .\store\utils\order_utils.py:154
+msgid "To many attempts, please try again later."
+msgstr "برای بسیاری از تلاش‌ها، لطفاً بعداً دوباره امتحان کنید."
+
+#: .\store\utils\order_utils.py:157
+msgid "Terminal user is suspend : (please contact our support team)."
+msgstr ""
+"ترمینال کاربر به حالت تعلیق درآمده است: (لطفاً با تیم پشتیبانی ما تماس "
+"بگیرید)."
+
+#: .\store\utils\order_utils.py:160 .\store\utils\order_utils.py:163
+msgid "Terminal user level is not valid : ( please contact our support team)."
+msgstr "سطح کاربر پایانه معتبر نیست: (لطفاً با تیم پشتیبانی ما تماس بگیرید)."
+
+#: .\store\utils\order_utils.py:166
+msgid "Terminal do not allow to accept floating wages."
+msgstr "ترمینال اجازه قبول دستمزد شناور را نمی دهد."
+
+#: .\store\utils\order_utils.py:169
+msgid ""
+"Terminal do not allow to accept wages, please add default bank account in "
+"panel."
+msgstr ""
+"ترمینال اجازه پذیرش دستمزد را نمی دهد، لطفاً حساب بانکی پیش فرض را در پانل "
+"اضافه کنید."
+
+#: .\store\utils\order_utils.py:172
+msgid "Wages is not valid, Total wages(floating) has been overload max amount."
+msgstr ""
+"دستمزدها معتبر نیست، کل دستمزدها (شناور) حداکثر مقدار اضافه بار بوده است."
+
+#: .\store\utils\order_utils.py:175
+msgid "Wages floating is not valid."
+msgstr "دستمزد شناور معتبر نیست."
+
+#: .\store\utils\order_utils.py:178
+msgid "Wages is not valid, Total wages(fixed) has been overload max amount."
+msgstr ""
+"دستمزدها معتبر نیست، کل دستمزدها (ثابت) حداکثر مقدار اضافه بار بوده است."
+
+#: .\store\utils\order_utils.py:181
+msgid ""
+"Wages is not valid, Total wages(floating) has been reached the limit in max "
+"parts."
+msgstr ""
+"دستمزدها معتبر نیست، مجموع دستمزدها (شناور) در حداکثر بخش به حد مجاز رسیده "
+"است."
+
+#: .\store\utils\order_utils.py:184
+msgid "Invalid extra params, expire_in is not valid."
+msgstr "پارامترهای اضافی نامعتبر، expire_in معتبر نیست."
+
+#: .\store\utils\order_utils.py:187
+msgid "Session is not valid, amounts values is not the same."
+msgstr "جلسه معتبر نیست، مقادیر مقادیر یکسان نیست."
+
+#: .\store\utils\order_utils.py:190
+msgid "Session is not valid, session is not active paid try."
+msgstr "جلسه معتبر نیست، جلسه فعال نیست سعی کنید پولی."
+
+#: .\store\utils\order_utils.py:193
+msgid "Oops!!, please contact our support team"
+msgstr "اوه!!، لطفا با تیم پشتیبانی ما تماس بگیرید"
+
+#: .\store\utils\order_utils.py:196
+msgid "Session is not this merchant_id session"
+msgstr "Session این جلسه merchant_id نیست"
+
+#: .\store\utils\order_utils.py:199
+msgid "Invalid authority."
+msgstr "مرجع نامعتبر"
+
+#: .\store\utils\order_utils.py:202
+msgid "Verified"
+msgstr "تایید شده"
+
+#: .\store\views\order_views.py:24 .\store\views\order_views.py:51
+#: .\store\views\product_views.py:170 .\store\views\product_views.py:216
+msgid ""
+"Oops! Something went wrong with your request. Please try again. If the issue "
+"persists, contact our support team for assistance."
+msgstr ""
+"اوه! مشکلی در درخواست شما پیش آمد. لطفا دوباره تلاش کنید. اگر مشکل همچنان "
+"ادامه داشت، برای کمک با تیم پشتیبانی ما تماس بگیرید."
+
+#: .\store\views\order_views.py:40
+msgid "Please enter a active product"
+msgstr "لطفا یک محصول فعال وارد کنید"
+
+#: .\store\views\order_views.py:43
+msgid "Please enter a product"
+msgstr "لطفا یک محصول وارد کنید"
+
+#: .\store\views\order_views.py:88
+msgid "Please select color or size for product!"
+msgstr "لطفا رنگ یا اندازه را برای محصول انتخاب کنید!"
+
+#: .\store\views\order_views.py:95 .\store\views\order_views.py:138
+msgid "Cart deleted"
+msgstr "سبد خرید حذف شد"
+
+#: .\store\views\order_views.py:118
+msgid "Cart update"
+msgstr "سبد خرید بروز شد"
+
+#: .\store\views\order_views.py:180 .\store\views\order_views.py:183
+msgid "The Coupon is not valid!"
+msgstr "کوپن معتبر نیست!"
+
+#: .\store\views\payment_views.py:39
+msgid ""
+"To view order details in the future, please register with the email you "
+"enter for the order."
+msgstr ""
+"برای مشاهده جزئیات سفارش در آینده، لطفاً با ایمیلی که برای سفارش وارد می‌کنید، "
+"ثبت نام نمایید."
+
+#: .\store\views\payment_views.py:95
+msgid "Your cart is empty!"
+msgstr "سبد خرید شما خالی است!"
+
+#: .\store\views\payment_views.py:101 .\store\views\payment_views.py:106
+msgid "please try again"
+msgstr "لطفا دوباره تلاش کنید"
+
+#: .\store\views\product_views.py:157
+msgid "You comment after confirmation will show in comments."
+msgstr "نظر شما پس از تایید در بخش نظرات نشان داده می شود."
+
+#: .\store\views\product_views.py:161
+msgid "Your comment have problem please try again!"
+msgstr "نظر شما مشکل دارد لطفا دوباره امتحان کنید!"
+
+#: .\store\views\product_views.py:180
+msgid "Unlike product."
+msgstr "لایک لغو شد"
+
+#: .\store\views\product_views.py:183
+msgid "Like product."
+msgstr "محصول لایک شد"
+
+#: .\store\views\product_views.py:188
+msgid "Please first login!"
+msgstr "لطفا ابتدا وارد شوید"
+
+#: .\store\views\product_views.py:224
+msgid "Something went wrong with your request."
+msgstr "مشکلی در درخواست شما پیش آمد."
+
+#~ msgid "Please enter a correct number!"
+#~ msgstr "لطفا یک عدد صحیح وارد کنید!"
+
+#~ msgid "Unknown"
+#~ msgstr "ناشناخته"
+
+#~ msgid "The minimum price for coupon is {coupon_rules.last().start_price}"
+#~ msgstr "حداقل قیمت کوپن {coupon_rules.last().start_price} است"
+
+#~ msgid ""
+#~ "The minimum price for coupon is {str(coupon_rules.last().start_price)}"
+#~ msgstr "حداقل قیمت کوپن {str(coupon_rules.last().start_price)} است"
+
+#, python-brace-format
+#~ msgid "The {coupon_obj} is not valid"
+#~ msgstr "{coupon_obj} معتبر نیست"
+
+#~ msgid "Cart Total (With Discount)"
+#~ msgstr "مجموع سبد خرید (با تخفیف)"
+
+#, fuzzy, python-brace-format
+#~ msgid "The {coupon.code} is not valid"
+#~ msgstr "{coupon_obj} معتبر نیست"
+
+#~ msgid "The is not valid"
+#~ msgstr " معتبر نیست"
+
+#~ msgid "The {str(coupon)} is not valid"
+#~ msgstr "{str(coupon)} معتبر نیست"
+
+#~ msgid "product color and size"
+#~ msgstr "رنگ و اندازه محصول"

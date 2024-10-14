@@ -1,0 +1,12 @@
+{% extends 'blog/_base_blog.html' %}
+
+{% load blog_temp_filters %}
+{% load i18n %}
+
+{% block title %} {% trans 'Posts' %} {% endblock title %}
+
+{% block content %}
+
+    {% include 'blog/_post_list_master.html' with posts=posts %}
+
+{% endblock content %}

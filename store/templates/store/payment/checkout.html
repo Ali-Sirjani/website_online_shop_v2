@@ -1,0 +1,306 @@
+{% extends '_base.html' %}
+
+{% load i18n %}
+{% load trans_fa %}
+{% load order_temp_filters %}
+{% load static %}
+
+{% block title %} {% trans 'checkout' %} {% endblock title %}
+
+{% block content %}
+
+    <!-- CHECKOUT AREA START -->
+    <div class="ltn__checkout-area mb-100 mt-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__checkout-inner">
+                        <div class="ltn__checkout-single-content ltn__coupon-code-wrap">
+                            <h5>{% trans 'Have a coupon?' %} <a class="ltn__secondary-color" href="#ltn__coupon-code"
+                                                                data-toggle="collapse">{% trans 'Click here to enter your code' %}</a>
+                            </h5>
+                            <div id="ltn__coupon-code" class="collapse ltn__checkout-single-content-info">
+                                <div class="ltn__coupon-code-form">
+                                    <p>{% trans 'If you have a coupon code, please apply it below.' %}</p>
+                                    <form action="{% url 'store:apply_coupon' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" name="code" placeholder="{% trans 'Coupon code' %}">
+                                        <button class="btn theme-btn-2 btn-effect-2 text-uppercase">{% trans 'Apply Coupon' %}
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% with profile_addresses=request.user.profile.profile_address.all %}
+                            {% if profile_addresses %}
+                                <h4 class="title-2 mt-5">{% trans 'address list' %}</h4>
+                                <div class="row">
+                                    {% for address in profile_addresses %}
+                                        <div class="col-md-6 col-12">
+                                            <div class="ltn__checkout-single-content ltn__coupon-code-wrap">
+                                                <h5>
+                                                    {{ address.state }} <a class="ltn__secondary-color" href="#address-{{ forloop.counter }}"
+                                                       data-toggle="collapse">{% trans 'see details' %}</a>
+                                                </h5>
+                                                <div id="address-{{ forloop.counter }}"
+                                                     class="collapse ltn__checkout-single-content-info">
+                                                    <div class="ltn__coupon-code-form">
+                                                        <address>
+                                                            <p>{% trans 'state' %}: {{ address.state }}</p>
+                                                            <p>{% trans 'city' %}: {{ address.city }}</p>
+                                                            <p>{% trans 'address' %}: {{ address.address }}</p>
+                                                            <p>{% trans 'plate' %}: {{ address.plate }}</p>
+                                                        </address>
+                                                    </div>
+                                                    <button type="submit"
+                                                            class="theme-btn-1 btn btn-effect-1 set-address"
+                                                            style="padding: 8px 8px; background-color: #007bff"
+                                                            data-state="{{ address.state }}"
+                                                            data-city="{{ address.city }}"
+                                                            data-address="{{ address.address }}"
+                                                            data-plate="{{ address.plate }}">{% trans 'set' %}</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+
+                        <div class="ltn__checkout-single-content mt-50">
+                            <h4 class="title-2">{% trans 'Billing Details' %}</h4>
+                            <div class="ltn__checkout-single-content-info">
+                                <form method="post" id="payment_form">
+                                    {% csrf_token %}
+                                    {% if order|coupon_is_valid:request %}
+                                        <input type="hidden" value="{{ order.get_cart_total_with_coupon }}"
+                                               name="total">
+                                    {% else %}
+                                        <input type="hidden" value="{{ order.get_cart_total }}" name="total">
+                                    {% endif %}
+                                    <h6>
+                                        {% trans 'Personal Information' %}
+                                        {% if request.user.is_authenticated %}
+                                            <a class="ml-3" href="#"
+                                               onclick="setProfileInfo(event)">{% trans 'Use of profile information' %}</a>
+                                        {% endif %}
+                                    </h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="input-item input-item-name ltn__custom-icon">
+                                                <input id="id_first_name" type="text" name="first_name"
+                                                       placeholder="{% trans 'First name' %}">
+                                                <div class="invalid-feedback text-block"
+                                                     id="invalid-feedback-first_name"
+                                                     style="display: none; "></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-item input-item-name ltn__custom-icon">
+                                                <input id="id_last_name" type="text" name="last_name"
+                                                       placeholder="{% trans 'Last name' %}">
+                                                <div class="invalid-feedback text-block"
+                                                     id="invalid-feedback-last_name"
+                                                     style="display: none; "></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-item input-item-email ltn__custom-icon">
+                                                <input id="id_email" type="email" name="email"
+                                                       placeholder="{% trans 'email address' %}">
+                                                <div class="invalid-feedback text-block"
+                                                     id="invalid-feedback-email"
+                                                     style="display: none; "></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="input-item input-item-phone ltn__custom-icon">
+                                                <input id="id_phone" type="text" name="phone"
+                                                       placeholder="{% trans 'phone number' %}">
+                                                <div class="invalid-feedback text-block"
+                                                     id="invalid-feedback-phone"
+                                                     style="display: none; "></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6">
+                                            <h6>{% trans 'State' %} </h6>
+                                            <div class="input-item">
+                                                <input id="id_state" type="text" placeholder="{% trans 'State' %}"
+                                                       name="state">
+                                                <div class="invalid-feedback text-block"
+                                                     id="invalid-feedback-state"
+                                                     style="display: none; "></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6">
+                                            <h6>{% trans 'City' %}</h6>
+                                            <div class="input-item">
+                                                <input id="id_city" type="text" placeholder="{% trans 'City' %}"
+                                                       name="city">
+                                                <div class="invalid-feedback text-block"
+                                                     id="invalid-feedback-city"
+                                                     style="display: none; "></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-md-6">
+                                            <h6>{% trans 'Zip' %}</h6>
+                                            <div class="input-item">
+                                                <input id="id_plate" type="text" placeholder="{% trans 'Zip' %}"
+                                                       name="plate">
+                                                <div class="invalid-feedback text-block"
+                                                     id="invalid-feedback-plate"
+                                                     style="display: none; "></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-md-5">
+                                            <h6>{% trans 'Address' %}</h6>
+                                            <div class="input-item input-item-textarea ltn__custom-icon">
+                                            <textarea name="address" id="id_address"
+                                                      placeholder=""></textarea>
+                                                <div class="invalid-feedback text-block"
+                                                     id="invalid-feedback-address"
+                                                     style="display: none; "></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <h6>{% trans 'Order Notes (optional)' %}</h6>
+                                    <div class="input-item input-item-textarea ltn__custom-icon">
+                                        <textarea name="order_note" id="id_order_note"
+                                                  placeholder="{% trans 'Notes about your order, e.g. special notes for delivery.' %}">
+                                        </textarea>
+                                        <div class="invalid-feedback text-block"
+                                             id="invalid-feedback-order_note"
+                                             style="display: none; "></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ltn__checkout-payment-method mt-50">
+                        <div class="ltn__payment-note mt-30 mb-30">
+                            <p>{% blocktrans %}Your personal data will be used to process your order, support your
+                                experience throughout this website, and for other purposes described in our privacy
+                                policy.{% endblocktrans %}</p>
+                        </div>
+                        <button class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                id="payment_button" type="submit">{% trans 'Payment' %}</button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping-cart-total mt-50">
+                        <h4 class="title-2">{% trans 'Items' %}</h4>
+                        <table class="table">
+                            <tbody>
+                            {% for item in order.act_items %}
+                                <tr>
+                                    <td>{{ item.product.title|truncatechars:30 }}<strong>× {{ item.quantity|num_fa_20 }}</strong>
+                                    </td>
+                                    {% if item.color_size %}
+                                        {% if item.color_size.color %}
+                                            <td>{{ item.color_size.color.name }}</td>
+                                        {% else %}
+                                            <td>-</td>
+                                        {% endif %}
+
+                                        {% if item.color_size.size %}
+                                            <td>{{ item.color_size.size.size }}</td>
+                                        {% else %}
+                                            <td>-</td>
+                                        {% endif %}
+
+                                    {% else %}
+                                        <td>-</td>
+                                        <td>-</td>
+                                    {% endif %}
+
+                                    {% if item.discount %}
+                                        <td>{{ item.discount_price|num_fa_20 }}</td>
+                                    {% else %}
+                                        <td>{{ item.price|num_fa_20 }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        <h4 class="title-2 mt-50">{% trans 'Cart Totals' %}</h4>
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>{% trans 'Quantity Items' %}</td>
+                                <td>{{ order.get_cart_items|num_fa_20 }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Total (No Discount)' %}</td>
+                                <td>{{ order.get_cart_total_no_discount|num_fa_20 }}</td>
+                            </tr>
+                            <tr>
+                                <td>{% trans 'Total Profit' %}</td>
+                                <td>{{ order.get_cart_total_profit|num_fa_20 }}</td>
+                            </tr>
+                            {% if order|coupon_is_valid:request %}
+                                <tr>
+                                    <td>{% trans 'Total Coupon' %}</td>
+                                    <td>{{ order.coupon_price|num_fa_20 }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>{% trans 'Order Total' %}</strong></td>
+                                    <td><strong>{{ order.get_cart_total|num_fa_20 }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>{% trans 'Total (With Coupon)' %}</strong></td>
+                                    <td><strong>{{ order.get_cart_total_with_coupon|num_fa_20 }}</strong></td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td><strong>{% trans 'Order Total' %}</strong></td>
+                                    <td><strong>{{ order.get_cart_total|num_fa_20 }}</strong></td>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CHECKOUT AREA START -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.js"
+            integrity="sha512-467grL09I/ffq86LVdwDzi86uaxuAhFZyjC99D6CC1vghMp1YAs+DqCgRvhEtZIKX+o9lR0F2bro6qniyeCMEQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{% static 'js/checkout.js' %}"></script>
+    <script>
+        var setProfileInfoUrl = "{% url 'store:set_profile_ajax' %}"
+        var formErrors = {{ forms_errors|safe }};
+
+        if (formErrors.order_errors || formErrors.shipping_errors) {
+            showErrorsFrom(formErrors.order_errors);
+            showErrorsFrom(formErrors.shipping_errors);
+        }
+        document.getElementById('payment_button').addEventListener('click', function (e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Get the user's input (email and total)
+            const email = document.querySelector('[name="email"]').value;
+
+            if (email) {
+                // Create a confirmation message
+                const message = "{% trans 'Entered email: ' %}" + email + "{% trans '\nDo you want to continue?' %}";
+
+                // Show a confirmation dialog
+                const isConfirmed = confirm(message);
+
+                if (isConfirmed) {
+                    // If OK is clicked, submit the form
+                    document.getElementById('payment_form').submit();
+                }
+            } else {
+                document.getElementById('payment_form').submit();
+            }
+            // If Cancel is clicked, do nothing (the form won't be submitted)
+        });
+    </script>
+{% endblock content %}

@@ -1,0 +1,605 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-26 16:47+0330\n"
+"PO-Revision-Date: 2024-01-19 22:33+0000\n"
+"Last-Translator:   <we@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
+
+#: .\templates\404.html:17
+msgid "Page Not Found!"
+msgstr "صفحه یافت نشد!"
+
+#: .\templates\404.html:19
+msgid ""
+"Oops! The page you are looking for does not exist. It might have been moved "
+"or deleted."
+msgstr "اوه! صفحه مورد نظر شما وجود ندارد. ممکن است منتقل شده یا حذف شده باشد."
+
+#: .\templates\404.html:21
+msgid "BACK TO HOME"
+msgstr "بازگشت به خانه"
+
+#: .\templates\_base.html:94 .\templates\_base.html:310
+#: .\templates\allauth\layouts\base.html:103
+#: .\templates\allauth\layouts\base.html:321
+msgid "home"
+msgstr "خانه"
+
+#: .\templates\_base.html:95 .\templates\_base.html:311
+#: .\templates\allauth\layouts\base.html:105
+#: .\templates\allauth\layouts\base.html:322
+msgid "products"
+msgstr "محصولات"
+
+#: .\templates\_base.html:97 .\templates\_base.html:312
+#: .\templates\allauth\layouts\base.html:107
+#: .\templates\allauth\layouts\base.html:323
+msgid "categories"
+msgstr "دسته بندی ها"
+
+#: .\templates\_base.html:113 .\templates\_base.html:326
+#: .\templates\allauth\layouts\base.html:123
+#: .\templates\allauth\layouts\base.html:337
+msgid "blog"
+msgstr "بلاگ"
+
+#: .\templates\_base.html:114 .\templates\_base.html:327
+#: .\templates\allauth\layouts\base.html:124
+#: .\templates\allauth\layouts\base.html:338
+msgid "contact"
+msgstr "تماس با ما"
+
+#: .\templates\_base.html:116 .\templates\allauth\layouts\base.html:127
+msgid "about project"
+msgstr "درباره پروژه"
+
+#: .\templates\_base.html:138 .\templates\allauth\layouts\base.html:148
+msgid "Search here..."
+msgstr "جستجو..."
+
+#: .\templates\_base.html:155 .\templates\_base.html:433
+#: .\templates\allauth\layouts\base.html:165
+#: .\templates\allauth\layouts\base.html:444
+msgid "Profile"
+msgstr "پروفایل"
+
+#: .\templates\_base.html:158 .\templates\allauth\layouts\base.html:168
+msgid "Log out"
+msgstr "خروج"
+
+#: .\templates\_base.html:163 .\templates\allauth\layouts\base.html:173
+msgid "Register"
+msgstr "ثبت نام"
+
+#: .\templates\_base.html:166 .\templates\allauth\layouts\base.html:176
+msgid "Sign in"
+msgstr "ورود"
+
+#: .\templates\_base.html:189 .\templates\_base.html:193
+#: .\templates\allauth\layouts\base.html:199
+#: .\templates\allauth\layouts\base.html:203
+msgid "Your Cart"
+msgstr "سبد خرید شما"
+
+#: .\templates\_base.html:244 .\templates\allauth\layouts\base.html:254
+msgid "cart"
+msgstr "سبد خرید"
+
+#: .\templates\_base.html:278 .\templates\_base.html:280
+#: .\templates\allauth\layouts\base.html:288
+#: .\templates\allauth\layouts\base.html:290
+msgid "Total"
+msgstr "مبلغ کل"
+
+#: .\templates\_base.html:285 .\templates\allauth\layouts\base.html:295
+msgid "View Cart"
+msgstr "مشاهده سبد خرید"
+
+#: .\templates\_base.html:286 .\templates\allauth\layouts\base.html:297
+msgid "Checkout"
+msgstr "پرداخت"
+
+#: .\templates\_base.html:304 .\templates\allauth\layouts\base.html:315
+msgid "Search..."
+msgstr "جستجو..."
+
+#: .\templates\_base.html:333 .\templates\_base.html:337
+#: .\templates\allauth\layouts\base.html:344
+#: .\templates\allauth\layouts\base.html:348
+msgid "My Account"
+msgstr "حساب من"
+
+#: .\templates\_base.html:341 .\templates\_base.html:345
+#: .\templates\allauth\layouts\base.html:352
+#: .\templates\allauth\layouts\base.html:356
+msgid "Wishlist"
+msgstr "لیست علاقه مندی ها"
+
+#: .\templates\_base.html:349 .\templates\_base.html:354
+#: .\templates\allauth\layouts\base.html:360
+#: .\templates\allauth\layouts\base.html:365
+msgid "Shoping Cart"
+msgstr "سبد خرید"
+
+#: .\templates\_base.html:428 .\templates\allauth\layouts\base.html:439
+msgid "Quick Links"
+msgstr "لینک های سریع"
+
+#: .\templates\_base.html:431 .\templates\allauth\layouts\base.html:442
+msgid "Home"
+msgstr "خانه"
+
+#: .\templates\_base.html:432 .\templates\allauth\layouts\base.html:443
+msgid "Contact Us"
+msgstr "تماس با ما"
+
+#: .\templates\_base.html:440 .\templates\allauth\layouts\base.html:451
+msgid "Explore"
+msgstr "کاوش کنید"
+
+#: .\templates\_base.html:443 .\templates\allauth\layouts\base.html:454
+msgid "Blog"
+msgstr "بلاگ"
+
+#: .\templates\_base.html:444 .\templates\allauth\layouts\base.html:455
+msgid "FAQ"
+msgstr "سوالات متداول"
+
+#: .\templates\_base.html:445 .\templates\allauth\layouts\base.html:456
+msgid "About Us"
+msgstr "درباره ما"
+
+#: .\templates\_base.html:452 .\templates\allauth\layouts\base.html:463
+msgid "Shop"
+msgstr "فروشگاه"
+
+#: .\templates\_base.html:455 .\templates\allauth\layouts\base.html:466
+msgid "Browse Products"
+msgstr "مرور محصولات"
+
+#: .\templates\_base.html:456 .\templates\allauth\layouts\base.html:468
+msgid "Shopping Cart"
+msgstr "سبد خرید"
+
+#: .\templates\_base.html:458 .\templates\allauth\layouts\base.html:470
+msgid "Favorites List"
+msgstr "لیست علاقه مندی ها"
+
+#: .\templates\_base.html:466 .\templates\allauth\layouts\base.html:478
+msgid "About Our Shop"
+msgstr "درباره فروشگاه ما"
+
+#: .\templates\_base.html:472 .\templates\allauth\layouts\base.html:484
+msgid ""
+"Fiama: Your stylish online shopping hub. Explore your unique style "
+"effortlessly with our curated collection. Upgrade your shopping experience "
+"with us and simplify your life."
+msgstr ""
+"فیاما: مرکز خرید آنلاین شیک شما. با مجموعه‌ای انتخابی ویژه، به راحتی سبک خود "
+"را کشف کنید. تجربه خرید با ما را ارتقا دهید و زندگی خود را آسان‌تر کنید."
+
+#: .\templates\_base.html:480 .\templates\allauth\layouts\base.html:492
+msgid "A place in Tehran"
+msgstr "مکانی در تهران"
+
+#: .\templates\_base.html:521 .\templates\allauth\layouts\base.html:534
+msgid "Ali Sirjani"
+msgstr "علی سیرجانی"
+
+#: .\templates\_base.html:522 .\templates\allauth\layouts\base.html:535
+msgid "all rights reserved"
+msgstr "تمامی حقوق محفوظ است"
+
+#: .\templates\account\account_inactive.html:5
+#: .\templates\account\account_inactive.html:11
+msgid "Account Inactive"
+msgstr "حساب غیر فعال"
+
+#: .\templates\account\account_inactive.html:14
+msgid "This account is inactive."
+msgstr "این حساب غیرفعال است."
+
+#: .\templates\account\email.html:4 .\templates\account\email.html:10
+msgid "Email Addresses"
+msgstr "آدرس ایمیل"
+
+#: .\templates\account\email.html:13
+msgid "The following email addresses are associated with your account:"
+msgstr "آدرس‌های ایمیل زیر با حساب شما مرتبط هستند:"
+
+#: .\templates\account\email.html:25
+msgid "Verified"
+msgstr "تایید شده"
+
+#: .\templates\account\email.html:29
+msgid "Unverified"
+msgstr "تایید نشده"
+
+#: .\templates\account\email.html:34
+msgid "Primary"
+msgstr "اصلی"
+
+#: .\templates\account\email.html:44
+msgid "Make Primary"
+msgstr "اصلی کنید"
+
+#: .\templates\account\email.html:47
+msgid "Re-send Verification"
+msgstr "ارسال مجدد تائیدیه"
+
+#: .\templates\account\email.html:50
+msgid "Remove"
+msgstr "حذف"
+
+#: .\templates\account\email.html:59
+msgid "Add Email Address"
+msgstr "اضافه کردن آدرس ایمیل"
+
+#: .\templates\account\email.html:72
+msgid "Add Email"
+msgstr "اضافه کردن ایمیل"
+
+#: .\templates\account\email.html:83
+msgid "Do you really want to remove the selected email address?"
+msgstr "آیا واقعاً می خواهید آدرس ایمیل انتخاب شده را حذف کنید؟"
+
+#: .\templates\account\email\account_already_exists_message.txt:4
+#, python-format
+msgid ""
+"You are receiving this email because you or someone else tried to signup for "
+"an\n"
+"account using email address:\n"
+"\n"
+"%(email)s\n"
+"\n"
+"However, an account using that email address already exists.  In case you "
+"have\n"
+"forgotten about this, please use the password forgotten procedure to "
+"recover\n"
+"your account:\n"
+"\n"
+"%(password_reset_url)s"
+msgstr ""
+"شما این ایمیل را دریافت می کنید زیرا شما یا شخص دیگری سعی کرده اید با "
+"استفاده از آدرس ایمیل برای یک حساب ثبت نام کنید:\n"
+"\n"
+"%(email)s\n"
+"\n"
+"با این حال، یک حساب با استفاده از آن آدرس ایمیل از قبل وجود دارد. در صورتی "
+"که این مورد را فراموش کرده اید، لطفاً از روش فراموشی رمز عبور برای بازیابی "
+"حساب خود استفاده کنید:\n"
+"\n"
+"%(password_reset_url)s"
+
+#: .\templates\account\email\account_already_exists_subject.txt:3
+msgid "Account Already Exists"
+msgstr "حساب از قبل وجود دارد"
+
+#: .\templates\account\email\base_message.txt:1
+#, python-format
+msgid "Hello from %(site_name)s!"
+msgstr "سلام از %(site_name)s!"
+
+#: .\templates\account\email\base_message.txt:5
+#, python-format
+msgid ""
+"Thank you for using %(site_name)s!\n"
+"%(site_domain)s"
+msgstr ""
+"از اینکه از %(site_name)s استفاده کردید متشکریم!\n"
+"%(site_domain)s"
+
+#: .\templates\account\email\email_confirmation_message.txt:5
+#, python-format
+msgid ""
+"You're receiving this email because user %(user_display)s has given your "
+"email address to register an account on %(site_domain)s.\n"
+"\n"
+"To confirm this is correct, go to %(activate_url)s"
+msgstr ""
+"شما این ایمیل را دریافت می کنید زیرا کاربر %(user_display)s آدرس ایمیل شما "
+"را برای ثبت حساب در %(site_domain)s داده است.\n"
+"\n"
+"برای تأیید صحت این مورد، به %(activate_url)s بروید"
+
+#: .\templates\account\email\email_confirmation_subject.txt:3
+msgid "Please Confirm Your Email Address"
+msgstr "لطفا آدرس ایمیل خود را تایید کنید"
+
+#: .\templates\account\email\password_reset_key_message.txt:4
+msgid ""
+"You're receiving this email because you or someone else has requested a "
+"password reset for your user account.\n"
+"It can be safely ignored if you did not request a password reset. Click the "
+"link below to reset your password."
+msgstr ""
+"شما این ایمیل را دریافت می‌کنید زیرا شما یا شخص دیگری درخواست بازنشانی رمز "
+"عبور برای حساب کاربری خود کرده‌اید. اگر بازنشانی رمز عبور را درخواست نکرده "
+"باشید، می توان با خیال راحت از آن چشم پوشی کرد. برای بازنشانی رمز عبور روی "
+"لینک زیر کلیک کنید."
+
+#: .\templates\account\email\password_reset_key_message.txt:9
+#, python-format
+msgid "In case you forgot, your username is %(username)s."
+msgstr "در صورتی که فراموش کردید، نام کاربری شما %(username)s است."
+
+#: .\templates\account\email\password_reset_key_subject.txt:3
+msgid "Password Reset Email"
+msgstr "ایمیل بازنشانی رمز عبور"
+
+#: .\templates\account\login.html:5 .\templates\account\login.html:11
+#: .\templates\account\login.html:31 .\templates\socialaccount\login.html:5
+msgid "Sign In"
+msgstr "ورود"
+
+#: .\templates\account\login.html:14
+#, python-format
+msgid ""
+"If you have not created an account yet, then please\n"
+"                    <a href=\"%(signup_url)s\">sign up</a> first."
+msgstr ""
+"اگر هنوز حساب کاربری ایجاد نکرده اید، لطفا\n"
+"ابتدا <a href=\"%(signup_url)s\">ثبت نام کنید</a>."
+
+#: .\templates\account\messages\cannot_delete_primary_email.txt:2
+#, python-format
+msgid "You cannot remove your primary email address (%(email)s)."
+msgstr "شما نمی توانید آدرس ایمیل اصلی خود (%(email)s) را حذف کنید."
+
+#: .\templates\account\messages\email_confirmation_failed.txt:2
+#, python-format
+msgid ""
+"Unable to confirm %(email)s because it is already confirmed by a different "
+"account."
+msgstr "تأیید %(email)s ممکن نیست زیرا قبلاً توسط حساب دیگری تأیید شده است."
+
+#: .\templates\account\messages\email_confirmation_sent.txt:2
+#, python-format
+msgid "Confirmation email sent to %(email)s."
+msgstr "ایمیل تایید به %(email)s ارسال شد."
+
+#: .\templates\account\messages\email_confirmed.txt:2
+#, python-format
+msgid "You have confirmed %(email)s."
+msgstr "شما %(email)s را تأیید کرده اید."
+
+#: .\templates\account\messages\email_deleted.txt:2
+#, python-format
+msgid "Removed email address %(email)s."
+msgstr "آدرس ایمیل %(email)s حذف شد."
+
+#: .\templates\account\messages\logged_in.txt:4
+#, python-format
+msgid "Successfully signed in as %(name)s."
+msgstr "با موفقیت به عنوان %(name)s وارد سیستم شدید."
+
+#: .\templates\account\messages\logged_out.txt:2
+msgid "You have signed out."
+msgstr "شما از سیستم خارج شدید."
+
+#: .\templates\account\messages\password_changed.txt:2
+msgid "Password successfully changed."
+msgstr "رمز با موفقیت تغییر یافت."
+
+#: .\templates\account\messages\password_set.txt:2
+msgid "Password successfully set."
+msgstr "رمز عبور با موفقیت تنظیم شد."
+
+#: .\templates\account\messages\primary_email_set.txt:2
+msgid "Primary email address set."
+msgstr "آدرس ایمیل اصلی تنظیم شد."
+
+#: .\templates\account\messages\unverified_primary_email.txt:2
+msgid "Your primary email address must be verified."
+msgstr "آدرس ایمیل اصلی شما باید تأیید شود."
+
+#: .\templates\account\password_change.html:4
+#: .\templates\account\password_change.html:10
+#: .\templates\account\password_change.html:22
+#: .\templates\account\password_reset_from_key.html:5
+#: .\templates\account\password_reset_from_key.html:16
+#: .\templates\account\password_reset_from_key.html:34
+#: .\templates\account\password_reset_from_key_done.html:5
+#: .\templates\account\password_reset_from_key_done.html:11
+msgid "Change Password"
+msgstr "تغییر رمز عبور"
+
+#: .\templates\account\password_change.html:20
+msgid "Forgot Password?"
+msgstr "رمز عبور را فراموش کرده اید؟"
+
+#: .\templates\account\password_reset.html:4
+#: .\templates\account\password_reset.html:10
+#: .\templates\account\password_reset_done.html:6
+#: .\templates\account\password_reset_done.html:12
+msgid "Password Reset"
+msgstr "بازنشانی رمز عبور"
+
+#: .\templates\account\password_reset.html:16
+msgid ""
+"Forgotten your password? Enter your email address below, and we'll send you "
+"an email allowing you to reset it."
+msgstr ""
+"آیا رمز ورود خود را فراموش کرده اید؟ آدرس ایمیل خود را در زیر وارد کنید، ما "
+"یک ایمیل برای شما ارسال می کنیم که به شما امکان می دهد آن را بازنشانی کنید."
+
+#: .\templates\account\password_reset.html:27
+msgid "Reset My Password"
+msgstr "بازنشانی رمز عبور"
+
+#: .\templates\account\password_reset.html:31
+msgid "Please contact us if you have any trouble resetting your password."
+msgstr ""
+"لطفا در صورت بروز هرگونه مشکل در تنظیم مجدد رمز عبور با ما تماس بگیرید."
+
+#: .\templates\account\password_reset_done.html:21
+msgid ""
+"We have sent you an email. If you have not received it please check your "
+"spam folder. Otherwise\n"
+"            contact us if you do not receive it in a few minutes."
+msgstr ""
+"ما برای شما یک ایمیل فرستادیم. اگر آن را دریافت نکرده اید، لطفاً پوشه اسپم "
+"خود را بررسی کنید. در غیر این صورت اگر ظرف چند دقیقه آن را دریافت نکردید با "
+"ما تماس بگیرید."
+
+#: .\templates\account\password_reset_from_key.html:13
+msgid "Bad Token"
+msgstr "توکن بد"
+
+#: .\templates\account\password_reset_from_key.html:22
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.\n"
+"                        Please request a <a href=\"%(passwd_reset_url)s"
+"\">new password reset</a>."
+msgstr ""
+"پیوند بازنشانی رمز عبور نامعتبر بود، احتمالاً به این دلیل که قبلاً استفاده شده "
+"است. لطفاً <a href=\"%(passwd_reset_url)s\">بازنشانی رمز عبور جدید</a> را "
+"درخواست کنید."
+
+#: .\templates\account\password_reset_from_key_done.html:14
+msgid "Your password is now changed."
+msgstr "رمز عبور شما اکنون تغییر کرده است."
+
+#: .\templates\account\password_set.html:5
+#: .\templates\account\password_set.html:9
+#: .\templates\account\password_set.html:20
+msgid "Set Password"
+msgstr "قراردادن رمز عبور"
+
+#: .\templates\account\signup.html:4
+msgid "Signup"
+msgstr "ثبت نام"
+
+#: .\templates\account\signup.html:11 .\templates\account\signup.html:31
+msgid "Sign Up"
+msgstr "ثبت نام"
+
+#: .\templates\account\signup.html:14
+#, python-format
+msgid ""
+"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>\n"
+"                    ."
+msgstr ""
+"از قبل حساب کاربری دارید؟ پس لطفاً <a href=\"%(login_url)s\">وارد سیستم شوید</"
+"a>"
+
+#: .\templates\account\signup_closed.html:5
+#: .\templates\account\signup_closed.html:11
+msgid "Sign Up Closed"
+msgstr "ثبت نام بسته شد"
+
+#: .\templates\account\signup_closed.html:14
+msgid "We are sorry, but the sign up is currently closed."
+msgstr "متأسفیم، اما ثبت نام در حال حاضر بسته است."
+
+#: .\templates\account\snippets\already_logged_in.html:7
+msgid "Note"
+msgstr "توجه"
+
+#: .\templates\account\snippets\already_logged_in.html:7
+#, python-format
+msgid "You are already logged in as %(user_display)s."
+msgstr "شما قبلاً به عنوان %(user_display)s وارد شده اید."
+
+#: .\templates\account\snippets\warn_no_email.html:3
+msgid "Warning:"
+msgstr "هشدار:"
+
+#: .\templates\account\snippets\warn_no_email.html:3
+msgid ""
+"You currently do not have any email address set up. You should really add an "
+"email address so you can receive notifications, reset your password, etc."
+msgstr ""
+"شما در حال حاضر هیچ آدرس ایمیلی تنظیم نکرده اید.بهتر است یک آدرس ایمیل اضافه "
+"کنید تا بتوانید اعلان ها را دریافت کنید، رمز عبور خود را بازنشانی کنید و "
+"غیره."
+
+#: .\templates\account\verification_sent.html:7
+#: .\templates\account\verification_sent.html:14
+msgid "Verify Your Email Address"
+msgstr "آدرس ایمیل خود را تأیید کنید"
+
+#: .\templates\account\verification_sent.html:18
+msgid ""
+"We have sent an email to you for verification. Follow the link provided to "
+"finalize the\n"
+"                signup process. If you do not see the verification email in "
+"your main inbox, check your spam folder.\n"
+"                Please contact us if you do not receive the verification "
+"email within a few minutes."
+msgstr ""
+"ما یک ایمیل تاییدیه برای شما ارسال کرده ایم. برای نهایی کردن مراحل ثبت نام، "
+"لینک ارائه شده را دنبال کنید. اگر ایمیل تأیید را در صندوق ورودی اصلی خود نمی "
+"بینید، پوشه هرزنامه خود را بررسی کنید. اگر ایمیل تأیید را در عرض چند دقیقه "
+"دریافت نکردید، لطفاً با ما تماس بگیرید."
+
+#: .\templates\socialaccount\authentication_error.html:5
+#: .\templates\socialaccount\authentication_error.html:11
+msgid "Social Network Login Failure"
+msgstr "ورود ناموفق به شبکه اجتماعی"
+
+#: .\templates\socialaccount\authentication_error.html:13
+msgid ""
+"An error occurred while attempting to login via your social network account."
+msgstr "هنگام تلاش برای ورود از طریق حساب شبکه اجتماعی شما خطایی رخ داد."
+
+#: .\templates\socialaccount\login.html:12
+#, python-format
+msgid "Connect %(provider)s"
+msgstr "اتصال به %(provider)s"
+
+#: .\templates\socialaccount\login.html:15
+#, python-format
+msgid ""
+"You are about to connect a new third-party account\n"
+"                        from %(provider)s."
+msgstr ""
+"شما در شرف اتصال یک حساب شخص ثالث جدید هستید\n"
+"از طریق %(provider)s."
+
+#: .\templates\socialaccount\login.html:20
+#, python-format
+msgid "Sign In Via %(provider)s"
+msgstr "از طریق %(provider)s وارد شوید"
+
+#: .\templates\socialaccount\login.html:23
+#, python-format
+msgid ""
+"You are about to sign in using a third-party account\n"
+"                        from %(provider)s."
+msgstr "شما در حال ورود به سیستم با استفاده از یک حساب %(provider)s هستید."
+
+#: .\templates\socialaccount\login.html:31
+msgid "Continue"
+msgstr "ادامه دادن"
+
+#: .\templates\socialaccount\snippets\login.html:8
+msgid "Or use a third-party"
+msgstr "یا از شخص ثالث استفاده کنید"
+
+#~ msgid "about dev"
+#~ msgstr "درباره توسعه دهنده"
+
+#~ msgid "lorem ipsum"
+#~ msgstr ""
+#~ "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده "
+#~ "از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و "
+#~ "سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای "
+#~ "متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه "
+#~ "درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد"

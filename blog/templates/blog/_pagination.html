@@ -1,0 +1,24 @@
+{% load blog_temp_filters %}
+{% load trans_fa %}
+
+<div class="ltn__pagination-area text-center">
+    <div class="ltn__pagination ltn__pagination-2">
+        <ul>
+            {% if page_obj.has_previous %}
+                <li><a href="?page={{ page_obj.previous_page_number }}{{ sort }}&{{ request.GET|remove_obsolete_pages_blog }}"><i class="icon-arrow-right"></i></a></li>
+                <li><a href="?page={{ page_obj.previous_page_number }}{{ sort }}&{{ request.GET|remove_obsolete_pages_blog }}">{{ page_obj.previous_page_number|num_fa_20 }}</a></li>
+            {% else %}
+                <li><a href="#"><i class="icon-arrow-right"></i></a></li>
+            {% endif %}
+
+            <li class="active"><a href="#">{{ page_obj.number|num_fa_20 }}</a></li>
+
+            {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}{{ sort }}&{{ request.GET|remove_obsolete_pages_blog }}">{{ page_obj.next_page_number|num_fa_20 }}</a></li>
+                <li><a href="?page={{ page_obj.next_page_number }}{{ sort }}&{{ request.GET|remove_obsolete_pages_blog }}"><i class="icon-arrow-left"></i></a></li>
+            {% else %}
+                <li><a href="#"><i class="icon-arrow-left"></i></a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

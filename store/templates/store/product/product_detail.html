@@ -1,0 +1,405 @@
+{% extends '_base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load trans_fa %}
+{% load order_temp_filters %}
+{% load crispy_forms_filters %}
+{% load widget_tweaks %}
+{% load jalali_tags %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'sass/sections/_product.scss' %}">
+{% endblock style %}
+
+{% block title %} {% trans 'Product' %} {% endblock title %}
+
+{% block content %}
+
+
+    <!-- SHOP DETAILS AREA START -->
+    <div class="ltn__shop-details-area pb-70 mt-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="ltn__shop-details-inner">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="ltn__shop-details-img-gallery ltn__shop-details-img-gallery-2">
+                                    <div class="ltn__shop-details-small-img slick-arrow-2">
+                                        {% for image in product.images.all %}
+                                            <div class="single-small-img">
+                                                <img src="{{ image.image.url }}" alt="Image">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="ltn__shop-details-large-img">
+                                        {% for image in product.images.all %}
+                                            <div class="single-large-img">
+                                                <a href="{{ image.image.url }}" data-rel="lightcase:myCollection">
+                                                    <img src="{{ image.image.url }}" alt="Image">
+                                                </a>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="modal-product-info shop-details-info pl-0">
+                                    <h3>{{ product.title }}</h3>
+                                    <div class="product-price-ratting mb-20">
+                                        <ul>
+                                            <li>
+                                                <div class="product-price">
+                                                    {% if product.discount %}
+                                                        <span>{{ product.discount_price|num_fa_25 }}</span>
+                                                        <del>{{ product.price|num_fa_25 }}</del>
+                                                    {% else %}
+                                                        <span>{{ product.price|num_fa_25 }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="product-ratting">
+                                                    <ul>
+                                                        {% with avg_result=product.avg_star %}
+                                                            <div class="star-rating star-{{ avg_result.0 }}"></div>
+                                                            <li class="review-total">
+                                                                ({% trans 'Reviews' %} {{ avg_result.2|num_fa_15 }})
+                                                            </li>
+                                                        {% endwith %}
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-product-brief">
+                                        <p>{{ product.short_description }}</p>
+                                    </div>
+                                    <div class="modal-product-meta ltn__product-details-menu-1 mb-20">
+                                        <ul>
+                                            <li>
+                                                <div class="ltn__color-widget clearfix">
+                                                    {% with items=product.color_dict.items %}
+                                                        {% if items %}
+                                                            <strong class="d-meta-title">{% trans 'Color' %}</strong>
+                                                            <ul>
+                                                                {% for color_pk, color in items %}
+                                                                    <li class="color-button {% if selected_color_id == color_pk %}selected{% endif %}"
+                                                                        data-product="{{ product.id }}"
+                                                                        data-color-id="{{ color_pk }}"
+                                                                        style="background-color: {{ color.color }};">
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endwith %}
+                                            </li>
+                                            <li>
+                                                <div class="ltn__size-widget clearfix mt-25">
+                                                    {% with items=product.size_dict.items %}
+                                                        {% if items %}
+                                                            <strong class="d-meta-title">{% trans 'Size' %}</strong>
+                                                            <ul>
+                                                                {% for size_pk, size  in product.size_dict.items %}
+                                                                    <li class="size-button size-button-{{ product.id }} {% if selected_size_id == size_pk %}selected{% endif %}"
+                                                                        data-product="{{ product.id }}"
+                                                                        data-size-id="{{ size_pk }}"
+                                                                        style="cursor: pointer; font-size: 25px;">
+                                                                        {{ size|upper }}
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                            </div>
+                                                        {% endif %}
+                                                    {% endwith %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="ltn__product-details-menu-2 product-cart-wishlist-btn mb-30">
+                                        <ul>
+                                            <li>
+                                                <div class="cart-plus-minus">
+                                                    <input type="text" id="qty-{{ product.id }}" value="01"
+                                                           name="qtybutton"
+                                                           class="cart-plus-minus-box">
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <button
+                                                        class="update-cart update-cart-{{ product.id }}-mini theme-btn-1 btn btn-effect-1 d-add-to-cart"
+                                                        data-product="{{ product.id }}"
+                                                        data-action="add"
+                                                        data-colorId=""
+                                                        data-sizeId=""
+                                                        title="Add to Cart">
+                                                    <span>{% trans 'ADD TO CART' %}</span>
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <a href="#"
+                                                   class="btn btn-effect-1 d-add-to-wishlist like-product"
+                                                   title="Add to Cart" data-bs-toggle="modal"
+                                                   data-product="{{ product.pk }}"
+                                                   data-bs-target="#liton_wishlist_modal">
+                                                    {% if product.pk in liked %}
+                                                        <i class="fas fa-heart" style="color: #e25671;"></i>
+                                                    {% else %}
+                                                        <i class="icon-heart"></i>
+                                                    {% endif %}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-product-meta ltn__product-details-menu-1 mb-30">
+                                        <ul>
+                                            <li>
+                                                <strong style="font-size: 20px;">{% trans 'Categories' %}:</strong>
+                                                <span style="font-size: 20px;">
+                                                    {% for category in product.category.all %}
+                                                        <a href="{{ category.get_absolute_url }}">{{ category.name }}</a>
+                                                    {% endfor %}
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SHOP DETAILS AREA END -->
+
+    <!-- SHOP DETAILS TAB AREA START -->
+    <div class="ltn__shop-details-tab-area pb-60">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__shop-details-tab-inner">
+                        <div class="ltn__shop-details-tab-menu">
+                            <div class="nav">
+                                <a class="active show" data-toggle="tab"
+                                   href="#liton_tab_details_1_1">{% trans 'Description' %}</a>
+                                {% if product.specs_values.all %}
+                                    <a data-toggle="tab" href="#liton_tab_details_1_2"
+                                       class="">{% trans 'Attributes' %}</a>
+                                {% endif %}
+                                <a data-toggle="tab" href="#liton_tab_details_1_3"
+                                   class="">{% trans 'Reviews' %}</a>
+                            </div>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade active show" id="liton_tab_details_1_1">
+                                <div class="ltn__shop-details-tab-content-inner text-center">
+                                    <p>{{ product.description|safe }}</p>
+                                </div>
+                            </div>
+                            {% if product.specs_values.all %}
+                                <div class="tab-pane fade" id="liton_tab_details_1_2">
+                                    <div class="ltn__shop-details-tab-content-inner">
+                                        <div class="container mt-4">
+                                            <table class="table table-bordered">
+                                                <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col">{% trans 'Specification' %}</th>
+                                                    <th scope="col">{% trans 'Value' %}</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for specification_value in product.specs_values.all %}
+                                                    <tr>
+                                                        <th scope="row">{{ specification_value.specification.name }}</th>
+                                                        <td>{{ specification_value.value }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="tab-pane fade" id="liton_tab_details_1_3">
+                                <div class="ltn__shop-details-tab-content-inner">
+                                    <div class="customer-reviews-head text-center">
+                                        <h4 class="title-2">{% trans 'Customer Reviews' %}</h4>
+                                        <div class="product-ratting">
+                                            <ul>
+                                                {% with avg_result=product.avg_star %}
+                                                    <div class="star-rating star-{{ avg_result.0 }}"></div>
+                                                    <li class="review-total">
+                                                        ({% trans 'Reviews' %} {{ avg_result.2|num_fa_15 }} )
+                                                    </li>
+                                                {% endwith %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-lg-7">
+                                            <!-- comment-area -->
+                                            <div class="ltn__comment-area mb-30">
+                                                <div class="ltn__comment-inner">
+                                                    <ul>
+                                                        {% for comment in comments %}
+                                                            <li>
+                                                                <div class="ltn__comment-item clearfix">
+                                                                    <div class="ltn__commenter-img">
+                                                                        <img src="{{ comment.author.profile.picture.url }}"
+                                                                             alt="Image">
+                                                                    </div>
+                                                                    <div class="ltn__commenter-comment">
+                                                                        {% if comment.author.name %}
+                                                                            <h6>{{ comment.author.name }}</h6>
+                                                                        {% else %}
+                                                                            <h6>{{ comment.author.username }}</h6>
+                                                                        {% endif %}
+                                                                        <div class="product-ratting">
+                                                                            <ul>
+                                                                                <div class="star-rating star-{{ comment.star }}"></div>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <p>{{ comment.text }}</p>
+                                                                        <span class="ltn__comment-reply-btn">{{ comment.datetime_updated|to_jalali:'%Y/%m/%d'|num_fa_15 }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <!-- comment-reply -->
+                                            <div class="ltn__comment-reply-area ltn__form-box mb-60">
+                                                {% if request.user.is_authenticated %}
+                                                    <form method="post">
+                                                        {% csrf_token %}
+                                                        <h4 class="title-2">{% trans 'Add a Review' %}</h4>
+                                                        {% for field in form %}
+                                                            {% if field.name == 'text' %}
+                                                                <div class="input-item input-item-textarea ltn__custom-icon">
+                                                                    {% render_field field %}
+                                                                </div>
+                                                            {% else %}
+                                                                <div class="mb-2">{{ field.label }}</div>
+                                                                {% render_field field %}
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        <div class="mb-80"></div>
+                                                        <div class="btn-wrapper">
+                                                            <button class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                                                    type="submit">{% trans 'Submit' %}
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                {% else %}
+                                                    {% url 'account_login' as account_login_url %}
+
+                                                    <h4>
+                                                        {% blocktrans %}
+                                                            for leave a commit first
+                                                            <a href="{{ account_login_url }}">Login</a>
+                                                        {% endblocktrans %}
+                                                    </h4>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SHOP DETAILS TAB AREA END -->
+
+    <!-- PRODUCT SLIDER AREA START -->
+    <div class="ltn__product-slider-area pb-40">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area text-center">
+                        <h1 class="section-title section-title-border">{% trans 'related products' %}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row ltn__related-product-slider-one-active slick-arrow-1">
+                <!-- ltn__product-item -->
+                {% for related_product in related_products %}
+                    <div class="col-12">
+                        <div class="ltn__product-item ltn__product-item-4">
+                            <div class="product-img">
+                                <a href="{{ related_product.get_absolute_url }}"><img
+                                        src="{{ related_product.main_image }}"
+                                        alt="#"></a>
+                                <div class="product-badge">
+                                    <ul>
+                                        {% if related_product.discount %}
+                                            <li class="badge-2">{% trans 'Off' %}</li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                                <div class="product-hover-action product-hover-action-3">
+                                    <ul>
+                                        <li>
+                                            <a href="#" title="Quick View" data-bs-toggle="modal" class="like-product"
+                                               data-bs-target="#quick_view_modal"
+                                               data-product="{{ related_product.pk }}">
+                                                {% if related_product.pk in liked %}
+                                                    <i class="fas fa-heart"></i>
+                                                {% else %}
+                                                    <i class="icon-heart"></i>
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="Quick View" data-toggle="modal"
+                                               data-target="#p{{ related_product.pk }}">
+                                                <i class="icon-shuffle"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <div class="product-ratting">
+                                    <ul>
+                                        {% with avg_result=related_product.avg_star %}
+                                            <div class="star-rating star-{{ avg_result.0 }}"></div>
+                                        {% endwith %}
+                                    </ul>
+                                </div>
+                                <h2 class="product-title"><a
+                                        href="{{ related_product.get_absolute_url }}">{{ related_product.title }}</a>
+                                </h2>
+                                <div class="product-price">
+                                    {% if related_product.discount %}
+                                        <span>{{ related_product.discount_price|num_fa_20 }}</span>
+                                        <del>{{ related_product.price|num_fa_15 }}</del>
+                                    {% else %}
+                                        <span>{{ related_product.price|num_fa_20 }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <!--  -->
+            </div>
+        </div>
+    </div>
+
+    {% include 'store/product/quick_view_modal.html' with products=related_products %}
+    <!-- PRODUCT SLIDER AREA END -->
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+{% endblock content %}

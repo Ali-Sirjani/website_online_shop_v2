@@ -1,0 +1,29 @@
+{% load jalali_tags %}
+{% load trans_fa %}
+
+{% for post in posts %}
+    <!-- Blog Item -->
+    <div class="col-sm-6">
+        <div class="ltn__blog-item">
+            <div class="ltn__blog-img">
+                <a href="{{ post.get_absolute_url }}"><img src="{{ post.image.url }}" alt="#"></a>
+            </div>
+            <div class="ltn__blog-brief">
+                <div class="ltn__blog-meta">
+                    <ul>
+                        <li>
+                            <span>{{ post.datetime_updated|to_jalali:'%Y/%m/%d'|num_fa_15 }}</span>
+                        </li>
+                        <li class="ltn__blog-comment">
+                            <span><i class="icon-speech"></i> {{ post.count_comments }}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+                <h3 class="ltn__blog-title blog-title-line"><a
+                        href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+            </div>
+        </div>
+    </div>
+    <!--  -->
+{% endfor %}

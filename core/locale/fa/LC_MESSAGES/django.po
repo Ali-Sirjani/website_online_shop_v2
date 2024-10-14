@@ -1,0 +1,1074 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-26 16:47+0330\n"
+"PO-Revision-Date: 2024-01-19 21:36+0000\n"
+"Last-Translator:   <we@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
+
+#: .\core\forms.py:53
+msgid "username"
+msgstr "نام کاربری"
+
+#: .\core\forms.py:69
+msgid "You must fill email or phone"
+msgstr "باید ایمیل یا تلفن را پر کنید"
+
+#: .\core\models.py:17
+msgid "user"
+msgstr "کاربر"
+
+#: .\core\models.py:19
+msgid "First name"
+msgstr "نام"
+
+#: .\core\models.py:20
+msgid "Last name"
+msgstr "نام خانوادگی"
+
+#: .\core\models.py:21 .\core\models.py:44
+msgid "phone"
+msgstr "شماره تلفن"
+
+#: .\core\models.py:24
+msgid "picture"
+msgstr "تصویر"
+
+#: .\core\models.py:26 .\core\models.py:51
+msgid "datetime created"
+msgstr "تاریخ ایجاد شد"
+
+#: .\core\models.py:27 .\core\models.py:52
+msgid "datetime updated"
+msgstr "تاریخ به روز شد"
+
+#: .\core\models.py:30 .\core\models.py:39
+msgid "profile"
+msgstr "پروفایل"
+
+#: .\core\models.py:31
+msgid "profiles"
+msgstr "پروفایل ها"
+
+#: .\core\models.py:43
+msgid "full name"
+msgstr "نام و نام خانوادگی"
+
+#: .\core\models.py:45 .\core\models.py:47
+msgid "Fill in the email or mobile number"
+msgstr "ایمیل یا شماره موبایل را وارد کنید"
+
+#: .\core\models.py:46
+msgid "email"
+msgstr "ایمیل"
+
+#: .\core\models.py:48
+msgid "message"
+msgstr "پیام"
+
+#: .\core\models.py:49
+msgid "answer"
+msgstr "جواب"
+
+#: .\core\models.py:55 .\core\models.py:56
+msgid "contact us"
+msgstr "تماس با ما"
+
+#: .\core\templates\core\about_project.html:28
+msgid "About Project"
+msgstr "درباره پروژه"
+
+#: .\core\templates\core\about_project.html:34
+msgid "Welcome to the online shop"
+msgstr "به فروشگاه آنلاین خوش آمدید"
+
+#: .\core\templates\core\about_project.html:38
+msgid ""
+"\n"
+"                    <h2>About Project</h2>\n"
+"                    <p style=\"font-size: 20px;\">\n"
+"                        I am Ali Sirjani, a developer in <strong>Django</"
+"strong> and <strong>Django Rest\n"
+"                        Framework</strong>, who has a passion for creating "
+"practical web applications.One of my notable\n"
+"                        projects is the \"Online Store,\" developed using "
+"the Django framework. The\n"
+"                        Online Store is an e-commerce platform that allows "
+"users to view and purchase products on the\n"
+"                        site, even without the need to log in. Users can "
+"also save products as favorites for future\n"
+"                        reference.\n"
+"                        <br>\n"
+"                        In addition, users can log in using their Google "
+"accounts for a seamless shopping experience.\n"
+"\n"
+"                        <br> <br>\n"
+"                        Additionally, I've enriched the user interface by "
+"incorporating JavaScript, coding essential\n"
+"                        features like dynamic shopping cart management, "
+"product liking functionality, and real-time\n"
+"                        product filtering based on size using AJAX. My "
+"commitment to enhancing user interaction extends\n"
+"                        to the profile section, where I've utilized "
+"JavaScript to create a seamless and secure interface\n"
+"                        for password management. Despite my initial limited "
+"knowledge of JavaScript, I took it upon\n"
+"                        myself to learn and implement these features, "
+"contributing to the overall richness of the\n"
+"                        \"Online Store\" project.\n"
+"\n"
+"                    </p>\n"
+"\n"
+"                    <h2 class=\"mt-40\">Contact Me</h2>\n"
+"                    <p style=\"font-size: 20px;\">\n"
+"                        Thank you for visiting my portfolio. If you are "
+"looking for a web developer who is passionate\n"
+"                        about web development and ready to take on new "
+"challenges, you can reach out to me.\n"
+"                    </p>\n"
+"                "
+msgstr ""
+"\n"
+"<h2>درباره پروژه</h2>\n"
+"<p style=\"font-size: 20px;\">\n"
+"\n"
+"من علی سیرجانی هستم، یک توسعه‌دهنده در زمینه جنگو و جنگو رست که به ایجاد "
+"برنامه‌های کاربردی وب علاقه دارد. یکی از پروژه‌های برجسته من، \"فروشگاه آنلاین"
+"\" است که با استفاده از چارچوب جنگو توسعه داده‌ شده است.\n"
+"فروشگاه آنلاین یک پلتفرم تجارت الکترونیکی است که به کاربران این امکان را "
+"می‌دهد تا محصولات را در سایت مشاهده و خرید کنند، حتی بدون نیاز به ورود به "
+"حساب کاربری. همچنین، کاربران می‌توانند محصولات را به عنوان آیتم‌های مورد علاقه "
+"برای آینده نگه‌داری کنند. \n"
+"<br>\n"
+"علاوه بر این، کاربران می‌توانند با استفاده از حساب‌های گوگل خود وارد سیستم "
+"شوند تا یک \n"
+"تجربه خرید بی‌نقص داشته باشند.\n"
+"<br> <br>\n"
+"\n"
+"علاوه بر این، رابط کاربری را با گنجاندن جاوا اسکریپت، کدنویسی ویژگی‌های ضروری "
+"مانند مدیریت پویا سبد خرید، امکان پسندیدن محصولات، و فیلتر کردن سایز محصول "
+"در زمان واقعی بر اساس رنگ محصول با استفاده از AJAX، غنی‌تر کرده‌ام. تعهد من به "
+"افزایش تعامل کاربر به بخش پروفایل گسترش می یابد، جایی که از جاوا اسکریپت "
+"برای ایجاد یک رابط یکپارچه و ایمن برای مدیریت رمز عبور استفاده کرده ام. "
+"علیرغم دانش محدود اولیه ام از جاوا اسکریپت، یادگیری و پیاده سازی این ویژگی "
+"ها را بر عهده گرفتم و به غنی سازی کلی پروژه \"فروشگاه آنلاین\" کمک کردم.\n"
+"</p>\n"
+"\n"
+"<h2 class=\"mt-40\">ارتباط با من</h2>\n"
+"<p style=\"font-size: 20px;\">\n"
+"با تشکر از بازدید شما از نمونه‌کار من. اگر به دنبال یک توسعه‌دهنده هستید که "
+"عاشق توسعه وب است و آماده به پذیرش چالش‌های جدید، می‌توانید با من تماس "
+"بگیرید.\n"
+"</p>"
+
+#: .\core\templates\core\about_us.html:8
+msgid "About us"
+msgstr "درباره ما"
+
+#: .\core\templates\core\about_us.html:50
+#: .\core\templates\core\home_page.html:334
+msgid "Free shipping"
+msgstr "ارسال رایگان"
+
+#: .\core\templates\core\about_us.html:51
+#: .\core\templates\core\home_page.html:335
+msgid "On all orders over"
+msgstr "در تمام سفارشات بیش از"
+
+#: .\core\templates\core\about_us.html:59
+#: .\core\templates\core\home_page.html:343
+msgid "days returns"
+msgstr "روز برگشت"
+
+#: .\core\templates\core\about_us.html:60
+#: .\core\templates\core\home_page.html:344
+msgid "Moneyback guarantee"
+msgstr "تضمین بازگشت پول"
+
+#: .\core\templates\core\about_us.html:68
+#: .\core\templates\core\home_page.html:352
+msgid "Secure checkout"
+msgstr "تسویه حساب ایمن"
+
+#: .\core\templates\core\about_us.html:84
+msgid ""
+"\n"
+"                            <h2>Welcome to Fiama!</h2>\n"
+"\n"
+"                            <p>\n"
+"                                At Fiama, we're not just an online store; "
+"we're your go-to destination for all things\n"
+"                                Radiant Finds. Established with a passion "
+"for elegance and style, our journey began with\n"
+"                                a simple goal - to provide a seamless and "
+"delightful shopping experience for our\n"
+"                                customers.\n"
+"                            </p>\n"
+"                        "
+msgstr ""
+"\n"
+"<h2>به فیاما خوش آمدید!</h2>\n"
+"\n"
+"<p>\n"
+"در فیاما، ما فقط یک فروشگاه آنلاین نیستیم. ما مقصد شما برای همه چیزهای "
+"درخشان هستیم. سفر ما که با اشتیاق به ظرافت و سبک تأسیس شد، با یک هدف ساده "
+"آغاز شد - ارائه یک تجربه خرید بی‌نظیر و لذت بخش برای مشتریانمان.\n"
+"</p>"
+
+#: .\core\templates\core\about_us.html:95
+msgid ""
+"\n"
+"                            <h3>Our Story:</h3>\n"
+"\n"
+"                            <p>\n"
+"                                Fiama was founded in 2020 by Fiama "
+"Starlight. Fueled by a deep love for timeless\n"
+"                                treasures, Fiama Starlight envisioned a "
+"place where enthusiasts and novices alike could\n"
+"                                find high-quality products that not only "
+"meet but exceed their expectations. What\n"
+"                                started as a small dream has now evolved "
+"into a thriving online community of\n"
+"                                trendsetters and fashion aficionados.\n"
+"                            </p>\n"
+"                        "
+msgstr ""
+"\n"
+"<h3>داستان ما:</h3>\n"
+"\n"
+"<p>\n"
+"فیاما در سال 2020 توسط فیاما استارلایت تاسیس شد. فیاما استارلایت با عشق عمیق "
+"به گنجینه های بی انتها، مکانی را متصور شد که در آن علاقه مندان و تازه کارها "
+"به طور یکسان بتوانند محصولاتی با کیفیت بالا پیدا کنند که نه تنها انتظارات "
+"آنها را برآورده می کند، بلکه فراتر از آن است. چیزی که به عنوان یک رویای کوچک "
+"شروع شد، اکنون به یک جامعه آنلاین پر رونق متشکل از ترندست ها و علاقه مندان "
+"به مد تبدیل شده است.\n"
+"</p>"
+
+#: .\core\templates\core\about_us.html:107
+msgid ""
+"\n"
+"                            <h3>What Sets Us Apart:</h3>\n"
+"\n"
+"                            <p>\n"
+"                                At Fiama, we take pride in curating a "
+"diverse collection of Radiant Finds. Whether\n"
+"                                you're a seasoned style maven or just "
+"starting your journey, our carefully selected\n"
+"                                range ensures there's something for "
+"everyone. We prioritize quality, sophistication, and\n"
+"                                functionality, offering products that not "
+"only reflect the latest trends but also stand\n"
+"                                the test of time.\n"
+"                            </p>\n"
+"                        "
+msgstr ""
+"\n"
+"<h3>آنچه ما را متمایز می کند:</h3>\n"
+"\n"
+"<p>\n"
+"فرقی نمی‌کند که یک مزرعه دار با تجربه هستید یا تازه سفر خود را شروع کرده‌اید، "
+"محدوده انتخاب شده ما تضمین می‌کند چیزی برای همه وجود دارد. ما کیفیت، پیچیدگی "
+"و عملکرد را در اولویت قرار می دهیم و محصولاتی را ارائه می دهیم که نه تنها "
+"منعکس کننده آخرین روندها هستند، بلکه در آزمون زمان نیز مقاومت می کنند.\n"
+"</p>"
+
+#: .\core\templates\core\about_us.html:119
+msgid ""
+"\n"
+"                            <h3>Our Commitment:</h3>\n"
+"\n"
+"\n"
+"                            <p>\n"
+"                                Customer satisfaction is at the heart of "
+"everything we do. We strive to create an online\n"
+"                                shopping experience that's not only "
+"enjoyable but also stress-free. Our dedicated\n"
+"                                customer support team is always ready to "
+"assist you, ensuring that your every concern is\n"
+"                                addressed promptly.\n"
+"                            </p>\n"
+"                        "
+msgstr ""
+"\n"
+"<h3>تعهد ما:</h3>\n"
+"\n"
+"\n"
+"<p>\n"
+"رضایت مشتری در قلب هر کاری است که انجام می دهیم. ما در تلاش هستیم تا یک "
+"تجربه خرید آنلاین ایجاد کنیم که نه تنها لذت بخش، بلکه بدون استرس نیز باشد. "
+"تیم پشتیبانی مشتری اختصاصی ما همیشه آماده است تا به شما کمک کند و اطمینان "
+"حاصل کند که هر نگرانی شما به سرعت برطرف می شود.\n"
+"</p>"
+
+#: .\core\templates\core\about_us.html:131
+msgid ""
+"\n"
+"                            <h3>Join Our Community:</h3>\n"
+"\n"
+"                            <p>\n"
+"                                Beyond being a shopping destination, Fiama "
+"is a stylish community. Connect with\n"
+"                                like-minded fashion enthusiasts, stay "
+"updated on the latest trends, and share your style\n"
+"                                experiences with us on social media. We "
+"believe that the joy of Radiant Finds is best\n"
+"                                when shared.\n"
+"\n"
+"                                Thank you for choosing Fiama for your "
+"stylish needs. We look forward to being a part of\n"
+"                                your fashion journey and helping you "
+"discover the best products for your unique taste\n"
+"                                and preferences.\n"
+"\n"
+"                                <br>\n"
+"                                <br>\n"
+"                                Happy shopping!\n"
+"                                <br>\n"
+"                                <br>\n"
+"                                Fiama Team\n"
+"                            </p>\n"
+"                        "
+msgstr ""
+"\n"
+"<h3>به انجمن ما بپیوندید:</h3>\n"
+"\n"
+"<p>\n"
+"فراتر از اینکه یک مقصد خرید است، فیاما یک جامعه شیک است. با علاقه مندان به "
+"مد ارتباط برقرار کنید، از آخرین روندها مطلع شوید و تجربیات سبک خود را با ما "
+"در رسانه های اجتماعی به اشتراک بگذارید.\n"
+"\n"
+"از اینکه فیاما را برای نیازهای شیک خود انتخاب کردید سپاسگزاریم. ما مشتاقانه "
+"منتظریم تا بخشی از سفر مد شما باشیم و به شما کمک کنیم تا بهترین محصولات را "
+"برای سلیقه و ترجیحات منحصر به فرد خود کشف کنید.\n"
+"\n"
+"<br>\n"
+"<br>\n"
+"خرید خوبی داشته باشید!\n"
+"<br>\n"
+"<br>\n"
+"تیم فیاما\n"
+"</p>"
+
+#: .\core\templates\core\about_us.html:165
+msgid "client says"
+msgstr "مشتریان می گویند"
+
+#: .\core\templates\core\about_us.html:175
+msgid "Sara Khadem"
+msgstr "سارا خادم"
+
+#: .\core\templates\core\about_us.html:176
+msgid ""
+"I found Fiama when searching for unique and high-quality products. The "
+"personalized attention and detail they put into every purchase exceeded my "
+"expectations. Fiama is not just an online shop; it's a destination for "
+"remarkable finds."
+msgstr ""
+"فیاما را هنگام جستجوی محصولات منحصر به فرد و با کیفیت پیدا کردم. توجه شخصی و "
+"جزئیاتی که آنها در هر خرید به کار می‌برند فراتر از انتظارات من بود. فیاما فقط "
+"یک فروشگاه آنلاین نیست. مقصدی برای یافته های قابل توجه است."
+
+#: .\core\templates\core\about_us.html:183
+msgid "Mohammad Reza Ahmadi"
+msgstr "محمدرضا احمدی"
+
+#: .\core\templates\core\about_us.html:184
+msgid ""
+"Working with Fiama was an absolute delight. Their commitment to delivering "
+"top-notch products with precision made a significant impact on the success "
+"of my projects. I can confidently say, Fiama is a game-changer in the world "
+"of online shopping."
+msgstr ""
+"کار با فیاما یک لذت مطلق بود. تعهد آنها به ارائه محصولات درجه یک با دقت "
+"تأثیر قابل توجهی بر موفقیت پروژه های من گذاشت. به جرات می توانم بگویم، فیاما "
+"در دنیای خرید آنلاین، بازی را تغییر می دهد."
+
+#: .\core\templates\core\about_us.html:191
+msgid "Leila Mohammadi"
+msgstr "لیلا محمدی"
+
+#: .\core\templates\core\about_us.html:192
+msgid ""
+"Fiama's professionalism and dedication to excellence truly set them apart. "
+"Collaborating with them was more than a transaction; it was an extraordinary "
+"journey of success. Fiama isn't just a brand; it's a trusted partner."
+msgstr ""
+"حرفه ای بودن و تعهد فیاما به برتری واقعاً آنها را متمایز می کند. همکاری با "
+"آنها بیش از یک معامله بود. این یک سفر موفقیت‌آمیز فوق‌العاده بود. فیاما فقط یک "
+"برند نیست. این یک شریک قابل اعتماد است"
+
+#: .\core\templates\core\about_us.html:199
+msgid "Amir Ali Jafari"
+msgstr "امیرعلی جعفری"
+
+#: .\core\templates\core\about_us.html:200
+msgid ""
+"The exceptional services provided by Fiama reflect their unwavering "
+"commitment to excellence. I'm not only pleased with the products but also "
+"the seamless shopping experience. I wouldn't hesitate to recommend Fiama to "
+"others."
+msgstr ""
+"خدمات استثنایی ارائه شده توسط فیاما نشان دهنده تعهد تزلزل ناپذیر آنها به "
+"تعالی است. من نه تنها از محصولات راضی هستم، بلکه از تجربه خرید بی‌نظیر نیز "
+"راضی هستم. من از توصیه فیاما به دیگران دریغ نمی کنم."
+
+#: .\core\templates\core\about_us.html:207
+msgid "Fatemeh Mohammadi"
+msgstr "فاطمه محمدی"
+
+#: .\core\templates\core\about_us.html:208
+msgid ""
+"Fiama's attention to detail and commitment to quality are truly commendable. "
+"My collaboration with them was a pleasure, and I eagerly look forward to "
+"exploring more of their curated selections."
+msgstr ""
+"توجه فیاما به جزئیات و تعهد به کیفیت واقعا ستودنی است. همکاری من با آنها لذت "
+"بخش بود و من مشتاقانه منتظر کاوش بیشتر در انتخاب های انتخاب شده آنها هستم."
+
+#: .\core\templates\core\about_us.html:215
+msgid "Mohammad Ali Rezai"
+msgstr "محمدعلی رضایی"
+
+#: .\core\templates\core\about_us.html:216
+msgid ""
+"Collaborating with Fiama was an enriching experience. Their expertise and "
+"dedication surpassed all expectations. I wholeheartedly recommend Fiama for "
+"a seamless and successful shopping partnership."
+msgstr ""
+"همکاری با فیاما یک تجربه غنی بود. تخصص و فداکاری آنها فراتر از همه انتظارات "
+"بود. من از صمیم قلب فیاما را برای یک همکاری خرید بی‌وقفه و موفق توصیه می‌کنم."
+
+#: .\core\templates\core\about_us.html:233
+msgid "Latest Posts"
+msgstr "آخرین پست ها"
+
+#: .\core\templates\core\contact_us.html:7 .\core\templates\core\faq.html:146
+msgid "Contact Us"
+msgstr "تماس با ما"
+
+#: .\core\templates\core\contact_us.html:20
+msgid "Email Address"
+msgstr "آدرس ایمیل"
+
+#: .\core\templates\core\contact_us.html:30
+msgid "Phone Number"
+msgstr "شماره تلفن"
+
+#: .\core\templates\core\contact_us.html:40
+msgid "Email & Web"
+msgstr "ایمیل و وب"
+
+#: .\core\templates\core\contact_us.html:50
+msgid "Opening Hours"
+msgstr "ساعات کار"
+
+#: .\core\templates\core\contact_us.html:51
+msgid "Fri to Wed: 6:00 Am to 8:00 Pm "
+msgstr "جمعه تا چهارشنبه: ٦:۰۰ صبح تا ٨:۰۰ بعد از ظهر"
+
+#: .\core\templates\core\contact_us.html:52
+msgid "Thursday - Off"
+msgstr "پنجشنبه - تعطیل"
+
+#: .\core\templates\core\contact_us.html:82
+msgid "Need Our Help! Please Send an Email."
+msgstr "به کمک ما نیاز دارید! لطفا یک پیام بفرستید."
+
+#: .\core\templates\core\contact_us.html:91
+msgid "Send Message"
+msgstr "ارسال پیام"
+
+#: .\core\templates\core\faq.html:6
+msgid "FAQ"
+msgstr "سوالات متداول"
+
+#: .\core\templates\core\faq.html:22
+msgid "How to buy a product?"
+msgstr "چگونه یک محصول بخریم؟"
+
+#: .\core\templates\core\faq.html:26
+msgid ""
+"\n"
+"                                            <p>\n"
+"                                                1. Add to Cart: <br>\n"
+"                                                - Browse through our product "
+"catalog and click \"Add to Cart\" for your\n"
+"                                                desired items.<br>\n"
+"                                                - No need to log in to add "
+"products to your cart.<br>\n"
+"                                                - If the product comes in "
+"different colors or sizes, choose one before\n"
+"                                                adding to the cart.<br><br>\n"
+"\n"
+"                                                2. View Cart: <br>\n"
+"                                                - Head to the Cart page to "
+"review your selected items. <br>\n"
+"                                                - Easily edit the quantity "
+"of products or remove them as needed.<br><br>\n"
+"\n"
+"                                                3. Checkout: <br>\n"
+"                                                - Proceed to the Payment "
+"page to finalize your purchase. <br>\n"
+"                                                - Logged-in users can use "
+"saved information and addresses.<br><br>\n"
+"\n"
+"                                                4. Payment: <br>\n"
+"                                                - Choose your preferred "
+"payment method. <br>\n"
+"                                                - Securely complete the "
+"transaction. <br><br>\n"
+"\n"
+"                                                5. Order Confirmation: <br>\n"
+"                                                - Receive order confirmation "
+"with details of your purchase. <br>\n"
+"                                                - Track your order and await "
+"its prompt delivery.</p>\n"
+"                                        "
+msgstr ""
+"\n"
+"1. افزودن به سبد خرید: <br>\n"
+"- کاتالوگ محصولات ما را مرور کنید و برای محصولات دلخواهتان  روی \"افزودن به "
+"سبد خرید\" کلیک کنید.<br>\n"
+"- برای افزودن محصولات لازم نیست وارد حساب کاربری شوید.<br>\n"
+"- اگر محصول رنگ یا سایز داشته باشد، قبل از اضافه کردن به سبد، یکی از آن‌ها را "
+"انتخاب کنید.<br><br>\n"
+"\n"
+"2. مشاهده سبد خرید:<br>\n"
+"- برای بررسی موارد انتخابی خود به صفحه سبد خرید بروید.<br>\n"
+"- به راحتی تعداد محصولات را ویرایش کنید یا در صورت نیاز محصولات را حذف "
+"کنید<br><br>\n"
+"\n"
+"3. نهایی کردن پرداخت:<br>\n"
+"- برای نهایی کردن خرید خود به صفحه پرداخت بروید.<br>\n"
+"- کاربران وارشده می توانند از اطلاعات و آدرس‌های ذخیره شده استفاده کنند."
+"<br><br>\n"
+"\n"
+"4. پرداخت:<br>\n"
+"- روش پرداخت مورد نظر خود را انتخاب کنید.<br>\n"
+"- تراکنش را به صورت ایمن تکمیل کنید.<br><br>\n"
+"\n"
+"5. تأیید سفارش:<br>\n"
+"- تأیید سفارش را با جزئیات خرید خود دریافت کنید.<br>\n"
+"- سفارش خود را پیگیری کنید و منتظر تحویل سریع آن باشید.</p>"
+
+#: .\core\templates\core\faq.html:58
+msgid "How can i make refund from your website?"
+msgstr "چگونه می توانم از وب سایت بازپرداخت کنم؟"
+
+#: .\core\templates\core\faq.html:62
+msgid ""
+"\n"
+"                                            <p>To request a refund from the "
+"website, please contact our support team or\n"
+"                                                visit the \"Contact Us\" or "
+"\"Support\" section on the website. Our support\n"
+"                                                team will provide you with "
+"more detailed guidance and the necessary\n"
+"                                                information to process the "
+"refund. We apologize for any inconvenience\n"
+"                                                and appreciate your "
+"understanding.</p>\n"
+"                                        "
+msgstr ""
+"\n"
+"<p>\n"
+"برای درخواست بازپرداخت از وب‌سایت، لطفاً با تیم پشتیبانی تماس بگیرید یا به بخش "
+"\"تماس با ما\" یا \"پشتیبانی\" در وب‌سایت مراجعه کنید. تیم پشتیبانی به شما "
+"راهنمایی دقیق تر خواهد کرد و اطلاعات لازم را برای انجام بازپرداخت ارائه "
+"خواهد داد\n"
+"</p>"
+
+#: .\core\templates\core\faq.html:76
+msgid "I am a new user. How should I start?"
+msgstr "من یک کاربر جدید هستم. چگونه باید شروع کنم؟"
+
+#: .\core\templates\core\faq.html:80
+msgid ""
+"\n"
+"                                            <p>Welcome! As a new user, start "
+"by exploring our product catalog. Create an\n"
+"                                                account for a personalized "
+"shopping experience, and easily browse, add\n"
+"                                                items to your cart, and "
+"proceed to checkout for a seamless shopping\n"
+"                                                journey.</p>\n"
+"                                        "
+msgstr ""
+"\n"
+"<p>\n"
+"خوش آمدید! به عنوان کاربر جدید، ابتدا با مراجعه به کاتالوگ محصولات شروع "
+"کنید. یک حساب کاربری بسازید تا تجربه خرید شخصی‌تان را بهبود بخشید و به راحتی "
+"محصولات را مرور کنید، به سبد خرید اضافه کنید و به مرحله تسویه حساب بروید.\n"
+"</p>"
+
+#: .\core\templates\core\faq.html:93
+msgid "Are my details secured?"
+msgstr "آیا اطلاعات من امن است؟"
+
+#: .\core\templates\core\faq.html:97
+msgid ""
+"\n"
+"                                            <p>Yes, your details are "
+"secured. We prioritize the security and\n"
+"                                                confidentiality of your "
+"information, implementing robust encryption\n"
+"                                                measures and following "
+"industry best practices to ensure the protection\n"
+"                                                of your personal data.</p>\n"
+"                                        "
+msgstr ""
+"\n"
+"<p>\n"
+"بله، اطلاعات شما امن است. ما امنیت و محرمانه بودن اطلاعات شما، اجرای اقدامات "
+"رمزگذاری قوی و پیروی از بهترین شیوه های صنعت را برای اطمینان از حفاظت از "
+"داده های شخصی شما در اولویت قرار می دهیم.\n"
+"</p>"
+
+#: .\core\templates\core\faq.html:110
+msgid "Coupon code is not working"
+msgstr "کد کوپن کار نمی کند"
+
+#: .\core\templates\core\faq.html:114
+msgid ""
+"\n"
+"                                            <p>We apologize for the "
+"inconvenience. Please ensure the coupon code is\n"
+"                                                entered correctly, without "
+"any errors or spaces. If the issue persists,\n"
+"                                                reach out to our support "
+"team for assistance, and we'll be happy to help\n"
+"                                                resolve the matter promptly."
+"</p>\n"
+"                                        "
+msgstr ""
+"\n"
+"<p>\n"
+"با عرض پوزش از مشکل ایجاد شده. لطفاً اطمینان حاصل کنید که کد کوپن به درستی و "
+"بدون هیچ گونه خطا یا فاصله‌ای وارد شده باشد. اگر مشکل همچنان ادامه داشت، برای "
+"کمک با تیم پشتیبانی ما تماس بگیرید و ما خوشحال می شویم که به سرعت به حل مشکل "
+"کمک کنیم.\n"
+"</p>"
+
+#: .\core\templates\core\faq.html:127
+msgid "How do I make payment by my credit card?"
+msgstr "چگونه می توانم با کارت اعتباری خود پرداخت کنم؟"
+
+#: .\core\templates\core\faq.html:131
+msgid ""
+"\n"
+"                                            <p>To make a payment with your "
+"credit card, proceed to the checkout page.\n"
+"                                                Enter your credit card "
+"details, including the card number, expiration\n"
+"                                                date, and CVV code. Ensure "
+"that the billing information matches your\n"
+"                                                card details, then confirm "
+"the payment to complete the transaction\n"
+"                                                securely.</p>\n"
+"                                        "
+msgstr ""
+"\n"
+"<p>\n"
+"برای پرداخت با کارت اعتباری خود، به صفحه پرداخت بروید. اطلاعات کارت اعتباری "
+"خود از جمله شماره کارت، تاریخ انقضا و کد CVV2 را وارد کنید. اطمینان حاصل "
+"کنید که اطلاعات صورت‌حساب با جزئیات کارت شما مطابقت دارد، سپس پرداخت را تأیید "
+"کنید تا تراکنش ایمن انجام شود.\n"
+"</p>"
+
+#: .\core\templates\core\faq.html:143
+msgid "Still need help? Reach out to support 24/7"
+msgstr "هنوز به کمک نیاز داری؟ برای پشتیبانی ٢۴/٧ تماس بگیرید"
+
+#: .\core\templates\core\home_page.html:9
+msgid "Home"
+msgstr "خانه"
+
+#: .\core\templates\core\home_page.html:31
+msgid "Laptop Deals"
+msgstr "پیشنهاد‌های لپتاپ"
+
+#: .\core\templates\core\home_page.html:33
+msgid "Discover the Latest in Laptop Technology"
+msgstr "کشف فناوری‌های جدید لپ‌تاپ"
+
+#: .\core\templates\core\home_page.html:36
+msgid ""
+"\n"
+"                                                                        Explore "
+"cutting-edge features and powerful\n"
+"                                                                        performance "
+"with our exclusive range of laptops.\n"
+"                                                                        Whether "
+"you're a professional seeking\n"
+"                                                                        productivity\n"
+"                                                                        or a "
+"gamer looking for immersive experiences, we\n"
+"                                                                        have "
+"the perfect laptop for you.\n"
+"                                                                    "
+msgstr ""
+"\n"
+"ویژگی های پیشرفته و عملکرد قدرتمند را با طیف انحصاری لپ تاپ های ما کاوش "
+"کنید. چه حرفه ای باشید که به دنبال بهره وری هستید و چه گیمری که به دنبال "
+"تجربه های همه جانبه است، ما لپ تاپ مناسبی را برای شما داریم."
+
+#: .\core\templates\core\home_page.html:49
+msgid "Browse Laptops"
+msgstr "لپ تاپ ها را مرور کنید"
+
+#: .\core\templates\core\home_page.html:78
+msgid "Gaming Essentials"
+msgstr "ملزومات گیمینگ"
+
+#: .\core\templates\core\home_page.html:80
+msgid "Level Up Your Gaming Experience"
+msgstr "تجربه بازیتان را ارتقا دهید."
+
+#: .\core\templates\core\home_page.html:83
+msgid ""
+"\n"
+"                                                                        Immerse "
+"yourself in the world of gaming with\n"
+"                                                                        cutting-"
+"edge technology and thrilling\n"
+"                                                                        experiences. "
+"From high-performance hardware to\n"
+"                                                                        immersive "
+"graphics, elevate your gaming setup to\n"
+"                                                                        new "
+"heights and conquer virtual realms with\n"
+"                                                                        precision "
+"and style.\n"
+"                                                                    "
+msgstr ""
+"\n"
+"با تکنولوژی پیشرفته و تجربیات هیجان انگیز خود را در دنیای بازی غرق کنید. از "
+"سخت افزار با عملکرد بالا گرفته تا گرافیک همه جانبه، تنظیمات بازی خود را به "
+"ارتفاعات جدیدی ارتقا دهید و قلمروهای مجازی را با دقت و سبک تسخیر کنید."
+
+#: .\core\templates\core\home_page.html:95
+msgid "Explore Gaming Gear"
+msgstr "تجهیزات بازی را بررسی کنید."
+
+#: .\core\templates\core\home_page.html:126
+msgid "Top Products"
+msgstr "محصولات برتر"
+
+#: .\core\templates\core\home_page.html:142
+#: .\core\templates\core\home_page.html:266
+msgid "Off"
+msgstr "تخفیف"
+
+#: .\core\templates\core\home_page.html:207
+msgid "Shoes"
+msgstr "کفش"
+
+#: .\core\templates\core\home_page.html:216
+msgid "Clothes"
+msgstr "لباس ها"
+
+#: .\core\templates\core\home_page.html:225
+msgid "Phones"
+msgstr "موبایل ها"
+
+#: .\core\templates\core\home_page.html:234
+msgid "Sport tools"
+msgstr "لوازم ورزشی"
+
+#: .\core\templates\core\home_page.html:250
+msgid "Random Products"
+msgstr "محصولات تصادفی"
+
+#: .\core\templates\core\profile.html:10 .\core\templates\core\profile.html:30
+msgid "Profile"
+msgstr "پروفایل"
+
+#: .\core\templates\core\profile.html:27
+msgid "Dashboard"
+msgstr "داشبورد"
+
+#: .\core\templates\core\profile.html:33
+msgid "Orders"
+msgstr "سفارشات"
+
+#: .\core\templates\core\profile.html:36
+msgid "Edit Profile"
+msgstr "ویرایش پروفایل"
+
+#: .\core\templates\core\profile.html:38 .\core\templates\core\profile.html:216
+#: .\core\templates\core\profile.html:238
+msgid "address"
+msgstr "آدرس"
+
+#: .\core\templates\core\profile.html:42
+msgid "Change password"
+msgstr "تغییر رمز عبور"
+
+#: .\core\templates\core\profile.html:45
+msgid "Set password"
+msgstr "قراردادن رمز عبور"
+
+#: .\core\templates\core\profile.html:48
+msgid "Logout"
+msgstr "خروج"
+
+#: .\core\templates\core\profile.html:59
+msgid "First Name"
+msgstr "نام"
+
+#: .\core\templates\core\profile.html:66
+msgid "Last Name"
+msgstr "نام خانوادگی"
+
+#: .\core\templates\core\profile.html:73
+msgid "Phone"
+msgstr "شماره موبایل"
+
+#: .\core\templates\core\profile.html:80
+msgid "Picture"
+msgstr "تصویر"
+
+#: .\core\templates\core\profile.html:94
+#, python-format
+msgid ""
+"\n"
+"                                                        <p>Hello <strong>"
+"%(username)s</strong> (not\n"
+"                                                            <strong>"
+"%(username)s</strong>?\n"
+"                                                            <small><a href="
+"\"%(logout_url)s\">Log out</a></small> )</p>\n"
+"                                                        <p>\n"
+"                                                            From your "
+"account dashboard you can view your recent orders\n"
+"                                                            and\n"
+"                                                            edit your "
+"password and account details.\n"
+"                                                        </p>\n"
+"                                                    "
+msgstr ""
+"\n"
+"<p>سلام <strong>%(username)s</strong> (\n"
+"<strong>%(username)s</strong> نیستین؟\n"
+"<small><a href=\"%(logout_url)s\">خروج از سیستم</a></small> )</p>\n"
+"<p>\n"
+"از داشبورد حساب خود می توانید سفارشات اخیر خود را مشاهده کنید و\n"
+"رمز عبور و جزئیات حساب خود را ویرایش کنید.\n"
+"</p>"
+
+#: .\core\templates\core\profile.html:113
+msgid "Order"
+msgstr "سفارش"
+
+#: .\core\templates\core\profile.html:114
+msgid "Date"
+msgstr "تاریخ"
+
+#: .\core\templates\core\profile.html:115
+msgid "Status"
+msgstr "استان"
+
+#: .\core\templates\core\profile.html:116
+msgid "Total"
+msgstr "مبلغ کل"
+
+#: .\core\templates\core\profile.html:117
+msgid "Action"
+msgstr "عمل"
+
+#: .\core\templates\core\profile.html:132
+msgid "View"
+msgstr "مشاهده"
+
+#: .\core\templates\core\profile.html:164
+msgid "Change username"
+msgstr "تغییر نام کاربری"
+
+#: .\core\templates\core\profile.html:190
+msgid "Save Changes"
+msgstr "ذخیره تغییرات"
+
+#: .\core\templates\core\profile.html:201
+msgid "The following addresses will be used on the checkout page by default."
+msgstr "آدرس های زیر به طور پیش فرض در صفحه پرداخت استفاده می شوند."
+
+#: .\core\templates\core\profile.html:203
+msgid "addresses"
+msgstr "آدرس ها"
+
+#: .\core\templates\core\profile.html:209
+msgid "Create new address"
+msgstr "ساخت آدرس جدید"
+
+#: .\core\templates\core\profile.html:227
+msgid "edit"
+msgstr "ویرایش"
+
+#: .\core\templates\core\profile.html:232
+msgid "delete"
+msgstr "حذف"
+
+#: .\core\templates\core\profile.html:236
+msgid "state"
+msgstr "استان"
+
+#: .\core\templates\core\profile.html:237
+msgid "city"
+msgstr "شهر"
+
+#: .\core\templates\core\profile.html:239
+msgid "plate"
+msgstr "پلاک"
+
+#: .\core\templates\core\profile.html:267
+msgid "submit"
+msgstr "ارسال"
+
+#: .\core\templates\core\profile.html:293
+msgid "Forgot your password?"
+msgstr "رمز عبور خود را فراموش کرده اید؟"
+
+#: .\core\templates\core\profile.html:297
+msgid "Change Password"
+msgstr "تغییر رمز عبور"
+
+#: .\core\templates\core\profile.html:318
+msgid "Set Password"
+msgstr "قراردادن رمز عبور"
+
+#: .\core\utils.py:7
+msgid "You are locked for too many requests"
+msgstr "شما به دلیل درخواست های زیاد قفل شده اید."
+
+#: .\core\views.py:66
+msgid "profile successfully updated"
+msgstr "پروفایل با موفقیت بروزرسانی شد"
+
+#: .\core\views.py:103
+msgid "You are already using this username. Choose a different one."
+msgstr "شما از این نام کاربری استفاده می کنید. نام کاربری دیگری انتخاب کنید."
+
+#: .\core\views.py:109
+msgid "Username successfully changed."
+msgstr "نام کاربری با موفقیت تغییر کرد."
+
+#: .\core\views.py:129
+#, python-format
+msgid "You can not have more than %s address"
+msgstr "شما نمی توانید بیش از %s آدرس داشته باشید"
+
+#: .\core\views.py:139
+msgid "Address successfully added"
+msgstr "آدرس با موفقیت اضافه شد"
+
+#: .\core\views.py:162
+msgid "Address successfully updated"
+msgstr "آدرس با موفقیت بروزرسانی شد"
+
+#: .\core\views.py:194
+#, python-format
+msgid "Address %(state)s %(city)s deleted"
+msgstr "آدرس %(state)s %(city) s حذف شد"
+
+#: .\core\views.py:204
+msgid "We will soon answer your message"
+msgstr "به زودی به پیام شما پاسخ خواهیم داد"
+
+#~ msgid ""
+#~ "Experiencing the personalized approach and meticulous attention to "
+#~ "detail\n"
+#~ "                                from Fiama went above and beyond my "
+#~ "expectations. I'm genuinely grateful for the\n"
+#~ "                                outstanding services they provide."
+#~ msgstr ""
+#~ "تجربه رویکرد شخصی و توجه دقیق به جزئیات از سوی فیاما فراتر از انتظارات من "
+#~ "بود. من واقعاً از خدمات برجسته ای که ارائه می دهند سپاسگزارم."
+
+#~ msgid ""
+#~ "Working with Fiama was more than just delightful; it was a "
+#~ "transformative\n"
+#~ "                                experience. Their unwavering commitment "
+#~ "to quality and precision played a significant\n"
+#~ "                                role in the success of our project. "
+#~ "Highly recommended!"
+#~ msgstr ""
+#~ "کار با فیاما فراتر از لذت بود. این یک تجربه متحول کننده بود. تعهد تزلزل "
+#~ "ناپذیر آنها به کیفیت و دقت نقش مهمی در موفقیت پروژه ما داشت. بسیار توصیه "
+#~ "می شود!"
+
+#~ msgid ""
+#~ "Fiama's attention to detail and commitment to delivering top-notch\n"
+#~ "                                services are genuinely commendable. It "
+#~ "was a pleasure working with them, and I eagerly\n"
+#~ "                                look forward to future collaborations."
+#~ msgstr ""
+#~ "توجه فیاما به جزئیات و تعهد به ارائه خدمات درجه یک واقعا قابل تحسین است. "
+#~ "کار با آنها لذت بخش بود و من مشتاقانه منتظر همکاری های بعدی هستم."
+
+#~ msgid ""
+#~ "The services provided by Fiama were outstanding and professional. Highly\n"
+#~ "                                recommended to others."
+#~ msgstr ""
+#~ "خدمات ارائه شده توسط فیاما برجسته و حرفه ای بود. به دیگران بسیار توصیه می "
+#~ "شود."
+
+#~ msgid "lorem ipsum"
+#~ msgstr ""
+#~ "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده "
+#~ "از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و "
+#~ "سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای "
+#~ "متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه "
+#~ "درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد"
+
+#~ msgid "Returns and refunds"
+#~ msgstr "بازده و بازپرداخت"
+
+#~ msgid "State"
+#~ msgstr "استان"
+
+#~ msgid "City"
+#~ msgstr "شهر"
+
+#~ msgid "Address"
+#~ msgstr "آدرس"
+
+#~ msgid "Plate"
+#~ msgstr "پلاک"
+
+#~ msgid ""
+#~ "\n"
+#~ "                    <p>\n"
+#~ "                        I am Ali Sirjani, a developer in <strong>Django</"
+#~ "strong> and <strong>Django Rest\n"
+#~ "                        Framework</strong>, who has a passion for "
+#~ "creating\n"
+#~ "                        practical web applications. As a developer, I am "
+#~ "enthusiastic about taking on new\n"
+#~ "                        challenges\n"
+#~ "                        and turning your ideas into reality.\n"
+#~ "                    </p>\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "<p>\n"
+#~ "من علی سیرجانی هستم، یک توسعه‌دهنده در زمینه <strong>جنگو</strong> و "
+#~ "<strong>جنگو رست</strong> که به ایجاد برنامه‌های کاربردی وب علاقه دارد. "
+#~ "به‌عنوان یک توسعه‌دهنده جوان، با شوق و انگیزه به پذیرش چالش‌های جدید و "
+#~ "ایده‌های شما را به واقعیت تبدیل کنم.</p>"
+
+#~ msgid "15 days returns"
+#~ msgstr "15 روز برگشت"

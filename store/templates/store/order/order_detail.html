@@ -1,0 +1,140 @@
+{% extends '_base.html' %}
+
+{% load i18n %}
+{% load trans_fa %}
+{% load jalali_tags %}
+
+{% block title %} {% trans 'Order Detail' %} {% endblock title %}
+
+{% block content %}
+
+    <div dir="rtl" class="mt-80 mb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">{% trans 'Customer Information' %}</h2>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <strong class="mr-3">{% trans 'Name' %}:</strong> {{ order_finished.first_name }} {{ order_finished.last_name }}
+                                </li>
+                                <li class="list-group-item">
+                                    <strong class="mr-3">{% trans 'Email' %}:</strong> {{ order_finished.email }}</li>
+                                <li class="list-group-item">
+                                    <strong class="mr-3">{% trans 'Phone' %}:</strong> {{ order_finished.phone.as_national|num_fa_20 }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h2 class="card-title">{% trans 'Order Status' %}</h2>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong class="mr-3">{% trans 'Tracking Code' %}:
+                                </strong> {{ order_finished.tracking_code }}</li>
+                                <li class="list-group-item"><strong class="mr-3">{% trans 'Delivery Status' %}:
+                                </strong> {{ order_finished.avg_track_items }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="mt-4">{% trans 'Order Items' %}</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>{% trans 'Product' %}</th>
+                        <th>{% trans 'Color/Size' %}</th>
+                        <th>{% trans 'Quantity' %}</th>
+                        <th>{% trans 'Price' %}</th>
+                        <th>{% trans 'Discounted Price' %}</th>
+                        <th>{% trans 'Total' %}</th>
+                        <th>{% trans 'Image' %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in order_finished.items.all %}
+                        <tr>
+                            <td>
+                                <a href="{{ item.product.get_absolute_url }}">{{ item.product.title|truncatewords:10 }}</a>
+                            </td>
+                            {% if item.color_size %}
+                                <td>{{ item.color_size }}</td>
+                            {% else %}
+                                <td class="text-center">-</td>
+                            {% endif %}
+                            <td>{{ item.quantity|num_fa_20 }}</td>
+                            <td>{{ item.price|num_fa_20 }}</td>
+                            {% if item.product.discount %}
+                                <td>{{ item.discount_price|num_fa_20 }}</td>
+                            {% else %}
+                                <td class="text-center">-</td>
+                            {% endif %}
+                            <td>{{ item.get_total_item|num_fa_20 }}</td>
+                            <td>
+                                {% for image in item.product.images.all %}
+                                    {% if image.is_main %}
+                                        <img src="{{ image.image.url }}" alt="{{ item.product.name }}"
+                                             class="img-thumbnail" style="max-width: 80px;">
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <h2 class="mt-4">{% trans 'Order Summary' %}</h2>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong class="mr-30">{% trans 'Cart Total (No Discount)' %}:</strong>
+                            {{ order_finished.get_cart_total_no_discount|num_fa_25 }}</li>
+                        <li class="list-group-item"><strong class="mr-30">{% trans 'Cart Total Profit' %}:</strong>
+                            {{ order_finished.get_cart_total_profit|num_fa_25 }}</li>
+                        {% if order_finished.coupon %}
+                            <li class="list-group-item"><strong class="mr-30">{% trans 'Coupon Price' %}:</strong>
+                                {{ order_finished.coupon_price|num_fa_25 }}
+                            </li>
+                            <li class="list-group-item"><strong class="mr-30">{% trans 'Cart Total' %}:</strong>
+                                {{ order_finished.get_cart_total|num_fa_25 }}
+                            </li>
+                            <li class="list-group-item"><strong class="mr-30">{% trans 'Cart Total With Coupon' %}:</strong>
+                                {{ order_finished.get_cart_total_with_coupon|num_fa_25 }}</li>
+                        {% else %}
+                            <li class="list-group-item"><strong class="mr-30">{% trans 'Cart Total' %}:</strong>
+                                {{ order_finished.get_cart_total|num_fa_25 }}
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+            <h2 class="mt-4">{% trans 'Additional Information' %}</h2>
+            <div class="card">
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong class="mr-3">{% trans 'Order Note' %}:</strong> {{ order_finished.order_note }}</li>
+                        <li class="list-group-item">
+                            <strong class="mr-3">{% trans 'Ordered on' %}:</strong> {{ order_finished.datetime_created|to_jalali:'%Y/%m/%d'|num_fa_15 }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="mr-3">{% trans 'Pay Time' %}:</strong> {{ order_finished.datetime_payed|to_jalali:'%Y/%m/%d'|num_fa_15 }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong class="mr-3">{% trans 'Last Updated' %}:</strong> {{ order_finished.datetime_updated|to_jalali:'%Y/%m/%d'|num_fa_15 }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

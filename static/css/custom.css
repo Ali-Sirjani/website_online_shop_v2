@@ -1,0 +1,125 @@
+@font-face {
+    font-family: 'num_fa_font';
+    src: url('../fonts/Qs_Iranyekan bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+/* Custom Iranyekan Fonts */
+@font-face {
+    font-family: 'Iranyekan';
+    src: url('../fonts/Qs_Iranyekan.ttf') format('truetype');
+    /* Additional font-face properties can be added here */
+}
+
+@font-face {
+    font-family: 'Iranyekan-Black';
+    src: url('../fonts/Qs_Iranyekan black.ttf') format('truetype');
+    /* Additional font-face properties can be added here */
+}
+
+@font-face {
+    font-family: 'Iranyekan-Bold';
+    src: url('../fonts/Qs_Iranyekan bold.ttf') format('truetype');
+    /* Additional font-face properties can be added here */
+}
+
+.num_fa_font {
+    font-family: 'num_fa_font', sans-serif;
+}
+
+.discount-color {
+    color: #808080;
+}
+
+.color-circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* This creates a circular shape */
+}
+
+/* Add this to your CSS file */
+.color-button {
+    margin: 12px; /* Add space around the color button */
+}
+
+.color-button.selected {
+    margin: 0; /* Remove the margin for the selected color button */
+}
+
+.size-button.selected {
+    color: #e05670; /* Change text color for better visibility */
+    font-weight: 900;
+}
+
+.star-rating {
+    font-size: 24px;
+    color: #ffd700;
+    display: inline-block;
+}
+
+.star-rating::before {
+    content: '\2606 \2606 \2606 \2606 \2606';
+    letter-spacing: 5px;
+}
+
+.star-rating.star-5::before {
+    content: '\2605 \2605 \2605 \2605 \2605';
+    letter-spacing: 5px;
+}
+
+.star-rating.star-4::before {
+    content: '\2605 \2605 \2605 \2605 \2606';
+    letter-spacing: 5px;
+}
+
+.star-rating.star-3::before {
+    content: '\2605 \2605 \2605 \2606 \2606';
+    letter-spacing: 5px;
+}
+
+.star-rating.star-2::before {
+    content: '\2605 \2605 \2606 \2606 \2606';
+    letter-spacing: 5px;
+}
+
+.star-rating.star-1::before {
+    content: '\2605 \2606 \2606 \2606 \2606';
+    letter-spacing: 5px;
+}
+
+address p {
+    word-wrap: break-word; /* Wrap long words onto the next line */
+    overflow: hidden; /* Hide content that exceeds the box */
+    max-width: 100%; /* Ensure the content doesn't exceed the container's width */
+}
+
+
+.overlay-form {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
+
+.overlay-form-container {
+      position: relative;
+      background-color: #fff;
+      padding: 35px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+.form-close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }

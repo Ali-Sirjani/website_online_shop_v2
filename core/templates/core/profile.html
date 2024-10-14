@@ -1,0 +1,351 @@
+{% extends '_base.html' %}
+
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_filters %}
+{% load widget_tweaks %}
+{% load trans_fa %}
+{% load jalali_tags %}
+
+{% block title %}{% trans 'Profile' %}{% endblock title %}
+
+{% block content %}
+
+    <!-- PROFILE AREA START -->
+    <div class="liton__wishlist-area pb-50 mt-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- PRODUCT TAB AREA START -->
+                    <div class="ltn__product-tab-area">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="ltn__tab-menu-list mb-50">
+                                        <div class="nav">
+                                            <a class="active show" data-toggle="tab" href="#liton_tab_1_2">
+                                                {% trans 'Dashboard' %} <i class="fas fa-home"></i>
+                                            </a>
+                                            <a data-toggle="tab" href="#liton_tab_1_1">
+                                                {% trans 'Profile' %} <i class="fas fa-user-alt"></i>
+                                            </a>
+                                            <a data-toggle="tab" href="#liton_tab_1_3">
+                                                {% trans 'Orders' %} <i class="fas fa-file-alt"></i>
+                                            </a>
+                                            <a data-toggle="tab" href="#liton_tab_1_4">
+                                                {% trans 'Edit Profile' %} <i class="fas fa-user-edit"></i>
+                                            </a>
+                                            <a data-toggle="tab" href="#liton_tab_1_5">{% trans 'address' %} <i
+                                                    class="fas fa-map-marker-alt"></i></a>
+                                            {% if user.has_usable_password %}
+                                                <a data-toggle="tab" href="#liton_tab_1_6"
+                                                >{% trans 'Change password' %} <i class="fas fa-key"></i></a>
+                                            {% else %}
+                                                <a data-toggle="tab" href="#liton_tab_1_6"
+                                                >{% trans 'Set password' %} <i class="fas fa-key"></i></a>
+                                            {% endif %}
+                                            <a href="{% url 'account_logout' %}">
+                                                {% trans 'Logout' %} <i class="fas fa-sign-out-alt"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade" id="liton_tab_1_1">
+                                            <div class="ltn__myaccount-tab-content-inner">
+                                                <div class="container mt-5">
+                                                    <dl class="row">
+                                                        <dt class="col-sm-3 mb-30">{% trans 'First Name' %}:</dt>
+                                                        {% if profile.first_name %}
+                                                            <dd class="col-sm-9 mb-30">{{ profile.first_name }}</dd>
+                                                        {% else %}
+                                                            <dd class="col-sm-9 mb-30">-</dd>
+                                                        {% endif %}
+
+                                                        <dt class="col-sm-3 mb-30">{% trans 'Last Name' %}:</dt>
+                                                        {% if profile.last_name %}
+                                                            <dd class="col-sm-9 mb-30">{{ profile.last_name }}</dd>
+                                                        {% else %}
+                                                            <dd class="col-sm-9 mb-30">-</dd>
+                                                        {% endif %}
+
+                                                        <dt class="col-sm-3 mb-30">{% trans 'Phone' %}:</dt>
+                                                        {% if profile.phone %}
+                                                            <dd class="col-sm-9 mb-30">{{ profile.phone.as_national|num_fa_20 }}</dd>
+                                                        {% else %}
+                                                            <dd class="col-sm-9 mb-30">-</dd>
+                                                        {% endif %}
+
+                                                        <dt class="col-sm-3 mb-30">{% trans 'Picture' %}:</dt>
+                                                        <dd class="col-sm-9 mb-30">
+                                                            <img src="{{ profile.picture.url }}" alt="Profile Picture"
+                                                                 class="img-fluid"
+                                                                 style="max-width: 200px; max-height: 200px;">
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade active show" id="liton_tab_1_2">
+                                            <div class="ltn__myaccount-tab-content-inner">
+                                                {% url 'account_logout' as logout_url %}
+                                                {% with username=request.user.username %}
+                                                    {% blocktrans %}
+                                                        <p>Hello <strong>{{ username }}</strong> (not
+                                                            <strong>{{ username }}</strong>?
+                                                            <small><a href="{{ logout_url }}">Log out</a></small> )</p>
+                                                        <p>
+                                                            From your account dashboard you can view your recent orders
+                                                            and
+                                                            edit your password and account details.
+                                                        </p>
+                                                    {% endblocktrans %}
+                                                {% endwith %}
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="liton_tab_1_3">
+                                            <div class="ltn__myaccount-tab-content-inner">
+                                                <div class="table-responsive">
+                                                    <table class="table">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>{% trans 'Order' %}</th>
+                                                            <th>{% trans 'Date' %}</th>
+                                                            <th>{% trans 'Status' %}</th>
+                                                            <th>{% trans 'Total' %}</th>
+                                                            <th>{% trans 'Action' %}</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% for order in orders_completed %}
+                                                            <tr>
+                                                                <td>{{ forloop.counter|num_fa_20 }}</td>
+                                                                <td>{{ order.datetime_payed|to_jalali:'%Y/%m/%d'|num_fa_15 }}</td>
+                                                                <td>{{ order.avg_track_items }}</td>
+                                                                {% if order.coupon %}
+                                                                    <td>{{ order.get_cart_total_with_coupon|num_fa_20 }}</td>
+                                                                {% else %}
+                                                                    <td>{{ order.get_cart_total|num_fa_20 }}</td>
+                                                                {% endif %}
+                                                                <td>
+                                                                    <a href="{{ order.get_absolute_url }}">{% trans 'View' %}</a>
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="liton_tab_1_4">
+                                            <div class="ltn__myaccount-tab-content-inner mb-50">
+                                                <div class="ltn__form-box mb-20">
+                                                    <fieldset>
+                                                        <form id="set_username_form">
+                                                            {% csrf_token %}
+                                                            <div class="alert alert-danger"
+                                                                 id="set_username_error_container"
+                                                                 style="display: none; font-size: 18px;"></div>
+                                                            <h4>
+                                                                {% for field in set_username_form %}
+                                                                    {{ field.errors }}
+                                                                    {{ field.label_tag }}
+                                                                    {% render_field field class="form-control" placeholder='' %}
+                                                                    <div class="invalid-feedback text-block"
+                                                                         id="invalid-feedback-{{ field.name }}"
+                                                                         style="display: none; "></div>
+                                                                {% endfor %}
+                                                            </h4>
+                                                            <div class="btn-wrapper">
+                                                                <button onclick="setUsernameAjax()" id="setUsernameBtn"
+                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                                                        type="button">
+                                                                    {% trans 'Change username' %}
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </fieldset>
+                                                </div>
+                                                <div class="ltn__form-box">
+                                                    <fieldset>
+                                                        <form id="profile_form" enctype="multipart/form-data">
+                                                            {% csrf_token %}
+                                                            <div class="alert alert-danger"
+                                                                 id="update_profile_error_container"
+                                                                 style="display: none; font-size: 18px;"></div>
+                                                            <h4>
+                                                                {% for field in form %}
+                                                                    {{ field|as_crispy_field }}
+                                                                    <div class="invalid-feedback text-block"
+                                                                         id="invalid-feedback-{{ field.name }}"
+                                                                         style="display: none; "></div>
+                                                                {% endfor %}
+                                                            </h4>
+                                                            <div class="btn-wrapper">
+                                                                <button onclick="updateProfileAjax()"
+                                                                        id="updateProfileBtn"
+                                                                        class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                                                        type="button">
+                                                                    {% trans 'Save Changes' %}
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="liton_tab_1_5">
+                                            <div class="ltn__myaccount-tab-content-inner">
+                                                <p>
+                                                    {% trans 'The following addresses will be used on the checkout page by default.' %}
+                                                </p>
+                                                <h4 class="d-inline">{% trans 'addresses' %}</h4>
+                                                {% with profile_addresses=profile.profile_address.all %}
+                                                    {% if profile_addresses|length < 3 %}
+                                                        <a href="#" class="d-inline" dir="ltr"
+                                                           data-operation-form="create"
+                                                           style="float:left; font-size: 20px;"
+                                                           onclick="showCreateOrUpdateFormAddress(event)">{% trans 'Create new address' %}
+                                                        </a>
+                                                    {% endif %}
+                                                    <div class="row mt-2">
+                                                        {% for address in profile_addresses %}
+                                                            <div class="col-md-6 col-12 learts-mb-30">
+                                                                <h4 class="mt-4">
+                                                                    {% trans 'address' %} {{ forloop.counter|num_fa_20 }}
+                                                                    <small>
+                                                                        <a onclick="showCreateOrUpdateFormAddress(event)"
+                                                                           href="#"
+                                                                           data-operation-form="update"
+                                                                           data-state="{{ address.state }}"
+                                                                           data-city="{{ address.city }}"
+                                                                           data-address="{{ address.address }}"
+                                                                           data-plate="{{ address.plate }}"
+                                                                           data-address-id="{{ address.pk }}"
+                                                                           data-counter="{{ forloop.counter }}"
+                                                                        >{% trans 'edit' %}
+                                                                        </a>
+                                                                    </small>
+                                                                    <small>
+                                                                        <a href="#" data-pk="{{ address.pk }}" data-counter="{{ forloop.counter }}"
+                                                                           onclick="deleteAddress(event)">{% trans 'delete' %}</a>
+                                                                    </small>
+                                                                </h4>
+                                                                <address>
+                                                                    <p>{% trans 'state' %}: {{ address.state }}</p>
+                                                                    <p>{% trans 'city' %}: {{ address.city }}</p>
+                                                                    <p>{% trans 'address' %}: {{ address.address }}</p>
+                                                                    <p>{% trans 'plate' %}: {{ address.plate|num_fa_20 }}</p>
+                                                                </address>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class="ltn__myaccount-tab-content-inner mb-50 mt-20">
+                                                {% endwith %}
+                                                <div class="ltn__form-box">
+                                                    <form id="address_form_id" method="post" style="display: none;">
+                                                        <hr>
+                                                        <h3 class="mb-4" id="address_form_title"></h3>
+                                                        {% csrf_token %}
+                                                        <div class="alert alert-danger"
+                                                             id="address_error_container"
+                                                             style="display: none; font-size: 18px;"></div>
+                                                        <input type="hidden" value="" name="pk">
+                                                        {% for field in address_form %}
+                                                            <h4>
+                                                                {{ field.errors }}
+                                                                {{ field.label_tag }}
+                                                                {% render_field field class="form-control" placeholder='' %}
+                                                                <div class="invalid-feedback text-block"
+                                                                     id="invalid-feedback-{{ field.name }}"
+                                                                     style="display: none; "></div>
+                                                            </h4>
+                                                        {% endfor %}
+                                                        <button id="addressBtn" onclick="addressAjax()"
+                                                                class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                                                type="button">{% trans 'submit' %}
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="liton_tab_1_6">
+                                            <div class="ltn__myaccount-tab-content-inner mb-50">
+                                                <div class="ltn__form-box">
+                                                    {% if change_pass_form %}
+                                                        <form id="change_password_form" method="post">
+                                                            {% csrf_token %}
+                                                            <div class="alert alert-danger"
+                                                                 id="change_pass_error_container"
+                                                                 style="display: none; font-size: 18px;"></div>
+                                                            {% for field in change_pass_form %}
+                                                                <h4>
+                                                                    {{ field.errors }}
+                                                                    {{ field.label_tag }}
+                                                                    {% render_field field class="form-control" placeholder='' %}
+                                                                    <div class="invalid-feedback text-block"
+                                                                         id="invalid-feedback-{{ field.name }}"
+                                                                         style="display: none; "></div>
+                                                                </h4>
+                                                            {% endfor %}
+                                                            <a href="/accounts/password/reset/">{% trans 'Forgot your password?' %}</a>
+                                                            <br><br>
+                                                            <button id="changePasswordBtn" onclick="changePassword()"
+                                                                    class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                                                    type="button">{% trans 'Change Password' %}
+                                                            </button>
+                                                        </form>
+                                                    {% else %}
+                                                        <form id="set_password_form" method="post">
+                                                            {% csrf_token %}
+                                                            <div class="alert alert-danger"
+                                                                 id="set_pass_error_container"
+                                                                 style="display: none; font-size: 18px;"></div>
+                                                            {% for field in set_pass_form %}
+                                                                <h4>
+                                                                    {{ field.errors }}
+                                                                    {{ field.label_tag }}
+                                                                    {% render_field field class="form-control" placeholder='' %}
+                                                                    <div class="invalid-feedback text-block"
+                                                                         id="invalid-feedback-{{ field.name }}"
+                                                                         style="display: none; "></div>
+                                                                </h4>
+                                                            {% endfor %}
+                                                            <button id="changePasswordBtn" onclick="setPassword()"
+                                                                    class="btn theme-btn-1 btn-effect-1 text-uppercase"
+                                                                    type="button">{% trans 'Set Password' %}
+                                                            </button>
+                                                        </form>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- PRODUCT TAB AREA END -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- PROFILE AREA START -->
+
+    <script>
+        var setUsernameUrl = "{% url 'core:set_username' %}";
+        var changePasswordUrl = "{% url 'account_change_password' %}";
+        var setPasswordUrl = "{% url 'account_set_password' %}";
+        var addressCreateUrl = "{% url 'core:profile_create_address' %}";
+        var addressUpdateUrl = "{% url 'core:profile_update_address' %}";
+        var addressDeleteUrl = "{% url 'core:profile_delete_address' %}"
+        var profileUrd = "{% url 'core:profile' %}";
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.js"
+            integrity="sha512-467grL09I/ffq86LVdwDzi86uaxuAhFZyjC99D6CC1vghMp1YAs+DqCgRvhEtZIKX+o9lR0F2bro6qniyeCMEQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="{% static 'js/profile.js' %}"></script>
+
+{% endblock content %}

@@ -1,0 +1,138 @@
+{% load i18n %}
+{% load trans_fa %}
+
+
+<div class="tab-content">
+    <div class="tab-pane fade active show" id="liton_product_grid">
+        <div class="ltn__product-tab-content-inner ltn__product-grid-view">
+            <div class="row">
+                {% for product in products %}
+                    <!-- ltn__product-item -->
+                    <div class="col-xl-4 col-sm-6 col-12">
+                        <div class="ltn__product-item text-center">
+                            <div class="product-img">
+                                <a href="{{ product.get_absolute_url }}"><img
+                                        src="{{ product.main_image }}"
+                                        alt="#"></a>
+                                <div class="product-badge">
+                                    {% if product.discount %}
+                                        <ul>
+                                            <li class="badge-1">{% trans 'Off' %}</li>
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                                <div class="product-hover-action product-hover-action-2">
+                                    <ul>
+                                        <li>
+                                            <a href="#" title="Quick View" data-bs-toggle="modal" class="like-product"
+                                               data-bs-target="#quick_view_modal" data-product="{{ product.pk }}">
+                                                {% if product.pk in liked %}
+                                                    <i class="fas fa-heart"></i>
+                                                {% else %}
+                                                    <i class="icon-heart"></i>
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="Quick View" data-toggle="modal"
+                                               data-target="#p{{ product.pk }}">
+                                                <i class="icon-shuffle"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2 class="product-title"><a
+                                        href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                </h2>
+                                <div class="product-price">
+                                    {% if product.discount %}
+                                        <span>{{ product.discount_price|num_fa_20 }}</span>
+                                        <del>{{ product.price|num_fa_15 }}</del>
+                                    {% else %}
+                                        <span>{{ product.price|num_fa_20 }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="liton_product_list">
+        <div class="ltn__product-tab-content-inner ltn__product-list-view">
+            <div class="row">
+                <!-- ltn__product-item -->
+                {% for product in products %}
+                    <div class="col-lg-12 mt-3">
+                        <div class="ltn__product-item">
+                            <div class="product-img">
+                                <a href="{{ product.get_absolute_url }}"><img src="{{ product.main_image }}"
+                                                                              alt="#"></a>
+                                <div class="product-badge">
+                                    {% if product.discount %}
+                                        <ul>
+                                            <li class="badge-1">{% trans 'Off' %}</li>
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="product-info">
+                                <h2 class="product-title"><a
+                                        href="{{ product.get_absolute.url }}">{{ product.title }}</a></h2>
+                                <div class="product-price">
+                                    {% if product.discount %}
+                                        <span>{{ product.discount_price|num_fa_20 }}</span>
+                                        <del>{{ product.price|num_fa_20 }}</del>
+                                    {% else %}
+                                        <span>{{ product.price|num_fa_20 }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="product-ratting">
+                                    <ul>
+                                        {% with avg_result=product.avg_star %}
+                                            <div class="star-rating star-{{ avg_result.0 }}"></div>
+                                            <li class="review-total">
+                                                ({% trans 'Reviews' %} {{ avg_result.2|num_fa_15 }})
+                                            </li>
+                                        {% endwith %}
+                                    </ul>
+                                </div>
+                                <div class="product-brief">
+                                    <p>{{ product.short_desctiption }}</p>
+                                </div>
+                                <div class="product-hover-action product-hover-action-2">
+                                    <ul>
+                                        <li>
+                                            <a href="#" title="Quick View" data-toggle="modal" class="like-product"
+                                               data-target="#quick_view_modal" data-product="{{ product.pk }}">
+                                                {% if product.pk in liked %}
+                                                    <i class="fas fa-heart"></i>
+                                                {% else %}
+                                                    <i class="icon-heart"></i>
+                                                {% endif %}
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" title="Quick View" data-toggle="modal"
+                                               data-target="#p{{ product.pk }}">
+                                                <i class="icon-shuffle"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <!--  -->
+            </div>
+        </div>
+    </div>
+</div>
+
+

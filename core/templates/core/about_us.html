@@ -1,0 +1,272 @@
+{% extends '_base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load trans_fa %}
+{% load crispy_forms_filters %}
+
+{% block title %}{% trans 'About us' %}{% endblock title %}
+
+{% block style %}
+    <style>
+.testimonial {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.testimonial h3 {
+    color: #3498db; /* Heading color */
+}
+
+.testimonial p {
+    color: #2c3e50; /* Paragraph color */
+}
+
+.testimonial:hover {
+    border-color: #E05670FF; /* Accent color on hover */
+}
+
+    </style>
+{% endblock style %}
+
+{% block content %}
+
+    <!-- FEATURE AREA START ( Feature - 3) -->
+    <div class="ltn__feature-area mt-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ltn__feature-item-box-wrap ltn__feature-item-box-wrap-2  ltn__border section-bg-6">
+                        <div class="ltn__feature-item ltn__feature-item-8">
+                            <div class="ltn__feature-icon">
+                                <img src="{% static 'img/icons/svg/8-trolley.svg' %}" alt="#">
+                            </div>
+                            <div class="ltn__feature-info">
+                                <h4>{% trans 'Free shipping' %}</h4>
+                                <p>{% trans 'On all orders over' %} {{ 1000000|num_fa_20 }} </p>
+                            </div>
+                        </div>
+                        <div class="ltn__feature-item ltn__feature-item-8">
+                            <div class="ltn__feature-icon">
+                                <img src="{% static 'img/icons/svg/9-money.svg' %}" alt="#">
+                            </div>
+                            <div class="ltn__feature-info">
+                                <h4>{{ 15|num_fa_20 }}{% trans 'days returns' %}</h4>
+                                <p>{% trans 'Moneyback guarantee' %}</p>
+                            </div>
+                        </div>
+                        <div class="ltn__feature-item ltn__feature-item-8">
+                            <div class="ltn__feature-icon">
+                                <img src="{% static 'img/icons/svg/10-credit-card.svg' %}" alt="#">
+                            </div>
+                            <div class="ltn__feature-info">
+                                <h4>{% trans 'Secure checkout' %}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- FEATURE AREA END -->
+
+    <!-- ABOUT US AREA START -->
+    <div class="ltn__about-us-area pt-90 pb-70">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 align-self-center">
+                    <div class="about-us-info-wrap">
+                        {% blocktrans %}
+                            <h2>Welcome to Fiama!</h2>
+
+                            <p>
+                                At Fiama, we're not just an online store; we're your go-to destination for all things
+                                Radiant Finds. Established with a passion for elegance and style, our journey began with
+                                a simple goal - to provide a seamless and delightful shopping experience for our
+                                customers.
+                            </p>
+                        {% endblocktrans %}
+
+                        {% blocktrans %}
+                            <h3>Our Story:</h3>
+
+                            <p>
+                                Fiama was founded in 2020 by Fiama Starlight. Fueled by a deep love for timeless
+                                treasures, Fiama Starlight envisioned a place where enthusiasts and novices alike could
+                                find high-quality products that not only meet but exceed their expectations. What
+                                started as a small dream has now evolved into a thriving online community of
+                                trendsetters and fashion aficionados.
+                            </p>
+                        {% endblocktrans %}
+
+                        {% blocktrans %}
+                            <h3>What Sets Us Apart:</h3>
+
+                            <p>
+                                At Fiama, we take pride in curating a diverse collection of Radiant Finds. Whether
+                                you're a seasoned style maven or just starting your journey, our carefully selected
+                                range ensures there's something for everyone. We prioritize quality, sophistication, and
+                                functionality, offering products that not only reflect the latest trends but also stand
+                                the test of time.
+                            </p>
+                        {% endblocktrans %}
+
+                        {% blocktrans %}
+                            <h3>Our Commitment:</h3>
+
+
+                            <p>
+                                Customer satisfaction is at the heart of everything we do. We strive to create an online
+                                shopping experience that's not only enjoyable but also stress-free. Our dedicated
+                                customer support team is always ready to assist you, ensuring that your every concern is
+                                addressed promptly.
+                            </p>
+                        {% endblocktrans %}
+
+                        {% blocktrans %}
+                            <h3>Join Our Community:</h3>
+
+                            <p>
+                                Beyond being a shopping destination, Fiama is a stylish community. Connect with
+                                like-minded fashion enthusiasts, stay updated on the latest trends, and share your style
+                                experiences with us on social media. We believe that the joy of Radiant Finds is best
+                                when shared.
+
+                                Thank you for choosing Fiama for your stylish needs. We look forward to being a part of
+                                your fashion journey and helping you discover the best products for your unique taste
+                                and preferences.
+
+                                <br>
+                                <br>
+                                Happy shopping!
+                                <br>
+                                <br>
+                                Fiama Team
+                            </p>
+                        {% endblocktrans %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ABOUT US AREA END -->
+
+    <!-- TESTIMONIAL AREA START -->
+    <div class="testimonial-area pt-95 pb-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area text-center">
+                        <h1 class="section-title section-title-border">{% trans 'client says' %}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+
+                    <!-- Testimonial 1 -->
+                    <div class="col-md-4">
+                        <div class="testimonial">
+                            <h3>{% trans "Sara Khadem" %}</h3>
+                            <p>{% blocktrans %}I found Fiama when searching for unique and high-quality products. The personalized attention and detail they put into every purchase exceeded my expectations. Fiama is not just an online shop; it's a destination for remarkable finds.{% endblocktrans %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="col-md-4">
+                        <div class="testimonial">
+                            <h3>{% trans "Mohammad Reza Ahmadi" %}</h3>
+                            <p>{% blocktrans %}Working with Fiama was an absolute delight. Their commitment to delivering top-notch products with precision made a significant impact on the success of my projects. I can confidently say, Fiama is a game-changer in the world of online shopping.{% endblocktrans %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="col-md-4">
+                        <div class="testimonial">
+                            <h3>{% trans "Leila Mohammadi" %}</h3>
+                            <p>{% blocktrans %}Fiama's professionalism and dedication to excellence truly set them apart. Collaborating with them was more than a transaction; it was an extraordinary journey of success. Fiama isn't just a brand; it's a trusted partner.{% endblocktrans %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 4 -->
+                    <div class="col-md-4">
+                        <div class="testimonial">
+                            <h3>{% trans "Amir Ali Jafari" %}</h3>
+                            <p>{% blocktrans %}The exceptional services provided by Fiama reflect their unwavering commitment to excellence. I'm not only pleased with the products but also the seamless shopping experience. I wouldn't hesitate to recommend Fiama to others.{% endblocktrans %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 5 -->
+                    <div class="col-md-4">
+                        <div class="testimonial">
+                            <h3>{% trans "Fatemeh Mohammadi" %}</h3>
+                            <p>{% blocktrans %}Fiama's attention to detail and commitment to quality are truly commendable. My collaboration with them was a pleasure, and I eagerly look forward to exploring more of their curated selections.{% endblocktrans %}</p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 6 -->
+                    <div class="col-md-4">
+                        <div class="testimonial">
+                            <h3>{% trans "Mohammad Ali Rezai" %}</h3>
+                            <p>{% blocktrans %}Collaborating with Fiama was an enriching experience. Their expertise and dedication surpassed all expectations. I wholeheartedly recommend Fiama for a seamless and successful shopping partnership.{% endblocktrans %}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- TESTIMONIAL AREA END -->
+
+
+    <!-- BLOG AREA START (blog-3) -->
+    <div class="ltn__blog-area  pt-60 pb-30">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title-area text-center">
+                        <h1 class="section-title section-title-border">{% trans 'Latest Posts' %}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row  ltn__blog-slider-one-active slick-arrow-1">
+                <!-- Blog Item -->
+                {% for recent_post in recent_posts %}
+                    <div class="col-lg-12">
+                        <div class="ltn__blog-item">
+                            <div class="ltn__blog-img">
+                                <a href="{{ recent_post.get_absolute_url }}"><img src="{{ recent_post.image.url }}"
+                                                                                  alt="#"></a>
+                            </div>
+                            <div class="ltn__blog-brief">
+                                <div class="ltn__blog-meta">
+                                    <ul>
+                                        <li>
+                                            <span>{{ recent_post.datetime_updated }}</span>
+                                        </li>
+                                        <li class="ltn__blog-comment">
+                                            <a href="{{ recent_post.get_absolute_url }}"><i
+                                                    class="icon-speech"></i> {{ recent_post.count_comments }}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <h3 class="ltn__blog-title blog-title-line"><a
+                                        href="{{ recent_post.get_absolute_url }}">{{ recent_post.title }}</a></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- BLOG AREA END -->
+
+
+{% endblock content %}
